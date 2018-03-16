@@ -24,6 +24,7 @@
 		04AC6F732032146B00ED80D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04AC6F722032146B00ED80D9 /* Images.xcassets */; };
 		04C9A9A0207C4AD800E595A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9A99F207C4AD800E595A7 /* Event.swift */; };
 		04D2328B20FD4A6700C71C72 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2328A20FD4A6700C71C72 /* ViewControllerExtension.swift */; };
+		04AC6F732032146B00ED80D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04AC6F722032146B00ED80D9 /* Images.xcassets */; };
 		04D763F920097D8D006CA589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763F820097D8D006CA589 /* AppDelegate.swift */; };
 		04D763FB20097D8D006CA589 /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763FA20097D8D006CA589 /* SignInPage.swift */; };
 		04D763FE20097D8D006CA589 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D763FC20097D8D006CA589 /* Main.storyboard */; };
@@ -38,13 +39,13 @@
 		A07289BC212F899D00B72E53 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07289BB212F899D00B72E53 /* StoreKit.framework */; };
 		A07289BE212F8C8000B72E53 /* AdFreeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */; };
 		A07289C0212F8D3900B72E53 /* AdFreeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXFileReference section */
 		0457244A2102364400BDE0EC /* NotificationTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTitle.swift; sourceTree = "<group>"; };
 		0457244D21023B6800BDE0EC /* InteractionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionDelegate.swift; sourceTree = "<group>"; };
 		0457244F2102417300BDE0EC /* Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
 		046B30B920FCE68900122CFF /* LoadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadState.swift; sourceTree = "<group>"; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
 		047A86CC2009A6FF005A46BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		047A86CE2009B8D7005A46BF /* ChooseExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseExport.swift; sourceTree = "<group>"; };
 		049210E5203E632C007C324D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 		04B35DA121019718008DDDA2 /* Calendar to Calendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calendar to Calendar.entitlements"; sourceTree = "<group>"; };
 		04C9A99F207C4AD800E595A7 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		04D2328A20FD4A6700C71C72 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
+		04AC6F722032146B00ED80D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		04D763F520097D8D006CA589 /* Calendar to Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calendar to Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D763F820097D8D006CA589 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D763FA20097D8D006CA589 /* SignInPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPage.swift; sourceTree = "<group>"; };
@@ -186,6 +188,10 @@
 				04D763FC20097D8D006CA589 /* Main.storyboard */,
 				04D7640120097D8D006CA589 /* LaunchScreen.storyboard */,
 				04D7640420097D8D006CA589 /* Info.plist */,
+				04D763F820097D8D006CA589 /* AppDelegate.swift */,
+				04D763FC20097D8D006CA589 /* Main.storyboard */,
+				04D7640120097D8D006CA589 /* LaunchScreen.storyboard */,
+				049210E9203E63B9007C324D /* CalendarApp.png */,
 			);
 			path = "Calendar to Calendar";
 			sourceTree = "<group>";
@@ -400,6 +406,10 @@
 				047A86CF2009B8D7005A46BF /* ChooseExport.swift in Sources */,
 				04C9A9A0207C4AD800E595A7 /* Event.swift in Sources */,
 				045724502102417300BDE0EC /* Name.swift in Sources */,
+				04FF846E20140D8600F71D52 /* fullView.swift in Sources */,
+				04D763FB20097D8D006CA589 /* SignInPage.swift in Sources */,
+				04D763F920097D8D006CA589 /* AppDelegate.swift in Sources */,
+				047A86CF2009B8D7005A46BF /* ChooseExport.swift in Sources */,
 				04FF846C20126DD200F71D52 /* partialView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,6 +561,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JLMAA9A3ZB;
+				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.DavidRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -571,6 +587,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JLMAA9A3ZB;
+				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.DavidRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

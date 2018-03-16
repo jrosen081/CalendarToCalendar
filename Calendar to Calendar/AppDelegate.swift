@@ -1,29 +1,15 @@
 import Google
 import GoogleSignIn
 import UIKit
-import GoogleMobileAds
-import UserNotifications
-
- let testDevices: [Any] = [kGADSimulatorID, "8d7f75d1a627b54e81099ff4bb2e9ac4", "67565bf06bc7fc00e6e6ec5196828417"]
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate{
+class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    var interstitial: GADInterstitial?
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func applicationDidFinishLaunching(_ application: UIApplication) {
         Thread.sleep(forTimeInterval: 1.0)
-        
-        GADMobileAds.configure(withApplicationID: "YOUR_ID_HERE")
-        GADMobileAds.sharedInstance().applicationMuted = true
-        
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.requestAuthorization(options: [.alert, .badge, .sound], completionHandler: {(success, error) in
-            if let error = error{
-                print(error.localizedDescription)
-            }
-        })
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-3940256099942544~1458002511")
         
         // Initialize sign-in
         var configureError: NSError?
@@ -43,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                                                      sourceApplication: sourceApplication,
                                                      annotation: annotation)
         }
+        return GIDSignIn.sharedInstance().handle(url,
+                                                 sourceApplication: sourceApplication,
+                                                 annotation: annotation)
     }
     
     @available(iOS 9.0, *)
