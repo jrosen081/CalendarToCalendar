@@ -14,16 +14,7 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     override func viewDidLoad() {
         setUpDatePickers(self.startDate, self.endDate)
         updateDelegates()
-        self.picker.reloadAllComponents()
-        googleUser.errorDelegate = {error in
-            self.showAlert(title: "Error", message: error.localizedDescription)
-        }
-        googleUser.finishingClosure = {data in
-            if let events = data as? [Event]{
-                self.events = events
-                self.performSegue(withIdentifier: "hasDetails", sender: nil)
-            }
-        }
+        googleUser.delegate = self
     }
     func updateDelegates(){
         self.picker.delegate = self
@@ -44,12 +35,8 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     //Get events using criteria
     func fetchEvents() {
         var calendarID: String = ""
-        for calendar in calendars
-        {
-            if (self.pickerData[picker.selectedRow(inComponent: 0)].description == calendar.summary!)
-            {
-                calendarID = calendar.identifier!
-            }
+        if let index = calendars.index(where: {$0.summary != nil && $0.summary! == self.pickerData[picker.selectedRow(inComponent: 0)].description}){
+            calendarID = calendars[index].identifier!
         }
         googleUser.fetchEvents(name: nil, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
     }
@@ -73,6 +60,19 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     deinit{
         self.calendars.removeAll()
         self.pickerData.removeAll()
+    }
+}
+extension fullView: GoogleInteractionDelegate{
+    func returnedError(error: CustomError) {
+        self.showAlert(title: "Error", message: error.localizedDescription)
+    }
+    func returnedResults(data: Any) {
+        if let events = data as? [Event]{
+            self.events = events
+            DispatchQueue.main.async{
+                self.performSegue(withIdentifier: "displayResults", sender: nil)
+            }
+        }
     }
 }
 

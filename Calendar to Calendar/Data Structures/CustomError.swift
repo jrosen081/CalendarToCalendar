@@ -8,9 +8,12 @@
 
 import Foundation
 
-struct CustomError{
+struct CustomError: ExpressibleByStringLiteral{
     var localizedDescription: String
     init(_ description: String){
+        self.localizedDescription = description
+    }
+    init(stringLiteral description: StringLiteralType){
         self.localizedDescription = description
     }
 }

@@ -48,10 +48,12 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     private func loadAd(){
         //Loads the advertisement
-        let request = GADRequest()
-        request.testDevices = self.testDevices
-        advertisement.load(request)
-        advertisement.delegate = self
+        DispatchQueue.main.async{
+            let request = GADRequest()
+            request.testDevices = self.testDevices
+            self.advertisement.load(request)
+            self.advertisement.delegate = self
+        }
     }
     private func setUpTableView(){
         //Displays the table view
@@ -78,18 +80,15 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         {
             self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
         }
-        else if (indexPath.row == 0){}
-        else{
+        else if (indexPath.row != 0){
                 self?.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
             }}, completion: nil)
         tableView.isScrollEnabled = true
     }
     //Changes the name of the event
     func changeText(_ event: Event, name: String){
-        for counter in 0 ..< events.count{
-            if (events[counter] == event){
-                events[counter].name = name
-            }
+        if let index = self.events.index(of: event){
+            events[index].name = name
         }
     }
     //Gets rid of keyboard on enter
@@ -130,14 +129,10 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     func changeAlarm(_ event: Event, alarm: Int){
-        for counter in 0 ..< events.count{
-            if (events[counter] == event){
-                events[counter].alarm = alarm
-                for cell in tableView.visibleCells{
-                    if (tableView.indexPath(for: cell)?.row == counter){
-                        (tableView.cellForRow(at: tableView.indexPath(for: cell)!) as! customcell).alarmPicker.selectRow(alarm, inComponent: 0, animated: true)
-                    }
-                }
+        if let index = events.index(of: event){
+            events[index].alarm = alarm
+            if let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)){
+                (cell as! customcell).alarmPicker.selectRow(alarm, inComponent: 0, animated: true)
             }
         }
     }
@@ -154,13 +149,9 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             alert.view.addSubview(picker)
             let action1 = UIAlertAction(title: "Select", style: .default, handler: { (action) -> Void in
                 let checker = picker.selectedRow(inComponent: 0)
-                for counter in 0 ... self.events.count - 1
+                for counter in 0 ..< self.events.count
                 {
-                        self.events[counter].alarm = checker
-                }
-                for cell in self.tableView.visibleCells as! Array<customcell>
-                {
-                    cell.alarmPicker.selectRow(checker, inComponent: 0, animated: true)
+                    self.changeAlarm(self.events[counter], alarm: checker)
                 }
             })
             let action2 = UIAlertAction(title: "Cancel", style: .default, handler: {(action) -> Void in})
@@ -202,53 +193,9 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     //Cell was selected
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell: customcell = tableView.cellForRow(at: indexPath) as! customcell
-        tableView.deselectRow(at: indexPath, animated: false)
-        var name = cell.nameOfEvent.text!
-        if (name != "")
-        {
-            name = "\"\(name)\" "
-        }else {name = "The event "}
-        var alarmData = ""
-        if (cell.alarmPicker.selectedRow(inComponent: 0) == 0)
-        {
-            alarmData = "no alarm will be set."
-        }
-        else
-        {
-            alarmData = "an alarm will be set \(alarmPickerDate[cell.alarmPicker.selectedRow(inComponent: 0)])."
-        }
-        if (cell.endDate.text == "All Day")
-        {
-            let startDate = cell.startDate.text!
-            let startDateParts: [String] = startDate.components(separatedBy: ", ")
-            let dayOfWeek = getDayOfWeek(date: startDateParts[0]).0
-            let startFormatted = "\(dayOfWeek), \(startDateParts[0])"
-            showAlert(title: "Your Event", message: "\(name)starts on \(startFormatted) and is an all day event, and \(alarmData)")
-        }
-        else{
-            let index1 = cell.startDate.text!.index(cell.startDate.text!.startIndex, offsetBy: 7)
-            let startDateSuffix = cell.startDate.text![index1...]
-            let startDate = String(startDateSuffix)
-            let startDateParts: [String] = startDate.components(separatedBy: ", ")
-            let dayOfWeek = getDayOfWeek(date: startDateParts[0])
-            let startFormatted = "\(dayOfWeek.0), \(startDateParts[0]) at \(startDateParts[1])"
-            let index2 = cell.endDate.text!.index(cell.endDate.text!.startIndex, offsetBy: 5)
-            let endDateSuffix = cell.endDate.text![index2...]
-            let endDate = String(endDateSuffix)
-            let endDateParts: [String] = endDate.components(separatedBy: ", ")
-            if (endDateParts[0] != startDateParts[0])
-            {
-                let dayOfEndDay = getDayOfWeek(date: endDateParts[0])
-                let endFormatted = "\(dayOfEndDay.0), \(endDateParts[0]) at \(endDateParts[1])"
-                showAlert(title: "Your Event", message: "\(name)starts on \(startFormatted) and ends on \(endFormatted), and \(alarmData)")
-            }
-            else
-            {
-                let endFormatted = "at \(endDateParts[1])"
-                showAlert(title: "Your Event", message: "\(name)starts on \(startFormatted) and ends \(endFormatted), and \(alarmData)")
-            }
-        }
+        tableView.deselectRow(at: indexPath, animated: true)
+        showAlert(title: "Your event", message: events[indexPath.row].description)
+        
     }
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -276,7 +223,6 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.alarmPicker.selectRow(event.alarm, inComponent: 0, animated: false)
         cell.alarmPicker.restorationIdentifier = String(describing: indexPath.row)
         cell.nameOfEvent.restorationIdentifier = String(describing: indexPath.row)
-        events[indexPath.row] = event
         if (indexPath.row < incorrect){
             cell.layer.borderColor = UIColor.red.cgColor
             cell.layer.borderWidth = 2
@@ -293,7 +239,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             let info = events.remove(at: indexPath.row)
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.none)
-            if let index = events.index(where: {$0 == info}){
+            if let index = events.index(of: info){
                 events.remove(at: index)
                 tableView.deleteRows(at: [IndexPath(item: Int(index), section: 0)], with: .none)
                 incorrect -= 1
@@ -308,7 +254,8 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                 })
                 
             }else {
-                for cell in tableView.visibleCells as! Array<customcell>
+                guard let cells = tableView.visibleCells as? [customcell] else {return}
+                for cell in cells
                 {
                     let indexPath: IndexPath = tableView.indexPath(for: cell)!
                     cell.alarmPicker.restorationIdentifier = String(describing: indexPath.row)
@@ -325,7 +272,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-    func getDayOfWeek(date: String) -> (String, Int)
+    private func getDayOfWeek(date: String) -> (String, Int)
     {
         let calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         let dateFormatter = DateFormatter()
@@ -339,7 +286,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         DispatchQueue.main.async{
             switch self.adState{
                 case .began:
-                    if !self.activity.isAnimating{
+                    if self.activity.superview == nil{
                         self.view.addSubview(self.activity)
                         self.activity.startAnimating()
                     }
@@ -394,67 +341,66 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             default:
                  break
             }
-            self.events[counter] = event
+            self.events[counter].alarm = event.alarm
         }
         addEventToCalendar(events: events)
     }
     //Adds events to calendar
-    func addEventToCalendar(events: [Event]) {
+    private func addEventToCalendar(events: [Event]) {
         let dateForCal = events[0].startDate
         var newEvents = [Event]()
         newEvents.append(contentsOf: events)
         newEvents.removeFirst(self.incorrect)
         let interval: TimeInterval = dateForCal.timeIntervalSinceReferenceDate
         store.requestAccess(to: .event) { (success, error) in
-            if  error == nil {
-                for event1 in newEvents {
-                    let event = EKEvent(eventStore: self.store)
-                    event.title = event1.name
-                    event.calendar = self.store.defaultCalendarForNewEvents// this will return deafult calendar from device calendars
-                    event.startDate = event1.startDate
-                    if (event1.isAllDay)
-                    {
-                        event.isAllDay = true;
-                        event.endDate = event.startDate
-                    }
-                    else{
-                        event.endDate = event1.endDate
-                    }
-                    if (event1.alarm != 0)
-                    {
-                        let date: Date = Date.init(timeInterval: TimeInterval(event1.alarm), since: event1.startDate)
-                        let alarm = EKAlarm.init(absoluteDate: date)
-                        event.addAlarm(alarm)
-                    }
-                    do {
-                        try self.store.save(event, span: .thisEvent)
-                        //event created successfullt to default calendar
-                    } catch let error as NSError {
-                        self.showAlert(title: "", message: "Failed to save event with error : \(error)")
-                    }
+            guard error == nil else{
+                self.showAlert(title: "Error", message: error!.localizedDescription)
+                return
+            }
+            for event1 in newEvents {
+                let event = EKEvent(eventStore: self.store)
+                event.title = event1.name
+                event.calendar = self.store.defaultCalendarForNewEvents// this will return deafult calendar from device calendars
+                event.startDate = event1.startDate
+                if (event1.isAllDay)
+                {
+                    event.isAllDay = true;
+                    event.endDate = event.startDate
                 }
-                DispatchQueue.main.async(execute: {
-                    let alert = UIAlertController(title: "Events Were Created", message: "", preferredStyle: .alert)
-                    let action1 = UIAlertAction(title: "Go To Calendar", style: .default, handler: { (action) -> Void in
-                        DispatchQueue.main.async{
-                            let url = NSURL(string: "calshow:\(interval)")!
-                            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
-                            self.performSegue(withIdentifier: "finish", sender: nil)
-                        }
-                    })
-                    
-                    let action2 = UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                else{
+                    event.endDate = event1.endDate
+                }
+                if (event1.alarm != 0)
+                {
+                    let date: Date = Date.init(timeInterval: TimeInterval(event1.alarm), since: event1.startDate)
+                    let alarm = EKAlarm.init(absoluteDate: date)
+                    event.addAlarm(alarm)
+                }
+                do {
+                    try self.store.save(event, span: .thisEvent)
+                    //event created successfullt to default calendar
+                } catch let error {
+                    self.showAlert(title: "Error", message: "Failed to save event with error : \(error.localizedDescription)")
+                }
+            }
+            DispatchQueue.main.async(execute: {
+                let alert = UIAlertController(title: "Events Were Created", message: "", preferredStyle: .alert)
+                let action1 = UIAlertAction(title: "Go To Calendar", style: .default, handler: { (action) -> Void in
+                    DispatchQueue.main.async{
+                        let url = NSURL(string: "calshow:\(interval)")!
+                        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
                         self.performSegue(withIdentifier: "finish", sender: nil)
-                    })
-                    alert.addAction(action1)
-                    alert.addAction(action2)
-                    self.present(alert, animated: true, completion: nil)
+                    }
                 })
                 
-            } else {
-                //we have error in getting access to device calendar
-                print("error = \(String(describing: error?.localizedDescription))")
-            }
+                let action2 = UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
+                    self.performSegue(withIdentifier: "finish", sender: nil)
+                })
+                alert.addAction(action1)
+                alert.addAction(action2)
+                self.present(alert, animated: true, completion: nil)
+            })
+            
         }
     }
     // Tells the delegate the interstitial had been animated off the screen.
@@ -511,7 +457,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         if (array.count >= 1 && array.count <= events.count / 2)
         {
             while (!array.isEmpty){
-                if let index = intArray.index(where: {$0 == 1}){
+                if let index = intArray.index(of: 1){
                     returnArray.append(events[index])
                     array.removeFirst()
                 }
@@ -526,9 +472,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: "Would you like to see suggestions of incorrect events?", message: nil, preferredStyle: UIAlertControllerStyle.alert)
                 let yes = UIAlertAction(title: "Yes", style: .default, handler: {(action) -> Void in
-                    for counter in 0 ..< self.wrongEvents.count{
-                        self.events.insert(self.wrongEvents[counter], at: counter)
-                    }
+                    self.events.insert(contentsOf: self.wrongEvents, at: 0)
                     self.incorrect = self.wrongEvents.count
                     self.tableView.reloadData()
                 })

@@ -4,33 +4,14 @@ import GoogleSignIn
 import UIKit
 import GoogleAPIClientForREST
 
-class SignInPage: UIViewController, GIDSignInUIDelegate {
-    
-
+class SignInPage: UIViewController{
     // Global variables
     let signInButton = GIDSignInButton()
     let signer = GoogleInteractor.sharedInstance
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @IBOutlet weak var signIn: UILabel!
-    deinit{
-        signer.finishingClosure = nil
-        signer.errorDelegate = nil
-        signer.signInUIDelegate = nil
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        signer.signInUIDelegate = self
-        signer.errorDelegate = {error in
-            self.showAlert(title: "Error", message: error.localizedDescription)
-        }
-        signer.finishingClosure = { _ in
-            DispatchQueue.main.async(execute:{
-                self.signInButton.isHidden = true
-                self.signIn.isHidden = false
-                self.progressIndicator.isHidden = false
-                self.changePages()
-            })
-        }
         progressIndicator.isHidden = true
         signIn.isHidden = true
         let transform: CGAffineTransform = CGAffineTransform(scaleX: 3.0, y: 3.0)
@@ -49,6 +30,7 @@ class SignInPage: UIViewController, GIDSignInUIDelegate {
             // Add the sign-in button.
             view.addSubview(signInButton)
         }
+        signer.delegate = self
     }
     //Sends to the next file
     func changePages()
@@ -56,6 +38,20 @@ class SignInPage: UIViewController, GIDSignInUIDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.performSegue(withIdentifier: "PersonSignedIn", sender: nil)
         }
+    }
+    
+}
+extension SignInPage: GoogleInteractionDelegate{
+    func returnedResults(data: Any) {
+        DispatchQueue.main.async(execute:{
+            self.signInButton.isHidden = true
+            self.signIn.isHidden = false
+            self.progressIndicator.isHidden = false
+            self.changePages()
+        })
+    }
+    func returnedError(error: CustomError) {
+        self.showAlert(title: "Error", message: error.localizedDescription)
     }
 }
 

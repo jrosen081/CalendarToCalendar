@@ -20,18 +20,7 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
         super.viewDidLoad()
         updateDelegates()
         setUpDatePickers(self.startDate, self.endDate)
-        //self.picker.reloadAllComponents()
-        google.errorDelegate = { error in
-            self.showAlert(title: "Error", message: error.localizedDescription)
-        }
-        google.finishingClosure = { response in
-            if let events = response as? [Event]{
-                self.events = events
-                DispatchQueue.main.async{
-                    self.performSegue(withIdentifier: "displayResults", sender: nil)
-                }
-            }
-        }
+        google.delegate = self
     }
     private func updateDelegates(){
         self.picker.delegate = self
@@ -54,13 +43,8 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     //Gets events using criteria
     func fetchEvents() {
         var calendarID: String = ""
-        for calendar in calendars
-        {
-            guard let _ = calendar.summary else {continue}
-            if (self.pickerData[picker.selectedRow(inComponent: 0)].description == calendar.summary!)
-            {
-                calendarID = calendar.identifier!
-            }
+        if let index = calendars.index(where: {$0.summary != nil && $0.summary! == self.pickerData[picker.selectedRow(inComponent: 0)].description}){
+            calendarID = calendars[index].identifier!
         }
         google.fetchEvents(name: self.label.text!, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
     }
@@ -95,5 +79,18 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     deinit{
         self.calendars.removeAll()
         self.pickerData.removeAll()
+    }
+}
+extension PartialView: GoogleInteractionDelegate{
+    func returnedError(error: CustomError) {
+        self.showAlert(title: "Error", message: error.localizedDescription)
+    }
+    func returnedResults(data: Any) {
+        if let events = data as? [Event]{
+            self.events = events
+            DispatchQueue.main.async{
+                self.performSegue(withIdentifier: "displayResults", sender: nil)
+            }
+        }
     }
 }

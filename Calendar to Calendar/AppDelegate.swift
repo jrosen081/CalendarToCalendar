@@ -2,6 +2,7 @@ import Google
 import GoogleSignIn
 import UIKit
 import GoogleMobileAds
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,6 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.configure(withApplicationID: "")
         GADMobileAds.sharedInstance().applicationMuted = true
         
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.requestAuthorization(options: [.alert, .badge, .sound], completionHandler: {(success, error) in
+            if let error = error{
+                print(error.localizedDescription)
+            }
+        })
         // Initialize sign-in
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)

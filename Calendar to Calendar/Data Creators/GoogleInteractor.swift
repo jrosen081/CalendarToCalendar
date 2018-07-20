@@ -13,33 +13,24 @@ import GoogleAPIClientForREST
 class GoogleInteractor: NSObject, GIDSignInDelegate{
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            errorDelegate?(CustomError(error.localizedDescription))
+            delegate?.returnedError(error: CustomError(error.localizedDescription))
             self.service.authorizer = nil
         } else {
             self.service.authorizer = user.authentication.fetcherAuthorizer()
-            finishingClosure?(user)
+            delegate?.returnedResults(data: user)
         }
     }
-    typealias Closure = (Any) -> ()
-    typealias ErrorResponse = (CustomError) -> ()
     var isSignedIn: Bool{
         return GIDSignIn.sharedInstance().hasAuthInKeychain()
     }
-    var errorDelegate: ErrorResponse?
-    var finishingClosure: Closure?
-    var hasName = false
+    var name: Name = .none
     private let service = GTLRCalendarService()
     static let sharedInstance = GoogleInteractor()
-    weak var signInUIDelegate: GIDSignInUIDelegate?{
-        didSet{
-            GIDSignIn.sharedInstance().uiDelegate = signInUIDelegate
-        }
-    }
     private let scopes = [kGTLRAuthScopeCalendar]
+    weak var delegate: GoogleInteractionDelegate?
     private override init(){
         super.init()
         GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().uiDelegate = signInUIDelegate
         GIDSignIn.sharedInstance().scopes = scopes
     }
     func signOut(){
@@ -64,13 +55,13 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
         error : NSError?) {
         
         if let error = error {
-            errorDelegate?(CustomError(error.localizedDescription))
+            delegate?.returnedError(error: CustomError(error.localizedDescription))
             return
         }
         if let calendars = response.items, !calendars.isEmpty {
-            finishingClosure?(calendars)
+            delegate?.returnedResults(data: calendars)
         } else {
-            errorDelegate?(CustomError("You need a Google Calendar for this app to work"))
+            delegate?.returnedError(error: "You need a Google Calendar for this app to work")
         }
     }
     //Gets events using criteria
@@ -82,8 +73,10 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
         query.singleEvents = true
         if let name = name{
             query.q = name
+            self.name = .name(name)
+        }else{
+            self.name = .none
         }
-        hasName = name != nil
         service.executeQuery(
             query,
             delegate: self,
@@ -98,7 +91,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
         error : NSError?) {
         
         if let error = error {
-            errorDelegate?(CustomError(error.localizedDescription))
+            delegate?.returnedError(error: CustomError(error.localizedDescription))
             return
         }
         var events = [Event]()
@@ -117,7 +110,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
                     userVisibleDateFormatter.timeStyle = DateFormatter.Style.short
                     let userVisibleDateTimeString = userVisibleDateFormatter.string(from: date!)
                     let endDate = userVisibleDateFormatter.string(from: enddate!)
-                    let event = Event(name: event.summary!, startDate: start.date, endDate: end.date, formattedEndDate: endDate, formattedStartDate: userVisibleDateTimeString, alarm: 0, isAllDay: false)
+                    let event = Event(name: event.summary!, startDate: start.date, endDate: end.date, formattedEndDate: endDate, formattedStartDate: userVisibleDateTimeString, isAllDay: false)
                     events.append(event)
                 }
                 else
@@ -146,18 +139,18 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
                     userVisibleDateFormatter.dateStyle = DateFormatter.Style.short
                     userVisibleDateFormatter.timeStyle = DateFormatter.Style.short
                     let userVisibleDateTimeString = userVisibleDateFormatter.string(from: date!)
-                    let event = Event(name: event.summary!, startDate: start.date, endDate: start.date, formattedEndDate: userVisibleDateTimeString, formattedStartDate: userVisibleDateTimeString, alarm: 0, isAllDay: true)
+                    let event = Event(name: event.summary!, startDate: start.date, endDate: start.date, formattedEndDate: userVisibleDateTimeString, formattedStartDate: userVisibleDateTimeString, isAllDay: true)
                     events.append(event)
                 }
             }
-            finishingClosure?(events)
+            self.delegate?.returnedResults(data: events)
         } else {
             var response = "There were no events"
-            if hasName{
-                response += " titled that"
+            if case let .name(name) = self.name{
+                response += " titled \(name)"
             }
             response += " during the time period."
-            errorDelegate?(CustomError(response))
+            delegate?.returnedError(error: CustomError(response))
         }
         
     }
