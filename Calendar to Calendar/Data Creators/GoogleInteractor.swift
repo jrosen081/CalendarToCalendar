@@ -10,11 +10,11 @@ import Foundation
 import GoogleSignIn
 import GoogleAPIClientForREST
 
-class GoogleInteractor: NSObject, GIDSignInDelegate{
+class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor{
+    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             delegate?.returnedError(error: CustomError(error.localizedDescription))
-            self.service.authorizer = nil
         } else {
             self.service.authorizer = user.authentication.fetcherAuthorizer()
             delegate?.returnedResults(data: user)
@@ -23,18 +23,34 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
     var isSignedIn: Bool{
         return GIDSignIn.sharedInstance().hasAuthInKeychain()
     }
-    var name: Name = .none
+    weak var uiDelegate: GIDSignInUIDelegate?{
+        didSet{
+            GIDSignIn.sharedInstance().uiDelegate = uiDelegate
+        }
+    }
+    private var name: Name = .none
     private let service = GTLRCalendarService()
     static let sharedInstance = GoogleInteractor()
     private let scopes = [kGTLRAuthScopeCalendar]
-    weak var delegate: GoogleInteractionDelegate?
+    weak var delegate: InteractionDelegate?
     private override init(){
         super.init()
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().scopes = scopes
     }
+    
+    func signIn(from object: AnyObject = GoogleInteractor.sharedInstance){
+        if isSignedIn {
+            GIDSignIn.sharedInstance().signInSilently()
+        } else {
+            GIDSignIn.sharedInstance().signIn()
+        }
+        ServerInteractor.currentServer = .GOOGLE
+    }
+    
     func signOut(){
         GIDSignIn.sharedInstance().signOut()
+        Calendars.removeAll()
     }
     //Gets Calendar Names
     func getCalendars(){
@@ -59,6 +75,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
             return
         }
         if let calendars = response.items, !calendars.isEmpty {
+            calendars.forEach({calendar in Calendars.addCalendar(calendar: Calendar(googleCalendar: calendar))})
             delegate?.returnedResults(data: calendars)
         } else {
             delegate?.returnedError(error: "You need a Google Calendar for this app to work")
@@ -97,51 +114,25 @@ class GoogleInteractor: NSObject, GIDSignInDelegate{
         var events = [Event]()
         if let eventItems = response.items, !eventItems.isEmpty {
             for event in eventItems {
+                let startDate: Date
+                let endDate: Date
+                let name = event.summary!
+                var isAllDay = true
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                 if let start = event.start!.dateTime {
-                    let end = event.end!.dateTime!
-                    let dateFromStringFormatter = DateFormatter()
-                    dateFromStringFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                    let StringFromDateFormatter = DateFormatter()
-                    StringFromDateFormatter.dateFormat = "mm/dd/yyy, HH:MM a"
-                    let date = dateFromStringFormatter.date(from: start.rfc3339String)
-                    let enddate = dateFromStringFormatter.date(from: end.rfc3339String)
-                    let userVisibleDateFormatter = DateFormatter()
-                    userVisibleDateFormatter.dateStyle = DateFormatter.Style.short
-                    userVisibleDateFormatter.timeStyle = DateFormatter.Style.short
-                    let userVisibleDateTimeString = userVisibleDateFormatter.string(from: date!)
-                    let endDate = userVisibleDateFormatter.string(from: enddate!)
-                    let event = Event(name: event.summary!, startDate: start.date, endDate: end.date, formattedEndDate: endDate, formattedStartDate: userVisibleDateTimeString, isAllDay: false)
-                    events.append(event)
+                    startDate = dateFormatter.date(from: start.rfc3339String)!
+                    endDate = dateFormatter.date(from: event.end!.dateTime!.rfc3339String)!
+                    isAllDay = false
                 }
                 else
                 {
                     let start = event.start!.date!
-                    let dateFromStringFormatter = DateFormatter()
-                    dateFromStringFormatter.dateFormat = "yyyy-MM-dd"
-                    let StringFromDateFormatter = DateFormatter()
-                    StringFromDateFormatter.dateFormat = "mm/dd/yyyy"
-                    let date = dateFromStringFormatter.date(from: start.rfc3339String)
-                    let userVisibleDateFormatter = DateFormatter()
-                    let timeZone: Int = TimeZone.current.secondsFromGMT() / 3600
-                    var timeZoneString: String = ""
-                    if (timeZone > 0)
-                    {
-                        timeZoneString = "+" + String(describing: timeZone)
-                    }
-                    else
-                    {
-                        timeZoneString = String(describing: timeZone)
-                    }
-                    if (timeZone < 10 && timeZone > -10)
-                    {
-                        timeZoneString.insert("0", at: timeZoneString.index(after: timeZoneString.startIndex))
-                    }
-                    userVisibleDateFormatter.dateStyle = DateFormatter.Style.short
-                    userVisibleDateFormatter.timeStyle = DateFormatter.Style.short
-                    let userVisibleDateTimeString = userVisibleDateFormatter.string(from: date!)
-                    let event = Event(name: event.summary!, startDate: start.date, endDate: start.date, formattedEndDate: userVisibleDateTimeString, formattedStartDate: userVisibleDateTimeString, isAllDay: true)
-                    events.append(event)
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    startDate = dateFormatter.date(from: start.rfc3339String)!
+                    endDate = dateFormatter.date(from: event.end!.date!.rfc3339String)!
                 }
+                events.append(Event(name: name, startDate: startDate, endDate: endDate, isAllDay: isAllDay))
             }
             self.delegate?.returnedResults(data: events)
         } else {

@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -20,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In to Google" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLh-xN-tZd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLh-xN-tZd">
                                 <rect key="frame" x="0.0" y="43.999999999999993" width="375" height="81.333333333333314"/>
                                 <color key="backgroundColor" red="0.11764705882352941" green="0.38431372549019605" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -56,35 +55,73 @@
                                 <color key="textColor" red="0.99369656505898074" green="0.97834535122042143" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3UQ-OS-3r8">
+                                <rect key="frame" x="93.999999999999986" y="289.66666666666669" width="187.66666666666663" height="81"/>
+                                <color key="backgroundColor" red="0.0" green="0.64313725490196072" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Use Google">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInUsingGoogle:" destination="BYZ-38-t0r" eventType="touchUpInside" id="89k-EP-QPA"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIY-39-GcI">
+                                <rect key="frame" x="169.33333333333334" y="370.66666666666669" width="37.333333333333343" height="81"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KDF-OC-0rY">
+                                <rect key="frame" x="93.999999999999986" y="451.66666666666669" width="187.66666666666663" height="81.000000000000057"/>
+                                <color key="backgroundColor" red="0.11764705882352941" green="0.38431372549019605" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Use Outlook">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInUsingOutlook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3bA-Ng-u8d"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.98592098875738376" green="1" blue="0.99142618441614239" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ft4-dY-7eK" firstAttribute="leading" secondItem="dE1-NM-hUY" secondAttribute="leading" id="1Tk-8W-WLT"/>
+                            <constraint firstItem="tIY-39-GcI" firstAttribute="width" secondItem="Y11-Va-lDg" secondAttribute="width" multiplier="1:10" id="2zP-My-wQU"/>
+                            <constraint firstItem="3UQ-OS-3r8" firstAttribute="width" secondItem="Y11-Va-lDg" secondAttribute="width" multiplier="1:2" id="3Fn-bd-6k7"/>
+                            <constraint firstItem="KDF-OC-0rY" firstAttribute="height" secondItem="3UQ-OS-3r8" secondAttribute="height" id="47P-RI-OZo"/>
                             <constraint firstItem="dE1-NM-hUY" firstAttribute="trailing" secondItem="B5b-BP-jd4" secondAttribute="trailing" id="AJh-3D-1fj"/>
                             <constraint firstItem="Ft4-dY-7eK" firstAttribute="width" secondItem="CLh-xN-tZd" secondAttribute="width" id="BMT-pg-xFb"/>
                             <constraint firstItem="2dj-vX-khb" firstAttribute="centerX" secondItem="dE1-NM-hUY" secondAttribute="centerX" id="Ear-p0-SRb"/>
                             <constraint firstItem="CLh-xN-tZd" firstAttribute="width" secondItem="Y11-Va-lDg" secondAttribute="width" id="GTy-C2-kpI"/>
                             <constraint firstItem="2dj-vX-khb" firstAttribute="top" secondItem="YzW-Sr-76A" secondAttribute="bottom" constant="8" id="Hh6-hQ-wy0"/>
+                            <constraint firstItem="3UQ-OS-3r8" firstAttribute="centerX" secondItem="dE1-NM-hUY" secondAttribute="centerX" id="Hlv-yg-i51"/>
                             <constraint firstItem="CLh-xN-tZd" firstAttribute="height" secondItem="Y11-Va-lDg" secondAttribute="height" multiplier="1:10" id="Lxt-QF-55H"/>
                             <constraint firstItem="YzW-Sr-76A" firstAttribute="centerX" secondItem="dE1-NM-hUY" secondAttribute="centerX" id="M3e-QM-c0M"/>
+                            <constraint firstItem="tIY-39-GcI" firstAttribute="height" secondItem="Y11-Va-lDg" secondAttribute="height" multiplier="1:10" id="Mqd-wa-pnS"/>
                             <constraint firstItem="CLh-xN-tZd" firstAttribute="leading" secondItem="dE1-NM-hUY" secondAttribute="leading" id="QV1-nC-oHB"/>
                             <constraint firstItem="YzW-Sr-76A" firstAttribute="centerY" secondItem="dE1-NM-hUY" secondAttribute="centerY" id="RdW-tn-6G7"/>
                             <constraint firstItem="CLh-xN-tZd" firstAttribute="top" secondItem="Ft4-dY-7eK" secondAttribute="bottom" id="U0k-Jd-yZt"/>
+                            <constraint firstItem="3UQ-OS-3r8" firstAttribute="height" secondItem="tIY-39-GcI" secondAttribute="height" id="aYx-1d-kcJ"/>
+                            <constraint firstItem="KDF-OC-0rY" firstAttribute="centerX" secondItem="dE1-NM-hUY" secondAttribute="centerX" id="dNa-7u-SYm"/>
                             <constraint firstItem="Ft4-dY-7eK" firstAttribute="width" secondItem="CLh-xN-tZd" secondAttribute="width" id="eVW-Hj-tLq"/>
                             <constraint firstItem="2dj-vX-khb" firstAttribute="width" secondItem="YzW-Sr-76A" secondAttribute="width" id="eq1-ww-spS"/>
                             <constraint firstItem="Ft4-dY-7eK" firstAttribute="top" secondItem="dE1-NM-hUY" secondAttribute="top" constant="-50" id="g4D-bS-Crd"/>
                             <constraint firstItem="dE1-NM-hUY" firstAttribute="bottom" secondItem="B5b-BP-jd4" secondAttribute="bottom" constant="-40" id="hso-zj-uLh"/>
+                            <constraint firstItem="KDF-OC-0rY" firstAttribute="top" secondItem="tIY-39-GcI" secondAttribute="bottom" id="jwA-Vd-wpQ"/>
+                            <constraint firstItem="KDF-OC-0rY" firstAttribute="width" secondItem="3UQ-OS-3r8" secondAttribute="width" id="k0w-jG-A6x"/>
                             <constraint firstItem="YzW-Sr-76A" firstAttribute="leading" secondItem="2dj-vX-khb" secondAttribute="leading" id="krs-zW-CeQ"/>
                             <constraint firstItem="dE1-NM-hUY" firstAttribute="trailing" secondItem="Ft4-dY-7eK" secondAttribute="trailing" id="lbs-cQ-LKd"/>
                             <constraint firstItem="B5b-BP-jd4" firstAttribute="width" secondItem="Y11-Va-lDg" secondAttribute="width" id="lvG-o1-xUH"/>
+                            <constraint firstItem="tIY-39-GcI" firstAttribute="centerX" secondItem="dE1-NM-hUY" secondAttribute="centerX" id="nlV-EO-yFB"/>
                             <constraint firstItem="B5b-BP-jd4" firstAttribute="leading" secondItem="dE1-NM-hUY" secondAttribute="leading" id="ooi-0o-IGh"/>
                             <constraint firstItem="YzW-Sr-76A" firstAttribute="width" secondItem="Y11-Va-lDg" secondAttribute="width" multiplier="1:2" id="s3p-KS-ClF"/>
                             <constraint firstItem="dE1-NM-hUY" firstAttribute="trailing" secondItem="CLh-xN-tZd" secondAttribute="trailing" id="vLT-5o-ZDX"/>
+                            <constraint firstItem="tIY-39-GcI" firstAttribute="centerY" secondItem="dE1-NM-hUY" secondAttribute="centerY" id="xJR-KW-yPe"/>
+                            <constraint firstItem="tIY-39-GcI" firstAttribute="top" secondItem="3UQ-OS-3r8" secondAttribute="bottom" id="xLJ-PJ-K38"/>
                             <constraint firstItem="CLh-xN-tZd" firstAttribute="top" secondItem="dE1-NM-hUY" secondAttribute="top" id="zM0-Io-qDW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dE1-NM-hUY"/>
                     </view>
                     <connections>
+                        <outlet property="googleSignIn" destination="3UQ-OS-3r8" id="tLY-YI-Fl4"/>
+                        <outlet property="outlookSignIn" destination="KDF-OC-0rY" id="6ft-II-LFv"/>
                         <outlet property="progressIndicator" destination="YzW-Sr-76A" id="oDE-pn-APF"/>
                         <outlet property="signIn" destination="2dj-vX-khb" id="cTw-sb-AMy"/>
                         <segue destination="IvJ-Oe-NMg" kind="showDetail" identifier="PersonSignedIn" id="zXb-6X-uOS"/>
@@ -149,11 +186,12 @@
                         <outlet property="calendarLoad" destination="dij-2D-fiO" id="8vi-o7-clq"/>
                         <segue destination="h5e-pj-TGp" kind="showDetail" identifier="FullCalendarSegue" id="54x-rK-oVh"/>
                         <segue destination="PJ6-2R-Ejj" kind="showDetail" identifier="partCalDet" id="KAx-tF-foP"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="signedOut" id="xTg-nq-3bc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FVh-LK-1z1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="810" y="-206"/>
+            <point key="canvasLocation" x="108" y="-316"/>
         </scene>
         <!--Full Calendar-->
         <scene sceneID="0Lu-bM-sSq">
@@ -391,7 +429,7 @@
                         <outlet property="endDate" destination="QNW-S3-N4N" id="Jz1-2J-i3C"/>
                         <outlet property="picker" destination="tSE-26-suH" id="Tqg-62-77x"/>
                         <outlet property="startDate" destination="Zqf-Vt-h8V" id="eHp-Qo-2QN"/>
-                        <segue destination="9ee-DZ-MDt" kind="showDetail" identifier="hasDetails" id="60f-wr-Qcc"/>
+                        <segue destination="9ee-DZ-MDt" kind="showDetail" identifier="displayResults" id="60f-wr-Qcc"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="signedOut" id="yzS-TR-UUw"/>
                     </connections>
                 </viewController>
@@ -978,7 +1016,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="60f-wr-Qcc"/>
-        <segue reference="AB0-Km-ayN"/>
-        <segue reference="fZh-Xd-aSW"/>
+        <segue reference="zXb-6X-uOS"/>
+        <segue reference="xTg-nq-3bc"/>
     </inferredMetricsTieBreakers>
 </document>

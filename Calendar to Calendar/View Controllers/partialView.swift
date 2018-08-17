@@ -8,19 +8,17 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     @IBOutlet weak var endDate: UIDatePicker!
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var picker: UIPickerView!
-    var pickerData:[String] = [String]()
-    private let scopes = [kGTLRAuthScopeCalendar]
-    private let service = GTLRCalendarService()
     @IBOutlet weak var label: UITextField!
     private var events: [Event] = [Event]()
-    var calendars: [GTLRCalendar_CalendarListEntry] = [GTLRCalendar_CalendarListEntry]()
-    private var google = GoogleInteractor.sharedInstance
+    var calendars = Calendars.all
+    private var server = ServerInteractor.current
     override func viewDidLoad() {
         createDismissedKeyboard()
         super.viewDidLoad()
+        AdInteractor.currentViewController = self
         updateDelegates()
         setUpDatePickers(self.startDate, self.endDate)
-        google.delegate = self
+        server.delegate = self
     }
     private func updateDelegates(){
         self.picker.delegate = self
@@ -43,10 +41,10 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     //Gets events using criteria
     func fetchEvents() {
         var calendarID: String = ""
-        if let index = calendars.index(where: {$0.summary != nil && $0.summary! == self.pickerData[picker.selectedRow(inComponent: 0)].description}){
-            calendarID = calendars[index].identifier!
+        if let index = calendars.index(where: {$0.name == self.calendars[picker.selectedRow(inComponent: 0)].name}){
+            calendarID = calendars[index].identifier
         }
-        google.fetchEvents(name: self.label.text!, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
+        server.fetchEvents(name: self.label.text!, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
     }
     
     //Signs Out
@@ -60,14 +58,14 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     }
     //Picker view functions
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        return calendars.count
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        return calendars[row].name
     }
     //Sends events to next file
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -76,12 +74,8 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
             viewControllerB.sort()
         }
     }
-    deinit{
-        self.calendars.removeAll()
-        self.pickerData.removeAll()
-    }
 }
-extension PartialView: GoogleInteractionDelegate{
+extension PartialView: InteractionDelegate{
     func returnedError(error: CustomError) {
         self.showAlert(title: "Error", message: error.localizedDescription)
     }

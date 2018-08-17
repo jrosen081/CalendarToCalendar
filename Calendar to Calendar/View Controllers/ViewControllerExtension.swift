@@ -10,6 +10,26 @@ import Foundation
 import UIKit
 
 extension UIViewController{
+    //Allows it to be the first responder
+    override open var canBecomeFirstResponder: Bool{
+        return true
+    }
+    //Sends the user back to the starting page on shake
+    override open func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if (motion == .motionShake) {
+            if self.classForCoder != SignInPage.classForCoder(){
+                let alert = UIAlertController(title: "Do you want to return to the sign in screen?", message: "You will be sent back to the starting screen, but not signed out", preferredStyle: .alert)
+                let signOut = UIAlertAction(title: "Yes", style: .default, handler: { (action) -> Void in
+                    self.performSegue(withIdentifier: "signedOut", sender: nil)
+                })
+                let cancel = UIAlertAction(title: "No", style: .cancel)
+                alert.addAction(cancel)
+                alert.addAction(signOut)
+                DispatchQueue.main.async(execute: {self.present(alert, animated: true, completion: nil)})
+            }
+        }
+    }
+    
     // Helper for showing an alert
     func showAlert(title : String, message: String = "", closure: ((UIAlertAction) -> ())? = nil) {
         DispatchQueue.main.async(execute: {
@@ -45,7 +65,7 @@ extension UIViewController{
     func signOut() {
         let alert = UIAlertController(title: "Are you sure?", message: "You will need to sign back in before using the app.", preferredStyle: .alert)
         let signOut = UIAlertAction(title: "Sign Out", style: .default, handler: { (action) -> Void in
-            GoogleInteractor.sharedInstance.signOut()
+            ServerInteractor.current.signOut()
             self.performSegue(withIdentifier: "signedOut", sender: nil)
         })
         signOut.setValue(UIColor.red, forKey: "titleTextColor")

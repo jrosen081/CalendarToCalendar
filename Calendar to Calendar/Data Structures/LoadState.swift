@@ -11,4 +11,5 @@ enum LoadState{
     case began
     case ready
     case failed
+    case none
 }

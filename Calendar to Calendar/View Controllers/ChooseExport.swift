@@ -9,13 +9,12 @@ import UIKit
 import GoogleAPIClientForREST
 import GoogleSignIn
 import UserNotifications
+import Foundation
 
 class ChooseExport: UIViewController{
+    
     //Global variables
-    private let scopes = [kGTLRAuthScopeCalendar]
-    private let service = GTLRCalendarService()
-    var calendars: [GTLRCalendar_CalendarListEntry] = [GTLRCalendar_CalendarListEntry]()
-    let googleUser = GoogleInteractor.sharedInstance
+    var serverUser = ServerInteractor.current
     private var finished = false
     private var change = ""
     var pickerData:[String] = [String]()
@@ -23,6 +22,7 @@ class ChooseExport: UIViewController{
     private var backgroundView = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        AdInteractor.currentViewController = self
         let transform: CGAffineTransform = CGAffineTransform(scaleX: 3.0, y: 3.0)
         calendarLoad.transform = transform
         calendarLoad.isHidden = true
@@ -33,7 +33,7 @@ class ChooseExport: UIViewController{
         backgroundView.isHidden = true
         self.view.addSubview(backgroundView)
         createNotification()
-        googleUser.delegate = self
+        serverUser.delegate = self
     }
     private func createNotification(){
         let content = UNMutableNotificationContent()
@@ -41,7 +41,7 @@ class ChooseExport: UIViewController{
         content.body = "Come back to Calendar to Calendar to update your iPhone calendar with Google events."
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM"
-        let dateComponents = DateComponents(calendar: Calendar.autoupdatingCurrent, timeZone: TimeZone.current, day: 1)
+        let dateComponents = DateComponents(calendar: Foundation.Calendar.autoupdatingCurrent, timeZone: TimeZone.current, day: 1)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest.init(identifier: NotificationTitle.identifier, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: {error in
@@ -52,22 +52,30 @@ class ChooseExport: UIViewController{
     }
     //Sends to next file
     @IBAction func partCal(_ sender: Any) {
-        googleUser.getCalendars()
-        self.calendarLoad.startAnimating()
-        UIView.animate(withDuration: 0.3, animations: {
-            self.calendarLoad.isHidden = false
-            self.backgroundView.isHidden = false
-        })
         self.change = "partCalDet"
+        if Calendars.all.isEmpty{
+            serverUser.getCalendars()
+            self.calendarLoad.startAnimating()
+            UIView.animate(withDuration: 0.3, animations: {
+                self.calendarLoad.isHidden = false
+                self.backgroundView.isHidden = false
+            })
+        } else {
+            changeLocation(change)
+        }
     }
     @IBAction func fullCal(_ sender: Any) {
-        googleUser.getCalendars()
-        self.calendarLoad.startAnimating()
-        UIView.animate(withDuration: 0.3, animations: {
-            self.calendarLoad.isHidden = false
-            self.backgroundView.isHidden = false
-        })
         self.change = "FullCalendarSegue"
+        if Calendars.all.isEmpty{
+            serverUser.getCalendars()
+            self.calendarLoad.startAnimating()
+            UIView.animate(withDuration: 0.3, animations: {
+                self.calendarLoad.isHidden = false
+                self.backgroundView.isHidden = false
+            })
+        } else {
+            changeLocation(change)
+        }
     }
     func changeLocation(_ location: String)
     {
@@ -75,33 +83,13 @@ class ChooseExport: UIViewController{
             self.performSegue(withIdentifier: self.change, sender: nil)
         })
     }
-    //Sends the calendars to the next file
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewControllerB = segue.destination as? PartialView {
-            viewControllerB.pickerData = self.pickerData
-            viewControllerB.calendars = self.calendars
-        }else if let viewControllerB = segue.destination as? fullView {
-            viewControllerB.pickerData = self.pickerData
-            viewControllerB.calendars = self.calendars
-        }
-    }
     
 }
-extension ChooseExport: GoogleInteractionDelegate{
+extension ChooseExport: InteractionDelegate{
     func returnedError(error: CustomError) {
         self.showAlert(title: "Error", message: error.localizedDescription)
     }
     func returnedResults(data: Any) {
-        if let responses = data as? [GTLRCalendar_CalendarListEntry]{
-            self.calendars = responses
-            responses.forEach({calendar in
-                if let _ = calendar.summary{
-                    self.pickerData.append(calendar.summary!)
-                }else{
-                    self.calendars.remove(at: self.calendars.index(of: calendar)!)
-                }
-            })
-        }
         self.changeLocation(self.change)
     }
 }

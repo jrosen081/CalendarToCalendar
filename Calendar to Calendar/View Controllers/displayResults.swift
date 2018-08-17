@@ -26,13 +26,15 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     var events: [Event] = [Event]()
     private var incorrect = 0
     private var wrongEvents = [Event]()
-    private let testDevices: [Any] = [kGADSimulatorID]
+    //Test: ca-app-pub-3940256099942544/4411468910
+    //Production: ca-app-pub-1472286068235914/8440163507
     var advertisement: GADInterstitial!
     private var activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private var adState: LoadState = .began
     override func viewDidLoad() {
-        advertisement = GADInterstitial(adUnitID: "")
+        advertisement = GADInterstitial(adUnitID: "ca-app-pub-1472286068235914/8440163507")
         self.activity.stopAnimating()
+        AdInteractor.currentViewController = self
         createDismissedKeyboard()
         loadAd()
         super.viewDidLoad()
@@ -42,7 +44,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         swipe.cancelsTouchesInView = false
         swipe.direction = .right
         self.view.addGestureRecognizer(swipe)
-        showAlert(title: "Hint:", message: "Click on the name of the event to change it!"){(action) -> Void  in
+        showAlert(title: "Hint:", message: "Click on the name of the event to change it!"){ _ in
                 self.showIncorrectEvents()
             }
     }
@@ -50,7 +52,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         //Loads the advertisement
         DispatchQueue.main.async{
             let request = GADRequest()
-            request.testDevices = self.testDevices
+            request.testDevices = testDevices
             self.advertisement.load(request)
             self.advertisement.delegate = self
         }
@@ -75,13 +77,13 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.tableFooterView = UIView()
         let indexPath = IndexPath(row: Int(textView.restorationIdentifier!)!, section: 0)
         UIView.animate(withDuration: 0.6, animations: {
-            [weak self] in
-            if (indexPath.row == (self?.events.count)! - 1)
-        {
-            self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-        }
-        else if (indexPath.row != 0){
-                self?.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+            [unowned self] in
+            if (indexPath.row == self.events.count - 1)
+            {
+                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
+            else if (indexPath.row != 0){
+                self.tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
             }}, completion: nil)
         tableView.isScrollEnabled = true
     }
@@ -207,6 +209,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.nameOfEvent.delegate = self
         cell.nameOfEvent.text = event.name
         cell.nameOfEvent.allowsEditingTextAttributes = true
+        print("\(indexPath.row) is an all day event: \(event.isAllDay)")
         if (event.isAllDay)
         {
             cell.startDate.text = event.formattedStartDate
@@ -237,14 +240,12 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete {
             let info = events.remove(at: indexPath.row)
-            tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.none)
             if let index = events.index(of: info){
                 events.remove(at: index)
                 tableView.deleteRows(at: [IndexPath(item: Int(index), section: 0)], with: .none)
                 incorrect -= 1
             }
-            tableView.endUpdates()
             if (events.count == 0)
             {
                 DispatchQueue.main.async(execute: {
@@ -274,7 +275,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     private func getDayOfWeek(date: String) -> (String, Int)
     {
-        let calendar: Calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        let calendar: Foundation.Calendar = Foundation.Calendar(identifier: Foundation.Calendar.Identifier.gregorian)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let dateDate = dateFormatter.date(from: date)!
@@ -300,6 +301,8 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                 case .ready:
                     self.advertisement.present(fromRootViewController: self)
                     break
+            default:
+                break
             }
         }
     }
@@ -357,27 +360,10 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.showAlert(title: "Error", message: error!.localizedDescription)
                 return
             }
-            for event1 in newEvents {
-                let event = EKEvent(eventStore: self.store)
-                event.title = event1.name
-                event.calendar = self.store.defaultCalendarForNewEvents// this will return deafult calendar from device calendars
-                event.startDate = event1.startDate
-                if (event1.isAllDay)
-                {
-                    event.isAllDay = true;
-                    event.endDate = event.startDate
-                }
-                else{
-                    event.endDate = event1.endDate
-                }
-                if (event1.alarm != 0)
-                {
-                    let date: Date = Date.init(timeInterval: TimeInterval(event1.alarm), since: event1.startDate)
-                    let alarm = EKAlarm.init(absoluteDate: date)
-                    event.addAlarm(alarm)
-                }
+            for event in newEvents {
+                let calendarEvent = event.createCalendarEvent(self.store)
                 do {
-                    try self.store.save(event, span: .thisEvent)
+                    try self.store.save(calendarEvent, span: .thisEvent)
                     //event created successfullt to default calendar
                 } catch let error {
                     self.showAlert(title: "Error", message: "Failed to save event with error : \(error.localizedDescription)")
@@ -387,8 +373,8 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let alert = UIAlertController(title: "Events Were Created", message: "", preferredStyle: .alert)
                 let action1 = UIAlertAction(title: "Go To Calendar", style: .default, handler: { (action) -> Void in
                     DispatchQueue.main.async{
-                        let url = NSURL(string: "calshow:\(interval)")!
-                        UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+                        let url = URL(string: "calshow:\(interval)")!
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
                         self.performSegue(withIdentifier: "finish", sender: nil)
                     }
                 })
@@ -419,7 +405,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             let stringFormatter = DateFormatter()
             stringFormatter.dateFormat = "MM/dd/yyyy"
             for event in self.events{
-                sorted.append((self.getDayOfWeek(date: stringFormatter.string(from: event.startDate)).1, Calendar.current.component(.hour, from: event.startDate)))
+                sorted.append((self.getDayOfWeek(date: stringFormatter.string(from: event.startDate)).1, Foundation.Calendar.current.component(.hour, from: event.startDate)))
             }
             var added = 0
             var badEvents = [Event]()
