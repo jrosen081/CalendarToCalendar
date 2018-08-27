@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import StoreKit
 
 extension UIViewController{
     //Allows it to be the first responder
@@ -18,7 +19,7 @@ extension UIViewController{
     override open func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if (motion == .motionShake) {
             if self.classForCoder != SignInPage.classForCoder(){
-                let alert = UIAlertController(title: "Do you want to return to the sign in screen?", message: "You will be sent back to the starting screen, but not signed out", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Do you want to return to the sign in screen?", message: "You will be sent back to the starting screen, but not signed out.", preferredStyle: .alert)
                 let signOut = UIAlertAction(title: "Yes", style: .default, handler: { (action) -> Void in
                     self.performSegue(withIdentifier: "signedOut", sender: nil)
                 })
@@ -73,5 +74,45 @@ extension UIViewController{
         alert.addAction(cancel)
         alert.addAction(signOut)
         DispatchQueue.main.async(execute: {self.present(alert, animated: true, completion: nil)})
+    }
+    
+}
+extension UIViewController: AdFreeDelegate {
+    
+    
+    //Shows the ad screen and lets the users see it
+    func showAdFree(){
+        let alert = UIAlertController(title: "Do you want to buy the ad free version?", message: "", preferredStyle: .alert)
+        let yes = UIAlertAction(title: "Yes", style: .default, handler: {action in
+            let mainController = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = mainController.instantiateViewController(withIdentifier: "AdFree") as! AdFreeViewController
+            AdInteractor.currentViewController = viewController
+            AdInteractor.isSigningIn = true
+            viewController.adFreeDelegate = self
+            if let this = self as? SKPaymentTransactionObserver {
+                SKPaymentQueue.default().remove(this)
+            }
+            self.present(viewController, animated: true)
+        })
+        let no = UIAlertAction(title: "No", style: .default)
+        alert.addAction(no)
+        alert.addAction(yes)
+        self.present(alert, animated: true, completion: nil)
+    }
+    func adFreeBought() {
+        AdInteractor.isSigningIn = false
+        SKPaymentQueue.default().remove(AdInteractor.currentViewController as! SKPaymentTransactionObserver)
+        AdInteractor.currentViewController?.dismiss(animated: true)
+        self.showAlert(title: "Congratulations", message: "You have succesfully bought the ad free version of the app.")
+        UserDefaults.standard.set(30, forKey: "totalAdsShown")
+        AdInteractor.currentViewController = self
+    }
+    
+    func adFreeCanceled() {
+        AdInteractor.isSigningIn = false
+        SKPaymentQueue.default().remove(AdInteractor.currentViewController as! SKPaymentTransactionObserver)
+        AdInteractor.currentViewController?.dismiss(animated: true)
+        self.showAlert(title: ":(", message: "Sorry to hear that you do not want the ad free version. There will be another opportunity if you want it")
+        AdInteractor.currentViewController = self
     }
 }

@@ -26,17 +26,23 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     var events: [Event] = [Event]()
     private var incorrect = 0
     private var wrongEvents = [Event]()
-    //Test: ca-app-pub-3940256099942544/4411468910
-    //Production: ca-app-pub-1472286068235914/8440163507
+    
     var advertisement: GADInterstitial!
     private var activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     private var adState: LoadState = .began
     override func viewDidLoad() {
-        advertisement = GADInterstitial(adUnitID: "ca-app-pub-1472286068235914/8440163507")
+        advertisement = GADInterstitial(adUnitID: "YOUR_ID_HERE")
         self.activity.stopAnimating()
         AdInteractor.currentViewController = self
         createDismissedKeyboard()
-        loadAd()
+        //If the person is not ad free, load the ad
+        if (!AdInteractor.isAdFree) {
+            loadAd()
+        }
+        //Else, set the ad state to failed, so the add events button will skip the ad
+        else {
+            self.adState = .failed
+        }
         super.viewDidLoad()
         setUpTableView()
         //Allows swipe to return
@@ -44,15 +50,18 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         swipe.cancelsTouchesInView = false
         swipe.direction = .right
         self.view.addGestureRecognizer(swipe)
-        showAlert(title: "Hint:", message: "Click on the name of the event to change it!"){ _ in
-                self.showIncorrectEvents()
-            }
+        //Only show the alert the first time it is downloaded. Else, there is no need to keep showing it
+        if (UserDefaults.standard.integer(forKey: "Version") < 2) {
+            showAlert(title: "Hint:", message: "Click on the name of the event to change it!"){ _ in
+                    self.showIncorrectEvents()
+                }
+        }
     }
     private func loadAd(){
         //Loads the advertisement
         DispatchQueue.main.async{
             let request = GADRequest()
-            request.testDevices = testDevices
+            //request.testDevices = testDevices
             self.advertisement.load(request)
             self.advertisement.delegate = self
         }
@@ -130,7 +139,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             changeAlarm(events[Int(identifier)!], alarm: row)
         }
     }
-    func changeAlarm(_ event: Event, alarm: Int){
+    private func changeAlarm(_ event: Event, alarm: Int){
         if let index = events.index(of: event){
             events[index].alarm = alarm
             if let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)){
@@ -183,7 +192,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                     cell.nameOfEvent.text = self.alert.textFields![0].text!
                 }
             })
-            let action2 = UIAlertAction(title: "Cancel", style: .default, handler: {(action) -> Void in})
+            let action2 = UIAlertAction(title: "Cancel", style: .default, handler: nil)
             self.alert.addAction(action2)
             self.alert.addAction(action1)
             self.present(self.alert, animated: true, completion: nil)
@@ -209,7 +218,6 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.nameOfEvent.delegate = self
         cell.nameOfEvent.text = event.name
         cell.nameOfEvent.allowsEditingTextAttributes = true
-        print("\(indexPath.row) is an all day event: \(event.isAllDay)")
         if (event.isAllDay)
         {
             cell.startDate.text = event.formattedStartDate
@@ -361,8 +369,10 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                 return
             }
             for event in newEvents {
+                //Creates the event using the function in event struct
                 let calendarEvent = event.createCalendarEvent(self.store)
                 do {
+                    //Stores the values in the calendar
                     try self.store.save(calendarEvent, span: .thisEvent)
                     //event created successfullt to default calendar
                 } catch let error {

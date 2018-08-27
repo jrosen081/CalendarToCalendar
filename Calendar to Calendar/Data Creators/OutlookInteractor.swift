@@ -19,7 +19,7 @@ class OutlookInteractor: NSObject, APIInteractor{
         "authorize_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
         "token_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
         "scope": "openid profile offline_access User.Read Calendars.Read",
-        "redirect_uris": ["CalendarToCalendar://oauth2/callback"],
+        "redirect_uris": ["YOUR_REDIRECT_URI"],
         "verbose": true,
         ] as OAuth2JSON
     
@@ -40,7 +40,6 @@ class OutlookInteractor: NSObject, APIInteractor{
     weak var delegate: InteractionDelegate?
     
     func signIn(from object: AnyObject) {
-        ServerInteractor.currentServer = .OUTLOOK
         oauth2.authorizeEmbedded(from: object) {
             result, error in
             if let unwrappedError = error {
@@ -73,7 +72,6 @@ class OutlookInteractor: NSObject, APIInteractor{
         }
         
         let apiUrl = urlBuilder.url!
-        //NSLog("Making request to \(apiUrl)")
         
         var req = oauth2.request(forURL: apiUrl)
         req.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -88,7 +86,6 @@ class OutlookInteractor: NSObject, APIInteractor{
             response in
             do {
                 let dict = try response.responseJSON()
-                print(dict)
                 DispatchQueue.main.async {
                     callback(dict)
                 }
@@ -103,26 +100,31 @@ class OutlookInteractor: NSObject, APIInteractor{
     
     func signOut() {
         oauth2.forgetTokens()
+        Calendars.removeAll()
     }
     
     func fetchEvents(name: String?, startDate: Date, endDate: Date, calendarID: String) {
         let toDateFormatter = DateFormatter()
         toDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.sssssss"
+        //Parameters for the query
         var params = [
             "$select": "subject,start,end,isAllDay",
             "$orderby": "start/dateTime ASC",
             "$filter": "start/dateTime ge '\(toDateFormatter.string(from: startDate))' and end/dateTime le '\(toDateFormatter.string(from: endDate))'"
         ]
         var dateText = "There were no events during that time."
+        //If there is a name to check, add it to the filter and response text
         if let name = name{
             params["$filter"] = "\(params["$filter"]!) and contains(subject, '\(name)')"
             dateText = "There were no events named \(name) during that time."
         }
+        //Makes the call to the outlook api
         makeApiCall(api: "/v1.0/me/calendars/\(calendarID)/events", params: params) {
             result in
             if let unwrappedResult = result as? OAuth2JSON{
                 var events = [Event]()
                 for (event) in JSON(unwrappedResult)["value"].arrayValue{
+                    //Gets all of the values to create an event
                     let startString = event["start"].dictionaryValue["dateTime"]?.stringValue
                     let endString = event["end"].dictionaryValue["dateTime"]?.stringValue
                     let newName = event["subject"].stringValue
@@ -146,6 +148,7 @@ class OutlookInteractor: NSObject, APIInteractor{
     
     func getCalendars() {
         let params = ["$select": "id,name"]
+        //Makes the api call to get all of the calendars
         makeApiCall(api: "/v1.0/me/calendars", params: params) {
             result in
             if let unwrappedResult = result as? OAuth2JSON{

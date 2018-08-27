@@ -11,6 +11,7 @@ import Foundation
 class Calendars{
     private static var googleCalendars = [Calendar]()
     private static var outlookCalendars = [Calendar]()
+    //The method to get the calendars, the values are sent based on the current server
     static var all: [Calendar] {
         if ServerInteractor.currentServer == .GOOGLE{
             return googleCalendars

@@ -35,6 +35,9 @@
 		04FF846C20126DD200F71D52 /* partialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF846B20126DD200F71D52 /* partialView.swift */; };
 		04FF846E20140D8600F71D52 /* fullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF846D20140D8600F71D52 /* fullView.swift */; };
 		898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */; };
+		A07289BC212F899D00B72E53 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07289BB212F899D00B72E53 /* StoreKit.framework */; };
+		A07289BE212F8C8000B72E53 /* AdFreeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */; };
+		A07289C0212F8D3900B72E53 /* AdFreeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +72,9 @@
 		04FF846B20126DD200F71D52 /* partialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = partialView.swift; sourceTree = "<group>"; };
 		04FF846D20140D8600F71D52 /* fullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullView.swift; sourceTree = "<group>"; };
 		783B112BEE4ADF0B25397DF0 /* Pods-Calendar to Calendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar to Calendar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar.debug.xcconfig"; sourceTree = "<group>"; };
+		A07289BB212F899D00B72E53 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeGetter.swift; sourceTree = "<group>"; };
+		A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeDelegate.swift; sourceTree = "<group>"; };
 		CA37D7C2630204D34F8510B9 /* Pods-QuickstartApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickstartApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickstartApp/Pods-QuickstartApp.release.xcconfig"; sourceTree = "<group>"; };
 		F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calendar_to_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FE0580215CCAE3D3DF0619 /* Pods-Calendar to Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar to Calendar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar.release.xcconfig"; sourceTree = "<group>"; };
@@ -80,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A07289BC212F899D00B72E53 /* StoreKit.framework in Frameworks */,
 				04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */,
 				898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */,
 			);
@@ -92,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				0457244D21023B6800BDE0EC /* InteractionDelegate.swift */,
+				A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -105,6 +113,7 @@
 				04FF84692011A59900F71D52 /* displayResults.swift */,
 				04FF846D20140D8600F71D52 /* fullView.swift */,
 				04D2328A20FD4A6700C71C72 /* ViewControllerExtension.swift */,
+				A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -184,6 +193,7 @@
 		70D12A274971795A067BBB14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A07289BB212F899D00B72E53 /* StoreKit.framework */,
 				04E1F508201010AC00EC2291 /* EventKit.framework */,
 				F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */,
 			);
@@ -239,6 +249,9 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -373,11 +386,13 @@
 				04A7B34D2121FD8C0026E954 /* Calendars.swift in Sources */,
 				04A7B34B2121FD070026E954 /* Calendar.swift in Sources */,
 				04A7B34F21220DF40026E954 /* AdInteractor.swift in Sources */,
+				A07289C0212F8D3900B72E53 /* AdFreeDelegate.swift in Sources */,
 				04A7B3532123AB670026E954 /* ServerInteractor.swift in Sources */,
 				04FF846E20140D8600F71D52 /* fullView.swift in Sources */,
 				04D763FB20097D8D006CA589 /* SignInPage.swift in Sources */,
 				04A7B3552123AEC80026E954 /* OutlookInteractor.swift in Sources */,
 				04D763F920097D8D006CA589 /* AppDelegate.swift in Sources */,
+				A07289BE212F8C8000B72E53 /* AdFreeGetter.swift in Sources */,
 				046B30BA20FCE68900122CFF /* LoadState.swift in Sources */,
 				04F2A46C20E5B114003605A9 /* CustomError.swift in Sources */,
 				0457244B2102364400BDE0EC /* NotificationTitle.swift in Sources */,

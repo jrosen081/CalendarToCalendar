@@ -8,8 +8,8 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var picker: UIPickerView!
     private var events: [Event] = [Event]()
-    var calendars = Calendars.all
-    private var serverUser = ServerInteractor.current
+    let calendars = Calendars.all
+    private let serverUser = ServerInteractor.current
     override func viewDidLoad() {
         super.viewDidLoad()
         AdInteractor.currentViewController = self

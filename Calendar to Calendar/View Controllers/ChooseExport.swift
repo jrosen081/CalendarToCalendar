@@ -14,7 +14,7 @@ import Foundation
 class ChooseExport: UIViewController{
     
     //Global variables
-    var serverUser = ServerInteractor.current
+    let serverUser = ServerInteractor.current
     private var finished = false
     private var change = ""
     var pickerData:[String] = [String]()

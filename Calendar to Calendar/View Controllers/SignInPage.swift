@@ -3,28 +3,26 @@
 import GoogleSignIn
 import UIKit
 import GoogleAPIClientForREST
+import StoreKit
 
 class SignInPage: UIViewController, GIDSignInUIDelegate{
-    // Global variables
-    let googleSigner = GoogleInteractor.sharedInstance
-    let outlookSigner = OutlookInteractor.sharedInstance
+    
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @IBOutlet weak var signIn: UILabel!
     @IBOutlet weak var googleSignIn: UIButton!
     @IBOutlet weak var outlookSignIn: UIButton!
+    @IBOutlet weak var restorePurchaseButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         AdInteractor.currentViewController = self
         progressIndicator.isHidden = true
         signIn.isHidden = true
-        googleSigner.uiDelegate = self
-        googleSigner.delegate = self
-        outlookSigner.delegate = self
         let transform: CGAffineTransform = CGAffineTransform(scaleX: 3.0, y: 3.0)
         progressIndicator.transform = transform
         googleSignIn.layer.cornerRadius = 10
         outlookSignIn.layer.cornerRadius = 10
+        restorePurchaseButton.layer.cornerRadius = 10
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -37,11 +35,14 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
     
     @IBAction func signInUsingGoogle(_ sender: Any) {
         ServerInteractor.currentServer = .GOOGLE
+        GoogleInteractor.sharedInstance.uiDelegate = self
+        ServerInteractor.current.delegate = self
         signInWithServers()
     }
     
     @IBAction func signInUsingOutlook(_ sender: Any) {
         ServerInteractor.currentServer = .OUTLOOK
+        ServerInteractor.current.delegate = self
         signInWithServers()
     }
     func signInWithServers(){
@@ -50,6 +51,14 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
         AdInteractor.isSigningIn = true
     }
     
+    
+    @IBAction func restorePurchases(_ sender: Any) {
+        if (SKPaymentQueue.canMakePayments()) {
+            SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().restoreCompletedTransactions()
+            print("here")
+        }
+    }
     func toggleButtons(isHidden: Bool){
         googleSignIn.isHidden = isHidden
         outlookSignIn.isHidden = isHidden
@@ -76,6 +85,27 @@ extension SignInPage: InteractionDelegate{
         AdInteractor.isSigningIn = false
         self.showAlert(title: "Error", message: error.localizedDescription)
         toggleButtons(isHidden: false)
+    }
+}
+extension SignInPage: SKPaymentTransactionObserver {
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            if transaction.transactionState == .restored || transaction.transactionState == .purchased {
+                AdInteractor.isAdFree = true
+                queue.finishTransaction(transaction)
+            } else if transaction.transactionState == .failed {
+                queue.finishTransaction(transaction)
+            }
+            print(transaction)
+        }
+        //showAlert(title: "Purchases have been restored.")
+    }
+    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
+        showAlert(title: "Purchases have been restored.")
+    }
+    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+        showAlert(title: "Purchases have been restored.")
+        print(error.localizedDescription)
     }
 }
 

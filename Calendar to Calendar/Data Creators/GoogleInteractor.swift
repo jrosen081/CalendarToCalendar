@@ -45,7 +45,6 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor{
         } else {
             GIDSignIn.sharedInstance().signIn()
         }
-        ServerInteractor.currentServer = .GOOGLE
     }
     
     func signOut(){

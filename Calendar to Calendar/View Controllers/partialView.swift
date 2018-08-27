@@ -10,8 +10,8 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var label: UITextField!
     private var events: [Event] = [Event]()
-    var calendars = Calendars.all
-    private var server = ServerInteractor.current
+    let calendars = Calendars.all
+    private let server = ServerInteractor.current
     override func viewDidLoad() {
         createDismissedKeyboard()
         super.viewDidLoad()

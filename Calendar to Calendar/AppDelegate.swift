@@ -14,7 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     var interstitial: GADInterstitial?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         Thread.sleep(forTimeInterval: 1.0)
-        GADMobileAds.configure(withApplicationID: "YOUR_APP_ID")
+        
+        GADMobileAds.configure(withApplicationID: "YOUR_ID_HERE")
         GADMobileAds.sharedInstance().applicationMuted = true
         
         let notificationCenter = UNUserNotificationCenter.current()
@@ -49,14 +50,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                      options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         let sourceApplication = options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String
         let annotation = options[UIApplicationOpenURLOptionsKey.annotation]
-        print(url)
+        //If it is this scheme, it is coming from Outlook
         if url.scheme?.lowercased() == "CalendarToCalendar".lowercased() {
             let service = OutlookInteractor.sharedInstance
-            //let newUrl = url.absoluteString.split(separator: ":")
             let newUrl = url.absoluteString.replacingOccurrences(of: "calendartocalendar", with: "CalendarToCalendar")
             service.handleOAuthCallback(url: URL(string: newUrl)!)
             return true
-        } else {
+        }
+        //Else the scheme is coming from Google
+        else {
             return GIDSignIn.sharedInstance().handle(url,
                                                      sourceApplication: sourceApplication,
                                                      annotation: annotation)
@@ -64,14 +66,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        if (!AdInteractor.isSigningIn){
+        //If the user is not signing in and does not have the ad free version, load the ad
+        if (!AdInteractor.isSigningIn && !AdInteractor.isAdFree){
             interstitial = AdInteractor.interstitial
+        } else {
+            print("Not active")
         }
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if !AdInteractor.isSigningIn, let controller = AdInteractor.currentViewController, let intersitial = interstitial, intersitial.isReady {
+        //If the user is not signing in and the user is not ad free, show the ad
+        if !AdInteractor.isSigningIn, !AdInteractor.isAdFree, let controller = AdInteractor.currentViewController, let intersitial = interstitial, intersitial.isReady {
             interstitial?.present(fromRootViewController: controller)
+        } else {
+            print("Back to active")
         }
     }
 }
