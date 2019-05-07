@@ -14,12 +14,12 @@ class AdInteractor: NSObject {
     //Production: ca-app-pub-1472286068235914/8440163507
     private static let delegate = AdInteractor()
     static var adState = LoadState.none
-    static var currentViewController: UIViewController?
-    private static var _interstitial = GADInterstitial(adUnitID: "YOUR_ID_HERE")
+    static var holder: HoldingController?
+    private static var _interstitial = GADInterstitial(adUnitID: "ca-app-pub-1472286068235914/8440163507")
     static var interstitial: GADInterstitial {
         get {
             if (_interstitial.hasBeenUsed){
-                 _interstitial = GADInterstitial(adUnitID: "YOUR_ID_HERE")
+                 _interstitial = GADInterstitial(adUnitID: "ca-app-pub-1472286068235914/8440163507")
             }
             switch adState {
             case .ready, .began:
@@ -56,7 +56,7 @@ extension AdInteractor: GADInterstitialDelegate{
         var totalAds = UserDefaults.standard.integer(forKey: "totalAdsShown")
         totalAds += 1
         if (totalAds >= 10 ) {
-            AdInteractor.currentViewController?.showAdFree()
+            AdInteractor.holder?.showAdFree()
             totalAds = 0
         }
         UserDefaults.standard.set(totalAds, forKey: "totalAdsShown")

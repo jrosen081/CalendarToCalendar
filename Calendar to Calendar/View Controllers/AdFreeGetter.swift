@@ -15,7 +15,7 @@ class AdFreeViewController: UIViewController, SKProductsRequestDelegate, SKPayme
     let productID: Set<String> = ["com.JackRosen.calendartocalendar.adfreeversion"]
     var products: [SKProduct] = []
     var adFreeDelegate: AdFreeDelegate?
-    let alertController = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let alertController = UIActivityIndicatorView(style: .gray)
     
     @IBOutlet weak var buyButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -26,9 +26,6 @@ class AdFreeViewController: UIViewController, SKProductsRequestDelegate, SKPayme
             let productRequest = SKProductsRequest(productIdentifiers: productID)
             productRequest.delegate = self
             productRequest.start()
-        }
-        else {
-            print("Cannot perform In App Purchases.")
         }
     }
     
@@ -56,7 +53,6 @@ class AdFreeViewController: UIViewController, SKProductsRequestDelegate, SKPayme
         self.showAlert(title: "There was an issue with getting the purchase.") { _ in
             self.adFreeDelegate?.adFreeCanceled()
         }
-        print(error.localizedDescription)
     }
     //This checks the payment to see if the transaction was failed or purchased
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {

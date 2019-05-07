@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
@@ -109,7 +108,7 @@
         <!--SignInPage-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="SignInPage" id="BYZ-38-t0r" customClass="SignInPage" customModule="Calendar_to_Calendar" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signIn" title="SignInPage" id="BYZ-38-t0r" customClass="SignInPage" customModule="Calendar_to_Calendar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Y11-Va-lDg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -239,6 +238,21 @@
             </objects>
             <point key="canvasLocation" x="7" y="436"/>
         </scene>
+        <!--HoldingVC-->
+        <scene sceneID="ISY-jE-XWw">
+            <objects>
+                <viewController id="TQN-ig-xDa" customClass="HoldingVC" customModule="Calendar_to_Calendar" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vrO-6Y-rgP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="IG8-N5-Cu4"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="omQ-az-cDi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-922" y="-566"/>
+        </scene>
         <!--Choose Option-->
         <scene sceneID="mNc-hU-OOb">
             <objects>
@@ -318,7 +332,7 @@
                                             <navigationItem title="Full Calendar Export" largeTitleDisplayMode="never" id="FsY-d0-gIH">
                                                 <barButtonItem key="leftBarButtonItem" title="&lt;Back" id="oYb-5v-lgp">
                                                     <connections>
-                                                        <segue destination="IvJ-Oe-NMg" kind="showDetail" identifier="" id="YA4-4Q-Sog"/>
+                                                        <action selector="backToChoose:" destination="h5e-pj-TGp" id="dno-nE-jMc"/>
                                                     </connections>
                                                 </barButtonItem>
                                                 <barButtonItem key="rightBarButtonItem" style="plain" id="5sE-j6-SFx">
@@ -749,7 +763,7 @@
                                     <navigationItem title="Partial Calendar Export" largeTitleDisplayMode="never" id="TGO-qF-MiA">
                                         <barButtonItem key="leftBarButtonItem" title="&lt;Back" id="6ct-8g-rLe">
                                             <connections>
-                                                <segue destination="IvJ-Oe-NMg" kind="showDetail" identifier="" id="gj0-Ag-T2Z"/>
+                                                <action selector="sendBacktoChoose:" destination="PJ6-2R-Ejj" id="EuN-Ao-blz"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" style="plain" id="hKa-Np-bBW">
@@ -819,7 +833,7 @@
         <!--Display Results-->
         <scene sceneID="D6T-sM-EFC">
             <objects>
-                <viewController id="9ee-DZ-MDt" customClass="displayResults" customModule="Calendar_to_Calendar" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="displayResults" id="9ee-DZ-MDt" customClass="displayResults" customModule="Calendar_to_Calendar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CHr-aK-fg6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -898,7 +912,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-Vl-Cvd">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="76.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="76.666666666666671"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="swJ-xd-cia">
                                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="15.666666666666666"/>

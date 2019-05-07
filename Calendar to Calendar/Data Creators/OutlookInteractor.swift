@@ -11,25 +11,32 @@ import p2_OAuth2
 import SwiftyJSON
 
 class OutlookInteractor: NSObject, APIInteractor{
-    static let sharedInstance = OutlookInteractor()
     
     // Configure the OAuth2 framework for Azure
     private static let oauth2Settings = [
-        "client_id" : "YOUR_CLIENT_ID",
+        "client_id" : "YOUR_ID",
         "authorize_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
         "token_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
         "scope": "openid profile offline_access User.Read Calendars.Read",
-        "redirect_uris": ["YOUR_REDIRECT_URI"],
+        "redirect_uris": ["CalendarToCalendar://oauth2/callback"],
         "verbose": true,
         ] as OAuth2JSON
     
     private let oauth2: OAuth2CodeGrant
     
-    override private init() {
+    override init() {
         oauth2 = OAuth2CodeGrant(settings: OutlookInteractor.oauth2Settings)
         oauth2.authConfig.authorizeEmbedded = true
         oauth2.authConfig.authorizeEmbeddedAutoDismiss = true
+		self.calendarHolder = nil
     }
+	
+	init(holder: CalendarHolder?) {
+		oauth2 = OAuth2CodeGrant(settings: OutlookInteractor.oauth2Settings)
+		oauth2.authConfig.authorizeEmbedded = true
+		oauth2.authConfig.authorizeEmbeddedAutoDismiss = true
+		self.calendarHolder = holder
+	}
     
     var isSignedIn: Bool {
         get {
@@ -38,11 +45,13 @@ class OutlookInteractor: NSObject, APIInteractor{
     }
     
     weak var delegate: InteractionDelegate?
+	let calendarHolder: CalendarHolder?
     
     func signIn(from object: AnyObject) {
         oauth2.authorizeEmbedded(from: object) {
             result, error in
             if let unwrappedError = error {
+				self.signOut()
                 self.delegate?.returnedError(error: CustomError(unwrappedError.localizedDescription))
             } else {
                 if let unwrappedResult = result{
@@ -53,7 +62,6 @@ class OutlookInteractor: NSObject, APIInteractor{
     }
     
     func handleOAuthCallback(url: URL) -> Void {
-        print("url with callback is \(url)")
         oauth2.handleRedirectURL(url)
     }
     
@@ -100,7 +108,7 @@ class OutlookInteractor: NSObject, APIInteractor{
     
     func signOut() {
         oauth2.forgetTokens()
-        Calendars.removeAll()
+        calendarHolder?.removeAll()
     }
     
     func fetchEvents(name: String?, startDate: Date, endDate: Date, calendarID: String) {
@@ -147,15 +155,18 @@ class OutlookInteractor: NSObject, APIInteractor{
     }
     
     func getCalendars() {
+		if !(self.calendarHolder?.calendars.isEmpty ?? true) {
+			return
+		}
         let params = ["$select": "id,name"]
         //Makes the api call to get all of the calendars
         makeApiCall(api: "/v1.0/me/calendars", params: params) {
             result in
             if let unwrappedResult = result as? OAuth2JSON{
                 for (calendar) in JSON(unwrappedResult)["value"].arrayValue{
-                    Calendars.addCalendar(calendar: Calendar(name: calendar["name"].stringValue, identifier: calendar["id"].stringValue))
+                    self.calendarHolder?.addCalendar(calendar: Calendar(name: calendar["name"].stringValue, identifier: calendar["id"].stringValue))
                 }
-                self.delegate?.returnedResults(data: Calendars.all)
+                self.delegate?.returnedResults(data: self.calendarHolder?.calendars ?? [])
             } else if let error = result as? Error {
                 self.delegate?.returnedError(error: CustomError(error.localizedDescription))
             }

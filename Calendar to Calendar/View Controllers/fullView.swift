@@ -8,14 +8,14 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var startDate: UIDatePicker!
     @IBOutlet weak var picker: UIPickerView!
     private var events: [Event] = [Event]()
-    let calendars = Calendars.all
-    private let serverUser = ServerInteractor.current
+	private lazy var calendars: [Calendar] = self.holding?.calendarHolder.calendars ?? []
+    private lazy var serverUser = self.holding?.currentInteractor
+	var holding: HoldingController?
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdInteractor.currentViewController = self
         setUpDatePickers(self.startDate, self.endDate)
         updateDelegates()
-        serverUser.delegate = self
+        serverUser?.delegate = self
     }
     func updateDelegates(){
         self.picker.delegate = self
@@ -23,7 +23,7 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     }
     //Sign out of google
     @IBAction func signOut(_ sender: Any) {
-        self.signOut()
+        self.holding?.signOut(from: self)
     }
     //Get events using given criteria when clicked
     @IBAction func getEvents(_ sender: Any) {
@@ -36,10 +36,10 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
     //Get events using criteria
     func fetchEvents() {
         var calendarID: String = ""
-        if let index = calendars.index(where: {$0.name == self.calendars[picker.selectedRow(inComponent: 0)].name}){
+        if let index = calendars.firstIndex(where: {$0.name == self.calendars[picker.selectedRow(inComponent: 0)].name}){
             calendarID = calendars[index].identifier
         }
-        serverUser.fetchEvents(name: nil, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
+        serverUser?.fetchEvents(name: nil, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
     }
     //Picker view functions
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -58,6 +58,13 @@ class fullView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource{
             viewControllerB.events = self.events
         }
     }
+
+	@IBAction func backToChoose(_ sender: Any) {
+		if let vc = self.storyboard?.instantiateViewController(withIdentifier: "chooseOption") as? ChooseExport {
+			vc.holder = self.holding
+			self.holding?.transition(from: self, to: vc, with: .leftToRight)
+		}
+	}
 }
 extension fullView: InteractionDelegate{
     func returnedError(error: CustomError) {
@@ -67,7 +74,11 @@ extension fullView: InteractionDelegate{
         if let events = data as? [Event]{
             self.events = events
             DispatchQueue.main.async{
-                self.performSegue(withIdentifier: "displayResults", sender: nil)
+				if let vc = self.storyboard?.instantiateViewController(withIdentifier: "displayResults") as? displayResults {
+					vc.events = events
+					vc.holder = self.holding
+					self.holding?.transition(from: self, to: vc, with: .rightToLeft)
+				}
             }
         }
     }

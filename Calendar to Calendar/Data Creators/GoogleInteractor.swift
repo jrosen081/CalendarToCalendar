@@ -17,7 +17,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor{
             delegate?.returnedError(error: CustomError(error.localizedDescription))
         } else {
             self.service.authorizer = user.authentication.fetcherAuthorizer()
-            delegate?.returnedResults(data: user)
+            delegate?.returnedResults(data: user!)
         }
     }
     var isSignedIn: Bool{
@@ -32,12 +32,21 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor{
     private let service = GTLRCalendarService()
     static let sharedInstance = GoogleInteractor()
     private let scopes = [kGTLRAuthScopeCalendar]
+	private let calendarHolder: CalendarHolder?
     weak var delegate: InteractionDelegate?
-    private override init(){
+    override init(){
+		self.calendarHolder = nil
         super.init()
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().scopes = scopes
     }
+
+	init(holder: CalendarHolder?) {
+		self.calendarHolder = holder
+		super.init()
+		GIDSignIn.sharedInstance().delegate = self
+		GIDSignIn.sharedInstance().scopes = scopes
+	}
     
     func signIn(from object: AnyObject = GoogleInteractor.sharedInstance){
         if isSignedIn {
@@ -49,10 +58,13 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor{
     
     func signOut(){
         GIDSignIn.sharedInstance().signOut()
-        Calendars.removeAll()
+        calendarHolder?.removeAll()
     }
     //Gets Calendar Names
     func getCalendars(){
+		if !(self.calendarHolder?.calendars.isEmpty ?? true) {
+			return
+		}
         DispatchQueue.global(qos: .utility).async{
             let query: GTLRCalendarQuery_CalendarListList = GTLRCalendarQuery_CalendarListList.query()
             query.showHidden = true
@@ -74,7 +86,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor{
             return
         }
         if let calendars = response.items, !calendars.isEmpty {
-            calendars.forEach({calendar in Calendars.addCalendar(calendar: Calendar(googleCalendar: calendar))})
+            calendars.forEach({calendar in self.calendarHolder?.addCalendar(calendar: Calendar(googleCalendar: calendar))})
             delegate?.returnedResults(data: calendars)
         } else {
             delegate?.returnedError(error: "You need a Google Calendar for this app to work")

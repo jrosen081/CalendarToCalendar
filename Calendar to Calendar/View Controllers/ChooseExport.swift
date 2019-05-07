@@ -14,15 +14,16 @@ import Foundation
 class ChooseExport: UIViewController{
     
     //Global variables
-    let serverUser = ServerInteractor.current
+	var serverUser: APIInteractor?
     private var finished = false
-    private var change = ""
+	private var change: (() -> UIViewController?)? = nil
     var pickerData:[String] = [String]()
     @IBOutlet weak var calendarLoad: UIActivityIndicatorView!
     private var backgroundView = UIView()
+	private var this = UIView.self
+	var holder: HoldingController?
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdInteractor.currentViewController = self
         let transform: CGAffineTransform = CGAffineTransform(scaleX: 3.0, y: 3.0)
         calendarLoad.transform = transform
         calendarLoad.isHidden = true
@@ -33,7 +34,8 @@ class ChooseExport: UIViewController{
         backgroundView.isHidden = true
         self.view.addSubview(backgroundView)
         createNotification()
-        serverUser.delegate = self
+        serverUser?.delegate = self
+		serverUser?.getCalendars()
     }
     private func createNotification(){
         let content = UNMutableNotificationContent()
@@ -52,35 +54,39 @@ class ChooseExport: UIViewController{
     }
     //Sends to next file
     @IBAction func partCal(_ sender: Any) {
-        self.change = "partCalDet"
-        if Calendars.all.isEmpty{
-            serverUser.getCalendars()
-            self.calendarLoad.startAnimating()
-            UIView.animate(withDuration: 0.3, animations: {
-                self.calendarLoad.isHidden = false
-                self.backgroundView.isHidden = false
-            })
-        } else {
-            changeLocation(change)
-        }
+        self.change = { () in
+			let vc = self.storyboard?.instantiateViewController(withIdentifier: "partCalendar") as? PartialView
+			vc?.holder = self.holder
+			return vc
+		}
+        changeCalendars()
     }
     @IBAction func fullCal(_ sender: Any) {
-        self.change = "FullCalendarSegue"
-        if Calendars.all.isEmpty{
-            serverUser.getCalendars()
-            self.calendarLoad.startAnimating()
-            UIView.animate(withDuration: 0.3, animations: {
-                self.calendarLoad.isHidden = false
-                self.backgroundView.isHidden = false
-            })
-        } else {
-            changeLocation(change)
-        }
+		self.change = { () in
+			let vc = self.storyboard?.instantiateViewController(withIdentifier: "fullCalendar") as? fullView
+			vc?.holding = self.holder
+			return vc
+		}
+		changeCalendars()
     }
-    func changeLocation(_ location: String)
+	private func changeCalendars(){
+		if self.holder?.calendarHolder.calendars.isEmpty ?? false{
+			serverUser?.getCalendars()
+			self.calendarLoad.startAnimating()
+			UIView.animate(withDuration: 0.3, animations: {
+				self.calendarLoad.isHidden = false
+				self.backgroundView.isHidden = false
+			})
+		} else {
+			changeLocation(change)
+		}
+	}
+	func changeLocation(_ location: (() -> UIViewController?)?)
     {
         DispatchQueue.main.async(execute: {
-            self.performSegue(withIdentifier: self.change, sender: nil)
+			if let vc = location?() {
+				self.holder?.transition(from: self, to: vc, with: .rightToLeft)
+			}
         })
     }
     
@@ -90,7 +96,7 @@ extension ChooseExport: InteractionDelegate{
         self.showAlert(title: "Error", message: error.localizedDescription)
     }
     func returnedResults(data: Any) {
-        self.changeLocation(self.change)
+		self.changeLocation(change)
     }
 }
 

@@ -26,14 +26,15 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     var events: [Event] = [Event]()
     private var incorrect = 0
     private var wrongEvents = [Event]()
-    
+    //Test: ca-app-pub-3940256099942544/4411468910
+    //Production: ca-app-pub-1472286068235914/8440163507
     var advertisement: GADInterstitial!
-    private var activity = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    private var activity = UIActivityIndicatorView(style: .gray)
     private var adState: LoadState = .began
+	var holder: HoldingController?
     override func viewDidLoad() {
-        advertisement = GADInterstitial(adUnitID: "YOUR_ID_HERE")
+        advertisement = GADInterstitial(adUnitID: "ca-app-pub-1472286068235914/8440163507")
         self.activity.stopAnimating()
-        AdInteractor.currentViewController = self
         createDismissedKeyboard()
         //If the person is not ad free, load the ad
         if (!AdInteractor.isAdFree) {
@@ -45,11 +46,6 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         super.viewDidLoad()
         setUpTableView()
-        //Allows swipe to return
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(self.goBack(_:)))
-        swipe.cancelsTouchesInView = false
-        swipe.direction = .right
-        self.view.addGestureRecognizer(swipe)
         //Only show the alert the first time it is downloaded. Else, there is no need to keep showing it
         if (UserDefaults.standard.integer(forKey: "Version") < 2) {
             showAlert(title: "Hint:", message: "Click on the name of the event to change it!"){ _ in
@@ -76,9 +72,15 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     @IBAction func signOut(_ sender: Any) {
-        self.signOut()
+		self.holder?.signOut(from: self)
     }
-    
+	@IBAction func sendBackToChoose(_ sender: Any) {
+		if let vc = storyboard?.instantiateViewController(withIdentifier: "chooseOption") as? ChooseExport {
+			vc.holder = self.holder
+			self.holder?.transition(from: self, to: vc, with: .leftToRight)
+		}
+	}
+	
     //When it stops editing, puts information into events
     func textViewDidEndEditing(_ textView: UITextView)
     {
@@ -98,7 +100,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     //Changes the name of the event
     func changeText(_ event: Event, name: String){
-        if let index = self.events.index(of: event){
+        if let index = self.events.firstIndex(of: event){
             events[index].name = name
         }
     }
@@ -140,7 +142,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     private func changeAlarm(_ event: Event, alarm: Int){
-        if let index = events.index(of: event){
+        if let index = events.firstIndex(of: event){
             events[index].alarm = alarm
             if let cell = tableView.cellForRow(at: IndexPath(item: index, section: 0)){
                 (cell as! customcell).alarmPicker.selectRow(alarm, inComponent: 0, animated: true)
@@ -151,7 +153,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction func fullAlarmChange(_ sender: Any) {
         DispatchQueue.main.async(execute: {
             let alert = UIAlertController(title: "How long before would you want an alarm for?", message: "This is for all events.", preferredStyle: .alert)
-            let height:NSLayoutConstraint = NSLayoutConstraint(item: alert.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 300)
+			let height:NSLayoutConstraint = NSLayoutConstraint(item: alert.view ?? UIView(frame: CGRect.zero), attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: 300)
             alert.view.addConstraint(height);
             let pickerFrame: CGRect = CGRect(x: 0, y: 100, width: 270, height: 100);
             let picker: UIPickerView = UIPickerView(frame: pickerFrame);
@@ -245,11 +247,11 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     //Method to Remove an Event
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
             let info = events.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.none)
-            if let index = events.index(of: info){
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.none)
+            if let index = events.firstIndex(of: info){
                 events.remove(at: index)
                 tableView.deleteRows(at: [IndexPath(item: Int(index), section: 0)], with: .none)
                 incorrect -= 1
@@ -258,7 +260,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             {
                 DispatchQueue.main.async(execute: {
                     self.showAlert(title: "You have no events chosen.", message: ""){(action) -> Void in
-                        self.performSegue(withIdentifier: "finish", sender: nil)
+                        self.segueBack()
                     }
                 })
                 
@@ -300,7 +302,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.activity.startAnimating()
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                        self.addEvents(self.tableView)
+                        self.addEvents(self.tableView!)
                     })
                     break
                 case .failed:
@@ -385,12 +387,12 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                     DispatchQueue.main.async{
                         let url = URL(string: "calshow:\(interval)")!
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        self.performSegue(withIdentifier: "finish", sender: nil)
+                        self.segueBack()
                     }
                 })
                 
                 let action2 = UIAlertAction(title: "Ok", style: .default, handler: { (action) -> Void in
-                    self.performSegue(withIdentifier: "finish", sender: nil)
+                    self.segueBack()
                 })
                 alert.addAction(action1)
                 alert.addAction(action2)
@@ -399,17 +401,23 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         }
     }
-    // Tells the delegate the interstitial had been animated off the screen.
+	
+	/// Segues back to the choose export
+	func segueBack() {
+		if let vc = self.storyboard?.instantiateViewController(withIdentifier: "chooseOption") as? ChooseExport {
+			vc.holder = self.holder
+			self.holder?.transition(from: self, to: vc, with: .leftToRight)
+		}
+	}
+
+	// Tells the delegate the interstitial had been animated off the screen.
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
         DispatchQueue.main.async{
             self.formatEvents()
         }
     }
-    @objc func goBack(_ sender: UISwipeGestureRecognizer)
-    {
-        self.performSegue(withIdentifier: "finish", sender: nil)
-    }
-    func sort(){
+
+	func sort(){
         DispatchQueue.global(qos: .userInitiated).async{
             var sorted = [(Int, Int)]()
             let stringFormatter = DateFormatter()
@@ -427,7 +435,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                     if (!index.isEmpty)
                     {
                         for counter in 0 ..< index.count{
-                            if let eventIndex = sorted.index(where: {$0.0 == index[counter].0 && $0.1 == index[counter].1}){
+                            if let eventIndex = sorted.firstIndex(where: {$0.0 == index[counter].0 && $0.1 == index[counter].1}){
                                 badEvents.append(self.events[Int(eventIndex) + added])
                                 added += 1
                                 sorted.remove(at: eventIndex)
@@ -439,6 +447,9 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
             if (added > 0)
             {
                 self.wrongEvents = badEvents
+                if UserDefaults.standard.integer(forKey: "Version") >= 2 {
+                    self.showIncorrectEvents()
+                }
             }
         }
     }
@@ -453,7 +464,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         if (array.count >= 1 && array.count <= events.count / 2)
         {
             while (!array.isEmpty){
-                if let index = intArray.index(of: 1){
+                if let index = intArray.firstIndex(of: 1){
                     returnArray.append(events[index])
                     array.removeFirst()
                 }
@@ -466,7 +477,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         if (self.wrongEvents.count != 0)
         {
             DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Would you like to see suggestions of incorrect events?", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Would you like to see suggestions of incorrect events?", message: nil, preferredStyle: UIAlertController.Style.alert)
                 let yes = UIAlertAction(title: "Yes", style: .default, handler: {(action) -> Void in
                     self.events.insert(contentsOf: self.wrongEvents, at: 0)
                     self.incorrect = self.wrongEvents.count
@@ -481,10 +492,8 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         self.adState = .failed
-        debugPrint("\(error.debugDescription)")
     }
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        debugPrint("Got ad here")
         self.adState = .ready
     }
 }

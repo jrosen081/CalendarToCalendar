@@ -12,10 +12,10 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
     @IBOutlet weak var googleSignIn: UIButton!
     @IBOutlet weak var outlookSignIn: UIButton!
     @IBOutlet weak var restorePurchaseButton: UIButton!
+	weak var holding: HoldingController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdInteractor.currentViewController = self
         progressIndicator.isHidden = true
         signIn.isHidden = true
         let transform: CGAffineTransform = CGAffineTransform(scaleX: 3.0, y: 3.0)
@@ -34,20 +34,20 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
     }
     
     @IBAction func signInUsingGoogle(_ sender: Any) {
-        ServerInteractor.currentServer = .GOOGLE
-        GoogleInteractor.sharedInstance.uiDelegate = self
-        ServerInteractor.current.delegate = self
+		holding?.currentServer = .GOOGLE
+		holding?.uiDelegate = self
+		holding?.delegate = self
         signInWithServers()
     }
     
     @IBAction func signInUsingOutlook(_ sender: Any) {
-        ServerInteractor.currentServer = .OUTLOOK
-        ServerInteractor.current.delegate = self
+		holding?.currentServer = .OUTLOOK
+		holding?.delegate = self
         signInWithServers()
     }
     func signInWithServers(){
         toggleButtons(isHidden: true)
-        ServerInteractor.current.signIn(from: self)
+        holding?.currentInteractor.signIn(from: self)
         AdInteractor.isSigningIn = true
     }
     
@@ -56,7 +56,6 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
         if (SKPaymentQueue.canMakePayments()) {
             SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().restoreCompletedTransactions()
-            print("here")
         }
     }
     func toggleButtons(isHidden: Bool){
@@ -69,7 +68,12 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
     func changePages()
     {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.performSegue(withIdentifier: "PersonSignedIn", sender: nil)
+			guard let nextVC = self.storyboard?.instantiateViewController(withIdentifier: "chooseOption") as? ChooseExport else {
+				return
+			}
+			nextVC.serverUser = self.holding?.currentInteractor
+			nextVC.holder = self.holding
+			self.holding?.transition(from: self, to: nextVC, with: .rightToLeft)
         }
     }
     
@@ -105,7 +109,6 @@ extension SignInPage: SKPaymentTransactionObserver {
     }
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         showAlert(title: "Purchases have been restored.")
-        print(error.localizedDescription)
     }
 }
 

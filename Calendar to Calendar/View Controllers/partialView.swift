@@ -10,15 +10,16 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     @IBOutlet weak var picker: UIPickerView!
     @IBOutlet weak var label: UITextField!
     private var events: [Event] = [Event]()
-    let calendars = Calendars.all
-    private let server = ServerInteractor.current
+    var calendars = [Calendar]()
+    private lazy var server = self.holder?.currentInteractor
+	var holder: HoldingController?
     override func viewDidLoad() {
         createDismissedKeyboard()
         super.viewDidLoad()
-        AdInteractor.currentViewController = self
         updateDelegates()
         setUpDatePickers(self.startDate, self.endDate)
-        server.delegate = self
+        server?.delegate = self
+		calendars.append(contentsOf: self.holder?.calendarHolder.calendars ?? [])
     }
     private func updateDelegates(){
         self.picker.delegate = self
@@ -41,15 +42,15 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
     //Gets events using criteria
     func fetchEvents() {
         var calendarID: String = ""
-        if let index = calendars.index(where: {$0.name == self.calendars[picker.selectedRow(inComponent: 0)].name}){
+        if let index = calendars.firstIndex(where: {$0.name == self.calendars[picker.selectedRow(inComponent: 0)].name}){
             calendarID = calendars[index].identifier
         }
-        server.fetchEvents(name: self.label.text!, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
+        server?.fetchEvents(name: self.label.text!, startDate: self.startDate.date, endDate: self.endDate.date, calendarID: calendarID)
     }
     
     //Signs Out
     @IBAction func signOut(_ sender: Any) {
-       self.signOut()
+       self.holder?.signOut(from: self)
     }
     //Gets rid of text field
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -74,6 +75,13 @@ class PartialView: UIViewController,UIPickerViewDelegate, UIPickerViewDataSource
             viewControllerB.sort()
         }
     }
+
+	@IBAction func sendBacktoChoose(_ sender: Any) {
+		if let vc = self.storyboard?.instantiateViewController(withIdentifier: "chooseOption") as?  ChooseExport {
+			vc.holder = self.holder
+			self.holder?.transition(from: self, to: vc, with: .leftToRight)
+		}
+	}
 }
 extension PartialView: InteractionDelegate{
     func returnedError(error: CustomError) {
@@ -83,7 +91,12 @@ extension PartialView: InteractionDelegate{
         if let events = data as? [Event]{
             self.events = events
             DispatchQueue.main.async{
-                self.performSegue(withIdentifier: "displayResults", sender: nil)
+				if let vc = self.storyboard?.instantiateViewController(withIdentifier: "displayResults") as? displayResults {
+					vc.events = events
+					vc.sort()
+					vc.holder = self.holder
+					self.holder?.transition(from: self, to: vc, with: .rightToLeft)
+				}
             }
         }
     }
