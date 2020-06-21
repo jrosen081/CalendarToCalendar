@@ -11,7 +11,6 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
     @IBOutlet weak var signIn: UILabel!
     @IBOutlet weak var googleSignIn: UIButton!
     @IBOutlet weak var outlookSignIn: UIButton!
-    @IBOutlet weak var restorePurchaseButton: UIButton!
 	weak var holding: HoldingController?
     
     override func viewDidLoad() {
@@ -22,7 +21,6 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
         progressIndicator.transform = transform
         googleSignIn.layer.cornerRadius = 10
         outlookSignIn.layer.cornerRadius = 10
-        restorePurchaseButton.layer.cornerRadius = 10
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,17 +46,9 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
     func signInWithServers(){
         toggleButtons(isHidden: true)
         holding?.currentInteractor.signIn(from: self)
-        AdInteractor.isSigningIn = true
     }
-    
-    
-    @IBAction func restorePurchases(_ sender: Any) {
-        if (SKPaymentQueue.canMakePayments()) {
-            SKPaymentQueue.default().add(self)
-            SKPaymentQueue.default().restoreCompletedTransactions()
-        }
-    }
-    func toggleButtons(isHidden: Bool){
+
+	func toggleButtons(isHidden: Bool){
         googleSignIn.isHidden = isHidden
         outlookSignIn.isHidden = isHidden
         self.signIn.isHidden = !isHidden
@@ -80,35 +70,12 @@ class SignInPage: UIViewController, GIDSignInUIDelegate{
 }
 extension SignInPage: InteractionDelegate{
     func returnedResults(data: Any) {
-        AdInteractor.isSigningIn = false
         DispatchQueue.main.async(execute:{
             self.changePages()
         })
     }
     func returnedError(error: CustomError) {
-        AdInteractor.isSigningIn = false
         self.showAlert(title: "Error", message: error.localizedDescription)
         toggleButtons(isHidden: false)
     }
 }
-extension SignInPage: SKPaymentTransactionObserver {
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            if transaction.transactionState == .restored || transaction.transactionState == .purchased {
-                AdInteractor.isAdFree = true
-                queue.finishTransaction(transaction)
-            } else if transaction.transactionState == .failed {
-                queue.finishTransaction(transaction)
-            }
-            print(transaction)
-        }
-        //showAlert(title: "Purchases have been restored.")
-    }
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        showAlert(title: "Purchases have been restored.")
-    }
-    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        showAlert(title: "Purchases have been restored.")
-    }
-}
-

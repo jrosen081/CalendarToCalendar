@@ -89,23 +89,7 @@ class HoldingVC: UIViewController, HoldingController, CalendarHolder {
 			from.view.frame = CGRect(x: self.view.bounds.width * CGFloat(transition.rawValue), y: 0, width: from.view.frame.width, height: from.view.frame.height)
 		}, completion: { _ in from.view.removeFromSuperview()})
 	}
-	
-	/// Shows the add free dialogue
-	func showAdFree() {
-		let alert = UIAlertController(title: "Do you want to buy the ad free version?", message: "", preferredStyle: .alert)
-		let yes = UIAlertAction(title: "Yes", style: .default, handler: {action in
-			let viewController = self.storyboard?.instantiateViewController(withIdentifier: "AdFree") as! AdFreeViewController
-			AdInteractor.isSigningIn = true
-			viewController.adFreeDelegate = self
-			viewController.view.frame = self.view.frame
-			self.view.addSubview(viewController.view)
-		})
-		let no = UIAlertAction(title: "No", style: .default)
-		alert.addAction(no)
-		alert.addAction(yes)
-		self.present(alert, animated: true, completion: nil)
-	}
-	
+		
 	/// Signs out the given account
 	func signOut(from controller: UIViewController) {
 		let alert = UIAlertController(title: "Are you sure?", message: "You will need to sign back in before using the app.", preferredStyle: .alert)
@@ -152,22 +136,5 @@ class HoldingVC: UIViewController, HoldingController, CalendarHolder {
 				DispatchQueue.main.async(execute: {self.present(alert, animated: true, completion: nil)})
 			}
 		}
-	}
-}
-
-extension HoldingVC: AdFreeDelegate{
-	
-	
-	func adFreeBought() {
-		AdInteractor.isSigningIn = false
-		self.view.subviews[1].removeFromSuperview()
-		self.showAlert(title: "Congratulations", message: "You have succesfully bought the ad free version of the app.")
-		UserDefaults.standard.set(30, forKey: "totalAdsShown")
-	}
-	
-	func adFreeCanceled() {
-		AdInteractor.isSigningIn = false
-		self.view.subviews[1].removeFromSuperview()
-		self.showAlert(title: ":(", message: "Sorry to hear that you do not want the ad free version. There will be another opportunity if you want it")
 	}
 }

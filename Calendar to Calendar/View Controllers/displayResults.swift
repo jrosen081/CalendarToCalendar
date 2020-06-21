@@ -8,7 +8,6 @@
 
 import UIKit
 import EventKit
-import GoogleMobileAds
 
 class customcell: UITableViewCell{
     @IBOutlet weak var nameOfEvent: UITextView!
@@ -16,7 +15,7 @@ class customcell: UITableViewCell{
     @IBOutlet weak var endDate: UILabel!
     @IBOutlet weak var alarmPicker: UIPickerView!
 }
-class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate, GADInterstitialDelegate{
+class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
     
     //Calls all of the variables
     private var alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
@@ -28,22 +27,12 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     private var wrongEvents = [Event]()
     //Test: ca-app-pub-3940256099942544/4411468910
     //Production: ca-app-pub-1472286068235914/8440163507
-    var advertisement: GADInterstitial!
     private var activity = UIActivityIndicatorView(style: .gray)
     private var adState: LoadState = .began
 	var holder: HoldingController?
     override func viewDidLoad() {
-        advertisement = GADInterstitial(adUnitID: "ca-app-pub-1472286068235914/8440163507")
         self.activity.stopAnimating()
         createDismissedKeyboard()
-        //If the person is not ad free, load the ad
-        if (!AdInteractor.isAdFree) {
-            loadAd()
-        }
-        //Else, set the ad state to failed, so the add events button will skip the ad
-        else {
-            self.adState = .failed
-        }
         super.viewDidLoad()
         setUpTableView()
         //Only show the alert the first time it is downloaded. Else, there is no need to keep showing it
@@ -53,16 +42,8 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
         }
     }
-    private func loadAd(){
-        //Loads the advertisement
-        DispatchQueue.main.async{
-            let request = GADRequest()
-            //request.testDevices = testDevices
-            self.advertisement.load(request)
-            self.advertisement.delegate = self
-        }
-    }
-    private func setUpTableView(){
+
+	private func setUpTableView(){
         //Displays the table view
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -294,28 +275,10 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     //Displays advertisement
     @IBAction func addEvents(_ sender: Any) {
-        DispatchQueue.main.async{
-            switch self.adState{
-                case .began:
-                    if self.activity.superview == nil{
-                        self.view.addSubview(self.activity)
-                        self.activity.startAnimating()
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
-                        self.addEvents(self.tableView!)
-                    })
-                    break
-                case .failed:
-                    self.formatEvents()
-                    break
-                case .ready:
-                    self.advertisement.present(fromRootViewController: self)
-                    break
-            default:
-                break
-            }
-        }
-    }
+		DispatchQueue.main.async {
+			self.formatEvents()
+		}
+	}
     //Formats events to prepare for putting it into calendar
     func formatEvents()
     {
@@ -358,6 +321,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         addEventToCalendar(events: events)
     }
+	
     //Adds events to calendar
     private func addEventToCalendar(events: [Event]) {
         let dateForCal = events[0].startDate
@@ -409,6 +373,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
 			self.holder?.transition(from: self, to: vc, with: .leftToRight)
 		}
 	}
+<<<<<<< HEAD
 
 	// Tells the delegate the interstitial had been animated off the screen.
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
@@ -417,6 +382,8 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
+=======
+>>>>>>> Updataed the app
 	func sort(){
         DispatchQueue.global(qos: .userInitiated).async{
             var sorted = [(Int, Int)]()
@@ -489,11 +456,5 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.present(alert, animated: true, completion: nil)
             }
         }
-    }
-    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        self.adState = .failed
-    }
-    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        self.adState = .ready
     }
 }

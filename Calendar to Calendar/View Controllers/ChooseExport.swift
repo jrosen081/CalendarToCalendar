@@ -43,7 +43,7 @@ class ChooseExport: UIViewController{
         content.body = "Come back to Calendar to Calendar to update your iPhone calendar with Google events."
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM"
-        let dateComponents = DateComponents(calendar: Foundation.Calendar.autoupdatingCurrent, timeZone: TimeZone.current, day: 1)
+        let dateComponents = DateComponents(calendar: Foundation.Calendar.autoupdatingCurrent, timeZone: TimeZone.current, day: 1, hour: 9)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest.init(identifier: NotificationTitle.identifier, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: {error in

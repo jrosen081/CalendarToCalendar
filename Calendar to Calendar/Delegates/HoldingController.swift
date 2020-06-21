@@ -31,7 +31,4 @@ protocol HoldingController: class {
 	
 	/// Signs out the given account
 	func signOut(from controller: UIViewController)
-	
-	/// Shows the add free dialogue
-	func showAdFree()
 }

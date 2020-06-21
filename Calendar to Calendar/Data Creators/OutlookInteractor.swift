@@ -14,7 +14,7 @@ class OutlookInteractor: NSObject, APIInteractor{
     
     // Configure the OAuth2 framework for Azure
     private static let oauth2Settings = [
-        "client_id" : "YOUR_ID",
+        "client_id" : "069f519d-d63c-49c0-a693-3ca17b2ea1d2",
         "authorize_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
         "token_uri": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
         "scope": "openid profile offline_access User.Read Calendars.Read",

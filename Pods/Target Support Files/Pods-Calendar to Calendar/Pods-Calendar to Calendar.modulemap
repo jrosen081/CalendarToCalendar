@@ -1,0 +1,6 @@
+framework module Pods_Calendar_to_Calendar {
+  umbrella header "Pods-Calendar to Calendar-umbrella.h"
+
+  export *
+  module * { export * }
+}

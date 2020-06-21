@@ -16,7 +16,6 @@
 		049210E6203E632C007C324D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 049210E5203E632C007C324D /* arrow.png */; };
 		04A7B34B2121FD070026E954 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34A2121FD070026E954 /* Calendar.swift */; };
 		04A7B34D2121FD8C0026E954 /* Calendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34C2121FD8C0026E954 /* Calendars.swift */; };
-		04A7B34F21220DF40026E954 /* AdInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34E21220DF40026E954 /* AdInteractor.swift */; };
 		04A7B3512123AAA80026E954 /* APIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3502123AAA80026E954 /* APIInteractor.swift */; };
 		04A7B3532123AB670026E954 /* ServerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3522123AB670026E954 /* ServerInteractor.swift */; };
 		04A7B3552123AEC80026E954 /* OutlookInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3542123AEC80026E954 /* OutlookInteractor.swift */; };
@@ -34,6 +33,11 @@
 		04FF846C20126DD200F71D52 /* partialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF846B20126DD200F71D52 /* partialView.swift */; };
 		04FF846E20140D8600F71D52 /* fullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF846D20140D8600F71D52 /* fullView.swift */; };
 		898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */; };
+		A0298D0F227277E5000C5BBE /* HoldingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D0E227277E5000C5BBE /* HoldingVC.swift */; };
+		A0298D1122727949000C5BBE /* HoldingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D1022727949000C5BBE /* HoldingController.swift */; };
+		A0298D132278BB44000C5BBE /* CalendarHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D122278BB44000C5BBE /* CalendarHolder.swift */; };
+		A0298D15227A069B000C5BBE /* CurrentServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D14227A069B000C5BBE /* CurrentServer.swift */; };
+		A0298D19227BDCDD000C5BBE /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D18227BDCDD000C5BBE /* Transition.swift */; };
 		A07289BC212F899D00B72E53 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07289BB212F899D00B72E53 /* StoreKit.framework */; };
 		A07289BE212F8C8000B72E53 /* AdFreeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */; };
 		A07289C0212F8D3900B72E53 /* AdFreeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */; };
@@ -47,9 +51,9 @@
 		047A86CC2009A6FF005A46BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		047A86CE2009B8D7005A46BF /* ChooseExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseExport.swift; sourceTree = "<group>"; };
 		049210E5203E632C007C324D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		049210E9203E63B9007C324D /* CalendarApp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CalendarApp.png; sourceTree = "<group>"; };
 		04A7B34A2121FD070026E954 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
 		04A7B34C2121FD8C0026E954 /* Calendars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendars.swift; sourceTree = "<group>"; };
-		04A7B34E21220DF40026E954 /* AdInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdInteractor.swift; sourceTree = "<group>"; };
 		04A7B3502123AAA80026E954 /* APIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInteractor.swift; sourceTree = "<group>"; };
 		04A7B3522123AB670026E954 /* ServerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInteractor.swift; sourceTree = "<group>"; };
 		04A7B3542123AEC80026E954 /* OutlookInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlookInteractor.swift; sourceTree = "<group>"; };
@@ -70,6 +74,11 @@
 		04FF846B20126DD200F71D52 /* partialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = partialView.swift; sourceTree = "<group>"; };
 		04FF846D20140D8600F71D52 /* fullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fullView.swift; sourceTree = "<group>"; };
 		783B112BEE4ADF0B25397DF0 /* Pods-Calendar to Calendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar to Calendar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar.debug.xcconfig"; sourceTree = "<group>"; };
+		A0298D0E227277E5000C5BBE /* HoldingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingVC.swift; sourceTree = "<group>"; };
+		A0298D1022727949000C5BBE /* HoldingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingController.swift; sourceTree = "<group>"; };
+		A0298D122278BB44000C5BBE /* CalendarHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHolder.swift; sourceTree = "<group>"; };
+		A0298D14227A069B000C5BBE /* CurrentServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentServer.swift; sourceTree = "<group>"; };
+		A0298D18227BDCDD000C5BBE /* Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
 		A07289BB212F899D00B72E53 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeGetter.swift; sourceTree = "<group>"; };
 		A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeDelegate.swift; sourceTree = "<group>"; };
@@ -97,7 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				0457244D21023B6800BDE0EC /* InteractionDelegate.swift */,
-				A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */,
+				A0298D1022727949000C5BBE /* HoldingController.swift */,
+				A0298D122278BB44000C5BBE /* CalendarHolder.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -112,6 +122,7 @@
 				04FF846D20140D8600F71D52 /* fullView.swift */,
 				04D2328A20FD4A6700C71C72 /* ViewControllerExtension.swift */,
 				A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */,
+				A0298D0E227277E5000C5BBE /* HoldingVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -126,7 +137,7 @@
 				0457244F2102417300BDE0EC /* Name.swift */,
 				04A7B34A2121FD070026E954 /* Calendar.swift */,
 				04A7B34C2121FD8C0026E954 /* Calendars.swift */,
-				04A7B34E21220DF40026E954 /* AdInteractor.swift */,
+				A0298D18227BDCDD000C5BBE /* Transition.swift */,
 			);
 			path = "Data Structures";
 			sourceTree = "<group>";
@@ -138,6 +149,7 @@
 				04A7B3502123AAA80026E954 /* APIInteractor.swift */,
 				04A7B3522123AB670026E954 /* ServerInteractor.swift */,
 				04A7B3542123AEC80026E954 /* OutlookInteractor.swift */,
+				A0298D14227A069B000C5BBE /* CurrentServer.swift */,
 			);
 			path = "Data Creators";
 			sourceTree = "<group>";
@@ -147,6 +159,7 @@
 			children = (
 				04AC6F722032146B00ED80D9 /* Images.xcassets */,
 				049210E5203E632C007C324D /* arrow.png */,
+				049210E9203E63B9007C324D /* CalendarApp.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -159,6 +172,7 @@
 				04D763F620097D8D006CA589 /* Products */,
 				D85DB956B10182044A4D97A1 /* Pods */,
 				70D12A274971795A067BBB14 /* Frameworks */,
+				A031E4A5249EFD310030D08F /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,10 +193,10 @@
 				04D2328E20FD4AC600C71C72 /* Data Creators */,
 				04D2328D20FD4AA100C71C72 /* Data Structures */,
 				04D2328C20FD4A8E00C71C72 /* View Controllers */,
-				04D7640420097D8D006CA589 /* Info.plist */,
 				04D763F820097D8D006CA589 /* AppDelegate.swift */,
 				04D763FC20097D8D006CA589 /* Main.storyboard */,
 				04D7640120097D8D006CA589 /* LaunchScreen.storyboard */,
+				04D7640420097D8D006CA589 /* Info.plist */,
 			);
 			path = "Calendar to Calendar";
 			sourceTree = "<group>";
@@ -195,6 +209,14 @@
 				F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A031E4A5249EFD310030D08F /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		D85DB956B10182044A4D97A1 /* Pods */ = {
@@ -244,6 +266,7 @@
 				TargetAttributes = {
 					04D763F420097D8D006CA589 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
@@ -310,7 +333,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -319,7 +342,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		406CDDE36540A718331DD2F2 /* [CP] Embed Pods Frameworks */ = {
@@ -328,8 +351,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -338,7 +360,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -347,7 +368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		63BF7C504D945EFA94823C4B /* [CP] Check Pods Manifest.lock */ = {
@@ -375,13 +396,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0298D15227A069B000C5BBE /* CurrentServer.swift in Sources */,
 				04FF846A2011A59900F71D52 /* displayResults.swift in Sources */,
 				04A7B3512123AAA80026E954 /* APIInteractor.swift in Sources */,
 				04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */,
 				0457244E21023B6800BDE0EC /* InteractionDelegate.swift in Sources */,
 				04A7B34D2121FD8C0026E954 /* Calendars.swift in Sources */,
 				04A7B34B2121FD070026E954 /* Calendar.swift in Sources */,
-				04A7B34F21220DF40026E954 /* AdInteractor.swift in Sources */,
 				A07289C0212F8D3900B72E53 /* AdFreeDelegate.swift in Sources */,
 				04A7B3532123AB670026E954 /* ServerInteractor.swift in Sources */,
 				04FF846E20140D8600F71D52 /* fullView.swift in Sources */,
@@ -396,11 +417,23 @@
 				047A86CF2009B8D7005A46BF /* ChooseExport.swift in Sources */,
 				04C9A9A0207C4AD800E595A7 /* Event.swift in Sources */,
 				045724502102417300BDE0EC /* Name.swift in Sources */,
+				04A7B34B2121FD070026E954 /* Calendar.swift in Sources */,
+				A0298D0F227277E5000C5BBE /* HoldingVC.swift in Sources */,
 				04FF846E20140D8600F71D52 /* fullView.swift in Sources */,
+				A0298D19227BDCDD000C5BBE /* Transition.swift in Sources */,
+				A0298D1122727949000C5BBE /* HoldingController.swift in Sources */,
 				04D763FB20097D8D006CA589 /* SignInPage.swift in Sources */,
+				04A7B3552123AEC80026E954 /* OutlookInteractor.swift in Sources */,
 				04D763F920097D8D006CA589 /* AppDelegate.swift in Sources */,
+				046B30BA20FCE68900122CFF /* LoadState.swift in Sources */,
+				04F2A46C20E5B114003605A9 /* CustomError.swift in Sources */,
+				0457244B2102364400BDE0EC /* NotificationTitle.swift in Sources */,
+				04D2328B20FD4A6700C71C72 /* ViewControllerExtension.swift in Sources */,
 				047A86CF2009B8D7005A46BF /* ChooseExport.swift in Sources */,
+				04C9A9A0207C4AD800E595A7 /* Event.swift in Sources */,
+				045724502102417300BDE0EC /* Name.swift in Sources */,
 				04FF846C20126DD200F71D52 /* partialView.swift in Sources */,
+				A0298D132278BB44000C5BBE /* CalendarHolder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,14 +578,15 @@
 				CODE_SIGN_ENTITLEMENTS = "Calendar to Calendar/Calendar to Calendar.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JLMAA9A3ZB;
+				DEVELOPMENT_TEAM = SCB9RTL9PP;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.DavidRosen.calendartocalendar;
+				MARKETING_VERSION = 2.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -565,14 +599,15 @@
 				CODE_SIGN_ENTITLEMENTS = "Calendar to Calendar/Calendar to Calendar.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JLMAA9A3ZB;
+				DEVELOPMENT_TEAM = SCB9RTL9PP;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.DavidRosen.calendartocalendar;
+				MARKETING_VERSION = 2.4;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
