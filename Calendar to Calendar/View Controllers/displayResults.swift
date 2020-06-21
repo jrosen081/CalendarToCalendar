@@ -373,17 +373,7 @@ class displayResults: UIViewController, UITableViewDelegate, UITableViewDataSour
 			self.holder?.transition(from: self, to: vc, with: .leftToRight)
 		}
 	}
-<<<<<<< HEAD
 
-	// Tells the delegate the interstitial had been animated off the screen.
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        DispatchQueue.main.async{
-            self.formatEvents()
-        }
-    }
-
-=======
->>>>>>> Updataed the app
 	func sort(){
         DispatchQueue.global(qos: .userInitiated).async{
             var sorted = [(Int, Int)]()

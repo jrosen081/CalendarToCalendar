@@ -7,40 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0457244B2102364400BDE0EC /* NotificationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457244A2102364400BDE0EC /* NotificationTitle.swift */; };
 		0457244E21023B6800BDE0EC /* InteractionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457244D21023B6800BDE0EC /* InteractionDelegate.swift */; };
-		045724502102417300BDE0EC /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457244F2102417300BDE0EC /* Name.swift */; };
-		046B30BA20FCE68900122CFF /* LoadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B30B920FCE68900122CFF /* LoadState.swift */; };
 		047A86CD2009A6FF005A46BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 047A86CC2009A6FF005A46BF /* GoogleService-Info.plist */; };
-		047A86CF2009B8D7005A46BF /* ChooseExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A86CE2009B8D7005A46BF /* ChooseExport.swift */; };
 		049210E6203E632C007C324D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 049210E5203E632C007C324D /* arrow.png */; };
-		04A7B34B2121FD070026E954 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34A2121FD070026E954 /* Calendar.swift */; };
-		04A7B34D2121FD8C0026E954 /* Calendars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34C2121FD8C0026E954 /* Calendars.swift */; };
 		04A7B3512123AAA80026E954 /* APIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3502123AAA80026E954 /* APIInteractor.swift */; };
-		04A7B3532123AB670026E954 /* ServerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3522123AB670026E954 /* ServerInteractor.swift */; };
-		04A7B3552123AEC80026E954 /* OutlookInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3542123AEC80026E954 /* OutlookInteractor.swift */; };
 		04AC6F732032146B00ED80D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04AC6F722032146B00ED80D9 /* Images.xcassets */; };
-		04C9A9A0207C4AD800E595A7 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9A99F207C4AD800E595A7 /* Event.swift */; };
-		04D2328B20FD4A6700C71C72 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2328A20FD4A6700C71C72 /* ViewControllerExtension.swift */; };
-		04D763F920097D8D006CA589 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763F820097D8D006CA589 /* AppDelegate.swift */; };
-		04D763FB20097D8D006CA589 /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763FA20097D8D006CA589 /* SignInPage.swift */; };
 		04D763FE20097D8D006CA589 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D763FC20097D8D006CA589 /* Main.storyboard */; };
 		04D7640320097D8D006CA589 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D7640120097D8D006CA589 /* LaunchScreen.storyboard */; };
 		04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E1F508201010AC00EC2291 /* EventKit.framework */; };
 		04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2A46920E58F52003605A9 /* GoogleInteractor.swift */; };
-		04F2A46C20E5B114003605A9 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2A46B20E5B114003605A9 /* CustomError.swift */; };
 		04FF846A2011A59900F71D52 /* displayResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF84692011A59900F71D52 /* displayResults.swift */; };
 		04FF846C20126DD200F71D52 /* partialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF846B20126DD200F71D52 /* partialView.swift */; };
-		04FF846E20140D8600F71D52 /* fullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF846D20140D8600F71D52 /* fullView.swift */; };
 		898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */; };
 		A0298D0F227277E5000C5BBE /* HoldingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D0E227277E5000C5BBE /* HoldingVC.swift */; };
 		A0298D1122727949000C5BBE /* HoldingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D1022727949000C5BBE /* HoldingController.swift */; };
 		A0298D132278BB44000C5BBE /* CalendarHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D122278BB44000C5BBE /* CalendarHolder.swift */; };
 		A0298D15227A069B000C5BBE /* CurrentServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D14227A069B000C5BBE /* CurrentServer.swift */; };
 		A0298D19227BDCDD000C5BBE /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D18227BDCDD000C5BBE /* Transition.swift */; };
-		A07289BC212F899D00B72E53 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07289BB212F899D00B72E53 /* StoreKit.framework */; };
-		A07289BE212F8C8000B72E53 /* AdFreeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */; };
-		A07289C0212F8D3900B72E53 /* AdFreeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */; };
+		A031E4A6249F00F70030D08F /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2A46B20E5B114003605A9 /* CustomError.swift */; };
+		A031E4A7249F01040030D08F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9A99F207C4AD800E595A7 /* Event.swift */; };
+		A031E4A8249F01130030D08F /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457244F2102417300BDE0EC /* Name.swift */; };
+		A031E4A9249F011F0030D08F /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D2328A20FD4A6700C71C72 /* ViewControllerExtension.swift */; };
+		A031E4AA249F01280030D08F /* ChooseExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047A86CE2009B8D7005A46BF /* ChooseExport.swift */; };
+		A031E4AB249F01410030D08F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763F820097D8D006CA589 /* AppDelegate.swift */; };
+		A031E4AC249F014A0030D08F /* LoadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B30B920FCE68900122CFF /* LoadState.swift */; };
+		A031E4AD249F01500030D08F /* NotificationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0457244A2102364400BDE0EC /* NotificationTitle.swift */; };
+		A031E4AE249F01790030D08F /* fullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FF846D20140D8600F71D52 /* fullView.swift */; };
+		A031E4AF249F01810030D08F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34A2121FD070026E954 /* Calendar.swift */; };
+		A031E4B0249F01920030D08F /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763FA20097D8D006CA589 /* SignInPage.swift */; };
+		A031E4B1249F01960030D08F /* OutlookInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3542123AEC80026E954 /* OutlookInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,9 +48,7 @@
 		049210E5203E632C007C324D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		049210E9203E63B9007C324D /* CalendarApp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CalendarApp.png; sourceTree = "<group>"; };
 		04A7B34A2121FD070026E954 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
-		04A7B34C2121FD8C0026E954 /* Calendars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendars.swift; sourceTree = "<group>"; };
 		04A7B3502123AAA80026E954 /* APIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInteractor.swift; sourceTree = "<group>"; };
-		04A7B3522123AB670026E954 /* ServerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInteractor.swift; sourceTree = "<group>"; };
 		04A7B3542123AEC80026E954 /* OutlookInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlookInteractor.swift; sourceTree = "<group>"; };
 		04AC6F722032146B00ED80D9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		04B35DA121019718008DDDA2 /* Calendar to Calendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Calendar to Calendar.entitlements"; sourceTree = "<group>"; };
@@ -93,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A07289BC212F899D00B72E53 /* StoreKit.framework in Frameworks */,
 				04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */,
 				898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */,
 			);
@@ -136,7 +128,6 @@
 				0457244A2102364400BDE0EC /* NotificationTitle.swift */,
 				0457244F2102417300BDE0EC /* Name.swift */,
 				04A7B34A2121FD070026E954 /* Calendar.swift */,
-				04A7B34C2121FD8C0026E954 /* Calendars.swift */,
 				A0298D18227BDCDD000C5BBE /* Transition.swift */,
 			);
 			path = "Data Structures";
@@ -147,7 +138,6 @@
 			children = (
 				04F2A46920E58F52003605A9 /* GoogleInteractor.swift */,
 				04A7B3502123AAA80026E954 /* APIInteractor.swift */,
-				04A7B3522123AB670026E954 /* ServerInteractor.swift */,
 				04A7B3542123AEC80026E954 /* OutlookInteractor.swift */,
 				A0298D14227A069B000C5BBE /* CurrentServer.swift */,
 			);
@@ -325,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 		1CE45C5B04E9BD709E520091 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -396,42 +386,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A031E4B1249F01960030D08F /* OutlookInteractor.swift in Sources */,
+				A031E4B0249F01920030D08F /* SignInPage.swift in Sources */,
+				A031E4AF249F01810030D08F /* Calendar.swift in Sources */,
+				A031E4AE249F01790030D08F /* fullView.swift in Sources */,
+				A031E4AD249F01500030D08F /* NotificationTitle.swift in Sources */,
+				A031E4AC249F014A0030D08F /* LoadState.swift in Sources */,
+				A031E4AB249F01410030D08F /* AppDelegate.swift in Sources */,
+				A031E4AA249F01280030D08F /* ChooseExport.swift in Sources */,
+				A031E4A9249F011F0030D08F /* ViewControllerExtension.swift in Sources */,
+				A031E4A8249F01130030D08F /* Name.swift in Sources */,
+				A031E4A7249F01040030D08F /* Event.swift in Sources */,
+				A031E4A6249F00F70030D08F /* CustomError.swift in Sources */,
 				A0298D15227A069B000C5BBE /* CurrentServer.swift in Sources */,
 				04FF846A2011A59900F71D52 /* displayResults.swift in Sources */,
 				04A7B3512123AAA80026E954 /* APIInteractor.swift in Sources */,
 				04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */,
 				0457244E21023B6800BDE0EC /* InteractionDelegate.swift in Sources */,
-				04A7B34D2121FD8C0026E954 /* Calendars.swift in Sources */,
-				04A7B34B2121FD070026E954 /* Calendar.swift in Sources */,
-				A07289C0212F8D3900B72E53 /* AdFreeDelegate.swift in Sources */,
-				04A7B3532123AB670026E954 /* ServerInteractor.swift in Sources */,
-				04FF846E20140D8600F71D52 /* fullView.swift in Sources */,
-				04D763FB20097D8D006CA589 /* SignInPage.swift in Sources */,
-				04A7B3552123AEC80026E954 /* OutlookInteractor.swift in Sources */,
-				04D763F920097D8D006CA589 /* AppDelegate.swift in Sources */,
-				A07289BE212F8C8000B72E53 /* AdFreeGetter.swift in Sources */,
-				046B30BA20FCE68900122CFF /* LoadState.swift in Sources */,
-				04F2A46C20E5B114003605A9 /* CustomError.swift in Sources */,
-				0457244B2102364400BDE0EC /* NotificationTitle.swift in Sources */,
-				04D2328B20FD4A6700C71C72 /* ViewControllerExtension.swift in Sources */,
-				047A86CF2009B8D7005A46BF /* ChooseExport.swift in Sources */,
-				04C9A9A0207C4AD800E595A7 /* Event.swift in Sources */,
-				045724502102417300BDE0EC /* Name.swift in Sources */,
-				04A7B34B2121FD070026E954 /* Calendar.swift in Sources */,
 				A0298D0F227277E5000C5BBE /* HoldingVC.swift in Sources */,
-				04FF846E20140D8600F71D52 /* fullView.swift in Sources */,
 				A0298D19227BDCDD000C5BBE /* Transition.swift in Sources */,
 				A0298D1122727949000C5BBE /* HoldingController.swift in Sources */,
-				04D763FB20097D8D006CA589 /* SignInPage.swift in Sources */,
-				04A7B3552123AEC80026E954 /* OutlookInteractor.swift in Sources */,
-				04D763F920097D8D006CA589 /* AppDelegate.swift in Sources */,
-				046B30BA20FCE68900122CFF /* LoadState.swift in Sources */,
-				04F2A46C20E5B114003605A9 /* CustomError.swift in Sources */,
-				0457244B2102364400BDE0EC /* NotificationTitle.swift in Sources */,
-				04D2328B20FD4A6700C71C72 /* ViewControllerExtension.swift in Sources */,
-				047A86CF2009B8D7005A46BF /* ChooseExport.swift in Sources */,
-				04C9A9A0207C4AD800E595A7 /* Event.swift in Sources */,
-				045724502102417300BDE0EC /* Name.swift in Sources */,
 				04FF846C20126DD200F71D52 /* partialView.swift in Sources */,
 				A0298D132278BB44000C5BBE /* CalendarHolder.swift in Sources */,
 			);

@@ -7,10 +7,6 @@ PODS:
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (1.0.10):
     - FirebaseCore (~> 3.6)
-<<<<<<< HEAD
-  - Google-Mobile-Ads-SDK (7.32.0)
-=======
->>>>>>> Updataed the app
   - Google/Core (3.0.3):
     - FirebaseAnalytics (~> 3.2)
   - Google/SignIn (3.0.3):
@@ -21,35 +17,6 @@ PODS:
     - GTMSessionFetcher (>= 1.1.7)
   - GoogleAPIClientForREST/Core (1.2.1):
     - GTMSessionFetcher (>= 1.1.7)
-<<<<<<< HEAD
-  - GoogleSignIn (4.2.0):
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
-    - GTMOAuth2 (~> 1.0)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.1.4):
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - GoogleToolboxForMac/Defines (2.1.4)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.4)":
-    - GoogleToolboxForMac/DebugUtils (= 2.1.4)
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.4)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
-  - GTMOAuth2 (1.1.6):
-    - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.2.0):
-    - GTMSessionFetcher/Full (= 1.2.0)
-  - GTMSessionFetcher/Core (1.2.0)
-  - GTMSessionFetcher/Full (1.2.0):
-    - GTMSessionFetcher/Core (= 1.2.0)
-  - p2.OAuth2 (4.0.1)
-  - SwiftyJSON (4.1.0)
-
-DEPENDENCIES:
-  - Google-Mobile-Ads-SDK
-=======
   - GoogleSignIn (4.4.0):
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
@@ -73,33 +40,20 @@ DEPENDENCIES:
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
->>>>>>> Updataed the app
   - Google/SignIn (~> 3.0.3)
   - GoogleAPIClientForREST/Calendar (~> 1.2.1)
   - p2.OAuth2
   - SwiftyJSON
 
 SPEC REPOS:
-<<<<<<< HEAD
-  https://github.com/cocoapods/specs.git:
-=======
   trunk:
->>>>>>> Updataed the app
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseInstanceID
     - Google
-<<<<<<< HEAD
-    - Google-Mobile-Ads-SDK
     - GoogleAPIClientForREST
     - GoogleSignIn
     - GoogleToolboxForMac
-    - GTMOAuth2
-=======
-    - GoogleAPIClientForREST
-    - GoogleSignIn
-    - GoogleToolboxForMac
->>>>>>> Updataed the app
     - GTMSessionFetcher
     - p2.OAuth2
     - SwiftyJSON
@@ -109,20 +63,6 @@ SPEC CHECKSUMS:
   FirebaseCore: 9691ee2ade70c098d7cf92440f4303f16d83ca75
   FirebaseInstanceID: b9eedd6846fb5e1f0f7279e1deaa7a7e4cf8392e
   Google: cd92fab98f800f509da88c1e0c570275713bc9d5
-<<<<<<< HEAD
-  Google-Mobile-Ads-SDK: 2aca87e46e860f1e1fc0fdc1201dd9caa4be9ba6
-  GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
-  GoogleSignIn: 591e46382014e591269f862ba6e7bc0fbd793532
-  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
-  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
-  p2.OAuth2: fdc2effef37793a8f775dd4760bc4c1ea906c956
-  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
-
-PODFILE CHECKSUM: 9bbe193e1ba839462406fd06efcc70630e1d0f9b
-
-COCOAPODS: 1.5.3
-=======
   GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
@@ -133,4 +73,3 @@ COCOAPODS: 1.5.3
 PODFILE CHECKSUM: ee635973da4b8ee0e41a2f9a3202a67635084a8e
 
 COCOAPODS: 1.8.4
->>>>>>> Updataed the app

@@ -31,13 +31,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="This will remove ads for the duration that you have the app installed. The price is $1.99" textAlignment="center" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9H-Be-Cor">
-                                <rect key="frame" x="0.0" y="360.33333333333331" width="375" height="101.66666666666669"/>
+                                <rect key="frame" x="0.0" y="360.33333333333331" width="375" height="101.33333333333331"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="751-t4-63j">
-                                <rect key="frame" x="-0.66666666666665719" y="477.00000000000006" width="375.33333333333326" height="101.66666666666669"/>
+                                <rect key="frame" x="0.0" y="476.66666666666669" width="375" height="101.66666666666669"/>
                                 <color key="backgroundColor" red="0.002805913210007646" green="0.72675936671087538" blue="0.27051315825334998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Buy">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -47,7 +47,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRb-p3-W1U">
-                                <rect key="frame" x="-0.66666666666665719" y="593.66666666666663" width="375.33333333333326" height="101.66666666666663"/>
+                                <rect key="frame" x="0.0" y="593.33333333333337" width="375" height="101.33333333333337"/>
                                 <color key="backgroundColor" red="1" green="0.049691020333036517" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -57,7 +57,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7J-L0-w0U">
-                                <rect key="frame" x="0.0" y="705.33333333333337" width="375" height="122.66666666666663"/>
+                                <rect key="frame" x="0.0" y="704.66666666666663" width="375" height="123.33333333333337"/>
                                 <color key="backgroundColor" red="0.19105765582216638" green="0.25946491828939311" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -170,6 +170,7 @@
                                     <action selector="signInUsingOutlook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3bA-Ng-u8d"/>
                                 </connections>
                             </button>
+                        </subviews>
                         <color key="backgroundColor" red="0.98592098875738376" green="1" blue="0.99142618441614239" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Ft4-dY-7eK" firstAttribute="leading" secondItem="dE1-NM-hUY" secondAttribute="leading" id="1Tk-8W-WLT"/>
@@ -885,19 +886,19 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="swJ-xd-cia">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="15.666666666666666"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="15.333333333333334"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rIk-fD-iyc">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="15.666666666666666"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="15.333333333333334"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name of Event:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTk-Kh-O5C">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="16"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="15.333333333333334"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zis-eI-x9m">
-                                                                                            <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="15.666666666666666"/>
+                                                                                            <rect key="frame" x="187.66666666666663" y="0.0" width="187.33333333333337" height="15.333333333333334"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
@@ -947,7 +948,7 @@
                                                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="30.666666666666668"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yje-lF-LGm">
-                                                                                            <rect key="frame" x="0.0" y="-0.3333333333333357" width="187.66666666666666" height="30.333333333333332"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="187.66666666666666" height="30.666666666666668"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
