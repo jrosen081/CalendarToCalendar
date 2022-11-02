@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,6 +36,11 @@
 		A031E4AF249F01810030D08F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34A2121FD070026E954 /* Calendar.swift */; };
 		A031E4B0249F01920030D08F /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763FA20097D8D006CA589 /* SignInPage.swift */; };
 		A031E4B1249F01960030D08F /* OutlookInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3542123AEC80026E954 /* OutlookInteractor.swift */; };
+		A0BF447D2911F5F4002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF447C2911F5F4002D08A5 /* SwiftPackageProductDependency */; };
+		A0BF44802911F6C1002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF447F2911F6C1002D08A5 /* SwiftPackageProductDependency */; };
+		A0BF44832911F73C002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF44822911F73C002D08A5 /* SwiftPackageProductDependency */; };
+		A0BF44852911F73C002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF44842911F73C002D08A5 /* SwiftPackageProductDependency */; };
+		A0FABADC278A10140050C67B /* EventFilterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FABADB278A10140050C67B /* EventFilterScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +80,7 @@
 		A07289BB212F899D00B72E53 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeGetter.swift; sourceTree = "<group>"; };
 		A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeDelegate.swift; sourceTree = "<group>"; };
+		A0FABADB278A10140050C67B /* EventFilterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFilterScreen.swift; sourceTree = "<group>"; };
 		CA37D7C2630204D34F8510B9 /* Pods-QuickstartApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickstartApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickstartApp/Pods-QuickstartApp.release.xcconfig"; sourceTree = "<group>"; };
 		F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calendar_to_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FE0580215CCAE3D3DF0619 /* Pods-Calendar to Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar to Calendar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar.release.xcconfig"; sourceTree = "<group>"; };
@@ -86,6 +92,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BF44832911F73C002D08A5 /* BuildFile in Frameworks */,
+				A0BF447D2911F5F4002D08A5 /* BuildFile in Frameworks */,
+				A0BF44802911F6C1002D08A5 /* BuildFile in Frameworks */,
+				A0BF44852911F73C002D08A5 /* BuildFile in Frameworks */,
 				04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */,
 				898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */,
 			);
@@ -177,6 +187,7 @@
 		04D763F720097D8D006CA589 /* Calendar to Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				A0FABADA278A0FEC0050C67B /* SwiftUI */,
 				04B35DA121019718008DDDA2 /* Calendar to Calendar.entitlements */,
 				0457244C21023B5500BDE0EC /* Delegates */,
 				04D2328F20FD4B1000C71C72 /* Images */,
@@ -209,6 +220,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		A0FABADA278A0FEC0050C67B /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				A0FABADB278A10140050C67B /* EventFilterScreen.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		D85DB956B10182044A4D97A1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,7 +251,6 @@
 				04D763F220097D8D006CA589 /* Frameworks */,
 				04D763F320097D8D006CA589 /* Resources */,
 				406CDDE36540A718331DD2F2 /* [CP] Embed Pods Frameworks */,
-				1CE45C5B04E9BD709E520091 /* [CP] Copy Pods Resources */,
 				04B088D92091514400FACE03 /* Run Script */,
 			);
 			buildRules = (
@@ -240,6 +258,12 @@
 			dependencies = (
 			);
 			name = "Calendar to Calendar";
+			packageProductDependencies = (
+				A0BF447C2911F5F4002D08A5 /* SwiftPackageProductDependency */,
+				A0BF447F2911F6C1002D08A5 /* SwiftPackageProductDependency */,
+				A0BF44822911F73C002D08A5 /* SwiftPackageProductDependency */,
+				A0BF44842911F73C002D08A5 /* SwiftPackageProductDependency */,
+			);
 			productName = QuickstartApp;
 			productReference = 04D763F520097D8D006CA589 /* Calendar to Calendar.app */;
 			productType = "com.apple.product-type.application";
@@ -278,6 +302,11 @@
 				Base,
 			);
 			mainGroup = 04D763EC20097D8D006CA589;
+			packageReferences = (
+				A0BF447B2911F5F4002D08A5 /* RemoteSwiftPackageReference */,
+				A0BF447E2911F6C1002D08A5 /* RemoteSwiftPackageReference */,
+				A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */,
+			);
 			productRefGroup = 04D763F620097D8D006CA589 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -317,44 +346,17 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
-		1CE45C5B04E9BD709E520091 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		406CDDE36540A718331DD2F2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/p2.OAuth2/p2_OAuth2.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/p2_OAuth2.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -402,6 +404,7 @@
 				04FF846A2011A59900F71D52 /* displayResults.swift in Sources */,
 				04A7B3512123AAA80026E954 /* APIInteractor.swift in Sources */,
 				04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */,
+				A0FABADC278A10140050C67B /* EventFilterScreen.swift in Sources */,
 				0457244E21023B6800BDE0EC /* InteractionDelegate.swift in Sources */,
 				A0298D0F227277E5000C5BBE /* HoldingVC.swift in Sources */,
 				A0298D19227BDCDD000C5BBE /* Transition.swift in Sources */,
@@ -483,7 +486,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -536,10 +539,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -555,8 +559,11 @@
 				DEVELOPMENT_TEAM = SCB9RTL9PP;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -576,8 +583,11 @@
 				DEVELOPMENT_TEAM = SCB9RTL9PP;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 2.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -608,6 +618,56 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A0BF447B2911F5F4002D08A5 /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		A0BF447E2911F6C1002D08A5 /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/p2/OAuth2.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A0BF447C2911F5F4002D08A5 /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0BF447B2911F5F4002D08A5 /* RemoteSwiftPackageReference */;
+			productName = SwiftyJSON;
+		};
+		A0BF447F2911F6C1002D08A5 /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0BF447E2911F6C1002D08A5 /* RemoteSwiftPackageReference */;
+			productName = OAuth2;
+		};
+		A0BF44822911F73C002D08A5 /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */;
+			productName = GoogleSignIn;
+		};
+		A0BF44842911F73C002D08A5 /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04D763ED20097D8D006CA589 /* Project object */;
 }

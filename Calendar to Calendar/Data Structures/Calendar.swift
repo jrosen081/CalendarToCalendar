@@ -9,9 +9,10 @@
 import Foundation
 import GoogleAPIClientForREST
 
-struct Calendar{
+struct Calendar: Hashable, Identifiable {
     let name: String
     let identifier: String
+    var id: String { identifier }
 }
 extension Calendar{
     init(googleCalendar: GTLRCalendar_CalendarListEntry){

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol APIInteractor: class {
+protocol APIInteractor: AnyObject {
     /** The delegate that the class sends data to */
     var delegate: InteractionDelegate? {get set}
     /** A boolean value of whether the user is signed in with the respective service */

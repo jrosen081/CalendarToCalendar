@@ -2,6 +2,7 @@ import Google
 import GoogleSignIn
 import UIKit
 import UserNotifications
+import SwiftUI
 
 
 @UIApplicationMain
@@ -24,22 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 		var configureError: NSError?
 		GGLContext.sharedInstance().configureWithError(&configureError)
 		assert(configureError == nil, "Error configuring Google services: \(String(describing: configureError))")
+        
+        window?.rootViewController = UIHostingController(rootView: NavigationView { EventFilterScreen(calendars: [Calendar(name: "Real", identifier: "fake")], filterByName: true) })
+        
 		return true
 	}
-	
-	func application(_ application: UIApplication,
-					 open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-		if url.scheme?.lowercased() == "calendartocalendar" {
-			service?.handleOAuthCallback(url: url)
-			return true
-		} else {
-			return GIDSignIn.sharedInstance().handle(url,
-													 sourceApplication: sourceApplication,
-													 annotation: annotation)
-		}
-	}
-	
-	@available(iOS 9.0, *)
+    
 	func application(_ app: UIApplication, open url: URL,
 					 options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
 		let sourceApplication = options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String
