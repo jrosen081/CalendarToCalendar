@@ -5,7 +5,7 @@ import UIKit
 import GoogleAPIClientForREST
 import StoreKit
 
-class SignInPage: UIViewController, GIDSignInUIDelegate{
+class SignInPage: UIViewController {
     
     @IBOutlet weak var progressIndicator: UIActivityIndicatorView!
     @IBOutlet weak var signIn: UILabel!

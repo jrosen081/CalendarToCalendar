@@ -1,4 +1,3 @@
-import Google
 import GoogleSignIn
 import UIKit
 import UserNotifications
@@ -43,9 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 		}
 		//Else the scheme is coming from Google
 		else {
-			return GIDSignIn.sharedInstance().handle(url,
-													 sourceApplication: sourceApplication,
-													 annotation: annotation)
+            return GIDSignIn.sharedInstance.handle(url)
 		}
 	}
 }

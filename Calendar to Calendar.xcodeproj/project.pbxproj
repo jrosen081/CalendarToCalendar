@@ -36,10 +36,13 @@
 		A031E4AF249F01810030D08F /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B34A2121FD070026E954 /* Calendar.swift */; };
 		A031E4B0249F01920030D08F /* SignInPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D763FA20097D8D006CA589 /* SignInPage.swift */; };
 		A031E4B1249F01960030D08F /* OutlookInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3542123AEC80026E954 /* OutlookInteractor.swift */; };
-		A0BF447D2911F5F4002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF447C2911F5F4002D08A5 /* SwiftPackageProductDependency */; };
-		A0BF44802911F6C1002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF447F2911F6C1002D08A5 /* SwiftPackageProductDependency */; };
-		A0BF44832911F73C002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF44822911F73C002D08A5 /* SwiftPackageProductDependency */; };
-		A0BF44852911F73C002D08A5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF44842911F73C002D08A5 /* SwiftPackageProductDependency */; };
+		A0BF447D2911F5F4002D08A5 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF447C2911F5F4002D08A5 /* SwiftyJSON */; };
+		A0BF44802911F6C1002D08A5 /* OAuth2 in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF447F2911F6C1002D08A5 /* OAuth2 */; };
+		A0BF44832911F73C002D08A5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF44822911F73C002D08A5 /* GoogleSignIn */; };
+		A0BF44852911F73C002D08A5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A0BF44842911F73C002D08A5 /* GoogleSignInSwift */; };
+		A0BF44882911F9F9002D08A5 /* TopLevelTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BF44872911F9F9002D08A5 /* TopLevelTabView.swift */; };
+		A0BF448B2911FAA2002D08A5 /* CalendarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BF448A2911FAA2002D08A5 /* CalendarInteractor.swift */; };
+		A0BF448D2911FD0B002D08A5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BF448C2911FD0B002D08A5 /* LoginView.swift */; };
 		A0FABADC278A10140050C67B /* EventFilterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FABADB278A10140050C67B /* EventFilterScreen.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +83,9 @@
 		A07289BB212F899D00B72E53 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A07289BD212F8C8000B72E53 /* AdFreeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeGetter.swift; sourceTree = "<group>"; };
 		A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeDelegate.swift; sourceTree = "<group>"; };
+		A0BF44872911F9F9002D08A5 /* TopLevelTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLevelTabView.swift; sourceTree = "<group>"; };
+		A0BF448A2911FAA2002D08A5 /* CalendarInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarInteractor.swift; sourceTree = "<group>"; };
+		A0BF448C2911FD0B002D08A5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A0FABADB278A10140050C67B /* EventFilterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFilterScreen.swift; sourceTree = "<group>"; };
 		CA37D7C2630204D34F8510B9 /* Pods-QuickstartApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickstartApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickstartApp/Pods-QuickstartApp.release.xcconfig"; sourceTree = "<group>"; };
 		F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calendar_to_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,10 +98,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0BF44832911F73C002D08A5 /* BuildFile in Frameworks */,
-				A0BF447D2911F5F4002D08A5 /* BuildFile in Frameworks */,
-				A0BF44802911F6C1002D08A5 /* BuildFile in Frameworks */,
-				A0BF44852911F73C002D08A5 /* BuildFile in Frameworks */,
+				A0BF44832911F73C002D08A5 /* GoogleSignIn in Frameworks */,
+				A0BF447D2911F5F4002D08A5 /* SwiftyJSON in Frameworks */,
+				A0BF44802911F6C1002D08A5 /* OAuth2 in Frameworks */,
+				A0BF44852911F73C002D08A5 /* GoogleSignInSwift in Frameworks */,
 				04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */,
 				898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */,
 			);
@@ -187,6 +193,7 @@
 		04D763F720097D8D006CA589 /* Calendar to Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				A0BF44892911FA68002D08A5 /* Interactor */,
 				A0FABADA278A0FEC0050C67B /* SwiftUI */,
 				04B35DA121019718008DDDA2 /* Calendar to Calendar.entitlements */,
 				0457244C21023B5500BDE0EC /* Delegates */,
@@ -220,9 +227,27 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		A0BF44862911F9E7002D08A5 /* TabView */ = {
+			isa = PBXGroup;
+			children = (
+				A0BF44872911F9F9002D08A5 /* TopLevelTabView.swift */,
+				A0BF448C2911FD0B002D08A5 /* LoginView.swift */,
+			);
+			path = TabView;
+			sourceTree = "<group>";
+		};
+		A0BF44892911FA68002D08A5 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				A0BF448A2911FAA2002D08A5 /* CalendarInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
 		A0FABADA278A0FEC0050C67B /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				A0BF44862911F9E7002D08A5 /* TabView */,
 				A0FABADB278A10140050C67B /* EventFilterScreen.swift */,
 			);
 			path = SwiftUI;
@@ -259,10 +284,10 @@
 			);
 			name = "Calendar to Calendar";
 			packageProductDependencies = (
-				A0BF447C2911F5F4002D08A5 /* SwiftPackageProductDependency */,
-				A0BF447F2911F6C1002D08A5 /* SwiftPackageProductDependency */,
-				A0BF44822911F73C002D08A5 /* SwiftPackageProductDependency */,
-				A0BF44842911F73C002D08A5 /* SwiftPackageProductDependency */,
+				A0BF447C2911F5F4002D08A5 /* SwiftyJSON */,
+				A0BF447F2911F6C1002D08A5 /* OAuth2 */,
+				A0BF44822911F73C002D08A5 /* GoogleSignIn */,
+				A0BF44842911F73C002D08A5 /* GoogleSignInSwift */,
 			);
 			productName = QuickstartApp;
 			productReference = 04D763F520097D8D006CA589 /* Calendar to Calendar.app */;
@@ -303,9 +328,9 @@
 			);
 			mainGroup = 04D763EC20097D8D006CA589;
 			packageReferences = (
-				A0BF447B2911F5F4002D08A5 /* RemoteSwiftPackageReference */,
-				A0BF447E2911F6C1002D08A5 /* RemoteSwiftPackageReference */,
-				A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */,
+				A0BF447B2911F5F4002D08A5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				A0BF447E2911F6C1002D08A5 /* XCRemoteSwiftPackageReference "OAuth2" */,
+				A0BF44812911F73C002D08A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = 04D763F620097D8D006CA589 /* Products */;
 			projectDirPath = "";
@@ -396,7 +421,9 @@
 				A031E4AC249F014A0030D08F /* LoadState.swift in Sources */,
 				A031E4AB249F01410030D08F /* AppDelegate.swift in Sources */,
 				A031E4AA249F01280030D08F /* ChooseExport.swift in Sources */,
+				A0BF448B2911FAA2002D08A5 /* CalendarInteractor.swift in Sources */,
 				A031E4A9249F011F0030D08F /* ViewControllerExtension.swift in Sources */,
+				A0BF448D2911FD0B002D08A5 /* LoginView.swift in Sources */,
 				A031E4A8249F01130030D08F /* Name.swift in Sources */,
 				A031E4A7249F01040030D08F /* Event.swift in Sources */,
 				A031E4A6249F00F70030D08F /* CustomError.swift in Sources */,
@@ -409,6 +436,7 @@
 				A0298D0F227277E5000C5BBE /* HoldingVC.swift in Sources */,
 				A0298D19227BDCDD000C5BBE /* Transition.swift in Sources */,
 				A0298D1122727949000C5BBE /* HoldingController.swift in Sources */,
+				A0BF44882911F9F9002D08A5 /* TopLevelTabView.swift in Sources */,
 				04FF846C20126DD200F71D52 /* partialView.swift in Sources */,
 				A0298D132278BB44000C5BBE /* CalendarHolder.swift in Sources */,
 			);
@@ -559,7 +587,7 @@
 				DEVELOPMENT_TEAM = SCB9RTL9PP;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -583,7 +611,7 @@
 				DEVELOPMENT_TEAM = SCB9RTL9PP;
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -620,7 +648,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A0BF447B2911F5F4002D08A5 /* RemoteSwiftPackageReference */ = {
+		A0BF447B2911F5F4002D08A5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
@@ -628,7 +656,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		A0BF447E2911F6C1002D08A5 /* RemoteSwiftPackageReference */ = {
+		A0BF447E2911F6C1002D08A5 /* XCRemoteSwiftPackageReference "OAuth2" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/p2/OAuth2.git";
 			requirement = {
@@ -636,7 +664,7 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */ = {
+		A0BF44812911F73C002D08A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
 			requirement = {
@@ -647,24 +675,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A0BF447C2911F5F4002D08A5 /* SwiftPackageProductDependency */ = {
+		A0BF447C2911F5F4002D08A5 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A0BF447B2911F5F4002D08A5 /* RemoteSwiftPackageReference */;
+			package = A0BF447B2911F5F4002D08A5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		A0BF447F2911F6C1002D08A5 /* SwiftPackageProductDependency */ = {
+		A0BF447F2911F6C1002D08A5 /* OAuth2 */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A0BF447E2911F6C1002D08A5 /* RemoteSwiftPackageReference */;
+			package = A0BF447E2911F6C1002D08A5 /* XCRemoteSwiftPackageReference "OAuth2" */;
 			productName = OAuth2;
 		};
-		A0BF44822911F73C002D08A5 /* SwiftPackageProductDependency */ = {
+		A0BF44822911F73C002D08A5 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */;
+			package = A0BF44812911F73C002D08A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
 		};
-		A0BF44842911F73C002D08A5 /* SwiftPackageProductDependency */ = {
+		A0BF44842911F73C002D08A5 /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A0BF44812911F73C002D08A5 /* RemoteSwiftPackageReference */;
+			package = A0BF44812911F73C002D08A5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */

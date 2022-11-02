@@ -11,17 +11,9 @@ import GoogleSignIn
 import StoreKit
 
 class HoldingVC: UIViewController, HoldingController, CalendarHolder {
-	private lazy var googleInteractor: GoogleInteractor = GoogleInteractor(holder: self)
+//	private lazy var googleInteractor: GoogleInteractor = GoogleInteractor(holder: self)
 	private lazy var outlookInteractor: OutlookInteractor = OutlookInteractor(holder: self)
 	var currentServer = CurrentServer.GOOGLE
-	var uiDelegate: GIDSignInUIDelegate? {
-		get {
-			return googleInteractor.uiDelegate
-		}
-		set {
-			googleInteractor.uiDelegate = newValue
-		}
-	}
 	
 	private var googleCalendars = [Calendar]()
 	private var outlookCalendars = [Calendar]()
@@ -57,7 +49,7 @@ class HoldingVC: UIViewController, HoldingController, CalendarHolder {
 	
 	var currentInteractor: APIInteractor {
 		if self.currentServer == .GOOGLE {
-			return self.googleInteractor
+			fatalError()
 		} else {
 			return self.outlookInteractor
 		}
