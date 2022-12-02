@@ -10,7 +10,7 @@ import Foundation
 import p2_OAuth2
 import SwiftyJSON
 
-class OutlookInteractor: NSObject, APIInteractor{
+class OutlookInteractor: NSObject, CalendarInteractor {
     
     // Configure the OAuth2 framework for Azure
     private static let oauth2Settings = [
@@ -23,20 +23,15 @@ class OutlookInteractor: NSObject, APIInteractor{
         ] as OAuth2JSON
     
     private let oauth2: OAuth2CodeGrant
+    static let shared = OutlookInteractor()
     
     override init() {
         oauth2 = OAuth2CodeGrant(settings: OutlookInteractor.oauth2Settings)
         oauth2.authConfig.authorizeEmbedded = true
         oauth2.authConfig.authorizeEmbeddedAutoDismiss = true
-		self.calendarHolder = nil
+        super.init()
+        (UIApplication.shared.delegate as? AppDelegate)?.service = self
     }
-	
-	init(holder: CalendarHolder?) {
-		oauth2 = OAuth2CodeGrant(settings: OutlookInteractor.oauth2Settings)
-		oauth2.authConfig.authorizeEmbedded = true
-		oauth2.authConfig.authorizeEmbeddedAutoDismiss = true
-		self.calendarHolder = holder
-	}
     
     var isSignedIn: Bool {
         get {
@@ -44,18 +39,87 @@ class OutlookInteractor: NSObject, APIInteractor{
         }
     }
     
-    weak var delegate: InteractionDelegate?
-	let calendarHolder: CalendarHolder?
+    private var viewController: UIViewController {
+        var rootController = UIApplication.shared.windows.first?.rootViewController ?? UIViewController()
+        while let presented = rootController.presentedViewController {
+            rootController = presented
+        }
+        return rootController
+    }
     
-    func signIn(from object: AnyObject) {
-        oauth2.authorizeEmbedded(from: object) {
-            result, error in
-            if let unwrappedError = error {
-				self.signOut()
-                self.delegate?.returnedError(error: CustomError(unwrappedError.localizedDescription))
-            } else {
-                if let unwrappedResult = result{
-                    self.delegate?.returnedResults(data: unwrappedResult)
+    @MainActor
+    func signIn() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            oauth2.authorizeEmbedded(from: viewController) { result, error in
+                if let unwrappedError = error {
+                    self.signOut()
+                    continuation.resume(with: .failure(unwrappedError))
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+    
+    func tryToSignInSilently() {
+        if isSignedIn {
+            oauth2.tryToObtainAccessTokenIfNeeded(callback: {_, _ in })
+        }
+    }
+    
+    func fetchEvents(name: String?, startDate: Date, endDate: Date, calendarID: String) async throws -> [Event] {
+        return try await withCheckedThrowingContinuation { continuation in
+            let toDateFormatter = DateFormatter()
+            toDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.sssssss"
+            //Parameters for the query
+            var params = [
+                "$select": "subject,start,end,isAllDay",
+                "$orderby": "start/dateTime ASC",
+                "$filter": "start/dateTime ge '\(toDateFormatter.string(from: startDate))' and end/dateTime le '\(toDateFormatter.string(from: endDate))'"
+            ]
+            //If there is a name to check, add it to the filter and response text
+            if let name = name{
+                params["$filter"] = "\(params["$filter"]!) and contains(subject, '\(name)')"
+            }
+            //Makes the call to the outlook api
+            makeApiCall(api: "/v1.0/me/calendars/\(calendarID)/events", params: params) {
+                result in
+                if let unwrappedResult = result as? OAuth2JSON{
+                    var events = [Event]()
+                    for (event) in JSON(unwrappedResult)["value"].arrayValue{
+                        //Gets all of the values to create an event
+                        let startString = event["start"].dictionaryValue["dateTime"]?.stringValue
+                        let endString = event["end"].dictionaryValue["dateTime"]?.stringValue
+                        let newName = event["subject"].stringValue
+                        let isAllDay = event["isAllDay"].boolValue
+                        guard startString != nil, endString != nil, let start = toDateFormatter.date(from: startString!), let end = toDateFormatter.date(from: endString!) else {
+                            continuation.resume(throwing: NSError(domain: "com.jackrosen", code: 100))
+                            return
+                        }
+                        events.append(Event(id: UUID().uuidString, name: newName, startDate: start, endDate: end, isAllDay: isAllDay))
+                    }
+                    continuation.resume(returning: events)
+                } else if let error = result as? Error{
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    func getCalendars() async throws -> [Calendar] {
+        return try await withCheckedThrowingContinuation { continuation in
+            let params = ["$select": "id,name"]
+            //Makes the api call to get all of the calendars
+            makeApiCall(api: "/v1.0/me/calendars", params: params) {
+                result in
+                if let unwrappedResult = result as? OAuth2JSON{
+                    var calendars = [Calendar]()
+                    for (calendar) in JSON(unwrappedResult)["value"].arrayValue{
+                        calendars.append(Calendar(name: calendar["name"].stringValue, identifier: calendar["id"].stringValue))
+                    }
+                    continuation.resume(returning: calendars)
+                } else if let error = result as? Error {
+                    continuation.resume(throwing: error)
                 }
             }
         }
@@ -108,68 +172,5 @@ class OutlookInteractor: NSObject, APIInteractor{
     
     func signOut() {
         oauth2.forgetTokens()
-        calendarHolder?.removeAll()
-    }
-    
-    func fetchEvents(name: String?, startDate: Date, endDate: Date, calendarID: String) {
-        let toDateFormatter = DateFormatter()
-        toDateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.sssssss"
-        //Parameters for the query
-        var params = [
-            "$select": "subject,start,end,isAllDay",
-            "$orderby": "start/dateTime ASC",
-            "$filter": "start/dateTime ge '\(toDateFormatter.string(from: startDate))' and end/dateTime le '\(toDateFormatter.string(from: endDate))'"
-        ]
-        var dateText = "There were no events during that time."
-        //If there is a name to check, add it to the filter and response text
-        if let name = name{
-            params["$filter"] = "\(params["$filter"]!) and contains(subject, '\(name)')"
-            dateText = "There were no events named \(name) during that time."
-        }
-        //Makes the call to the outlook api
-        makeApiCall(api: "/v1.0/me/calendars/\(calendarID)/events", params: params) {
-            result in
-            if let unwrappedResult = result as? OAuth2JSON{
-                var events = [Event]()
-                for (event) in JSON(unwrappedResult)["value"].arrayValue{
-                    //Gets all of the values to create an event
-                    let startString = event["start"].dictionaryValue["dateTime"]?.stringValue
-                    let endString = event["end"].dictionaryValue["dateTime"]?.stringValue
-                    let newName = event["subject"].stringValue
-                    let isAllDay = event["isAllDay"].boolValue
-                    guard startString != nil, endString != nil, let start = toDateFormatter.date(from: startString!), let end = toDateFormatter.date(from: endString!) else {
-                        self.delegate?.returnedError(error: "There was an error parsing the events.")
-                        return
-                    }
-                    events.append(Event(name: newName, startDate: start, endDate: end, isAllDay: isAllDay))
-                }
-                if (events.isEmpty){
-                    self.delegate?.returnedError(error: CustomError(dateText))
-                } else {
-                    self.delegate?.returnedResults(data: events)
-                }
-            } else if let error = result as? Error{
-                self.delegate?.returnedError(error: CustomError(error.localizedDescription))
-            }
-        }
-    }
-    
-    func getCalendars() {
-		if !(self.calendarHolder?.calendars.isEmpty ?? true) {
-			return
-		}
-        let params = ["$select": "id,name"]
-        //Makes the api call to get all of the calendars
-        makeApiCall(api: "/v1.0/me/calendars", params: params) {
-            result in
-            if let unwrappedResult = result as? OAuth2JSON{
-                for (calendar) in JSON(unwrappedResult)["value"].arrayValue{
-                    self.calendarHolder?.addCalendar(calendar: Calendar(name: calendar["name"].stringValue, identifier: calendar["id"].stringValue))
-                }
-                self.delegate?.returnedResults(data: self.calendarHolder?.calendars ?? [])
-            } else if let error = result as? Error {
-                self.delegate?.returnedError(error: CustomError(error.localizedDescription))
-            }
-        }
     }
 }
