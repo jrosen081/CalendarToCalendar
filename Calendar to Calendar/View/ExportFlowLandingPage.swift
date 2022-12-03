@@ -111,12 +111,14 @@ struct ExportFlowLandingPage: View {
     private func loadCalendars() {
         self.isLoading = true
         Task {
-            for val in 1 ..< 4 where self.calendars.isEmpty {
+            for val in 1 ..< 4 where !CurrentServer.allCases.allSatisfy({
+                calendars[$0] != nil || !$0.interactor.isSignedIn
+            }) {
                 if val > 1 {
                     try await Task.sleep(nanoseconds: 500_000_000)
                 }
                 await withTaskGroup(of: Void.self) { taskGroup in
-                    for server in CurrentServer.allCases where server.interactor.isSignedIn  {
+                    for server in CurrentServer.allCases where server.interactor.isSignedIn && calendars[server] == nil {
                         taskGroup.addTask {
                             do {
                                 let calendars = try await server.interactor.getCalendars()

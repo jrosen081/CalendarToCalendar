@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			if let error = error{
 				print(error.localizedDescription)
             } else {
-                createNotification()
+                self.createNotification()
             }
 		})
 		

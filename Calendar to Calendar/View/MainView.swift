@@ -23,7 +23,7 @@ enum Screen {
 struct MainView: View {
     @State private var calendarInfo: [CurrentServer: [Calendar]] = [:]
     @State private var currentScreen = Screen.request
-    @State private var showingOnboarding = UserDefaults.standard.integer(forKey: "Version") < 3
+    @State private var showingOnboarding = true//UserDefaults.standard.integer(forKey: "Version") < 3
     
     var body: some View {
         TabView(selection: $currentScreen) {

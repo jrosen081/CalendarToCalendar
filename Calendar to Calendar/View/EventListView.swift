@@ -36,6 +36,7 @@ struct EventListView: View {
     @State private var isShowingTextOverlay: Bool = false
     @State private var isShowingAllAlarms: Bool = false
     @State private var eventListError: EventError? = nil
+    @State private var successfulExport = false
     @State private var openPublisher = PassthroughSubject<Bool, Never>()
     let dismiss: () -> Void
     
@@ -47,7 +48,7 @@ struct EventListView: View {
                 if let error {
                     self.eventListError = error
                 } else {
-                    dismiss()
+                    self.successfulExport = true
                 }
             }
         }
@@ -125,6 +126,15 @@ struct EventListView: View {
         }
         .alert(item: $eventListError) { error in
             error.alert(retry: self.saveEvents)
+        }
+        .alert("Events Saved Successful", isPresented: $successfulExport) {
+            Button("Open Calendar") {
+                let interval: TimeInterval = events.map(\.startDate).sorted()[0].timeIntervalSinceReferenceDate
+                let url = URL(string: "calshow:\(interval)")!
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                dismiss()
+            }
+            Button("Dismiss", action: dismiss)
         }
     }
 }
@@ -228,6 +238,7 @@ struct EventNameEditingView: View {
             Text("What would you like to name the events?")
                 .font(.title)
             TextField("Name", text: $text)
+                .font(.headline)
                 .textFieldStyle(.roundedBorder)
             Spacer()
             CircularButton {
