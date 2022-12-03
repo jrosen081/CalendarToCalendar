@@ -10,51 +10,53 @@ import Foundation
 import GoogleSignIn
 import GoogleAPIClientForREST
 
-class GoogleInteractor: NSObject, GIDSignInDelegate, CalendarInteractor {
+class GoogleInteractor: NSObject, CalendarInteractor {
     
-    private var signInContinuation: CheckedContinuation<Void, Error>?
-    
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        defer { signInContinuation = nil }
-        if let error = error {
-            signInContinuation?.resume(throwing: error)
-        } else {
-            signInContinuation?.resume()
-            self.service.authorizer = user.authentication.fetcherAuthorizer()
-        }
-    }
     var isSignedIn: Bool{
-        return GIDSignIn.sharedInstance().hasAuthInKeychain()
-    }
-    weak var uiDelegate: GIDSignInUIDelegate? {
-        didSet{
-            GIDSignIn.sharedInstance().uiDelegate = uiDelegate
-        }
+        return GIDSignIn.sharedInstance.hasPreviousSignIn() || GIDSignIn.sharedInstance.currentUser != nil
     }
     private let service = GTLRCalendarService()
     static let sharedInstance = GoogleInteractor()
     private let scopes = [kGTLRAuthScopeCalendarReadonly]
     
-    override init(){
-        super.init()
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().scopes = scopes
+    private lazy var configuration = GIDConfiguration(clientID: "140821696802-p1vcstjg021t9v3b3n90nie63n01f6s6.apps.googleusercontent.com")
+    
+    private func signInCallbackCreator(continuation: CheckedContinuation<(), Error>?) -> GIDSignInCallback {
+        return { user, error in
+            if let error {
+                continuation?.resume(throwing: error)
+            } else if let user {
+                if user.grantedScopes?.contains(where: self.scopes.contains(_:)) == true {
+                    continuation?.resume()
+                    self.service.authorizer = user.authentication.fetcherAuthorizer()
+                } else {
+                    GIDSignIn.sharedInstance.addScopes(self.scopes,
+                                                       presenting: OutlookInteractor.viewController,
+                                                       callback: self.signInCallbackCreator(continuation: continuation))
+                }
+            }
+        }
     }
     
     func signIn() async throws {
         return try await withCheckedThrowingContinuation { continuation in
-            self.signInContinuation = continuation
-            if isSignedIn {
-                GIDSignIn.sharedInstance().signInSilently()
-            } else {
-                GIDSignIn.sharedInstance().signIn()
+            DispatchQueue.main.async { [self] in
+                let callback = signInCallbackCreator(continuation: continuation)
+                if isSignedIn {
+                    GIDSignIn.sharedInstance.restorePreviousSignIn(callback: callback)
+                } else {
+                    GIDSignIn.sharedInstance.signIn(with: configuration,
+                                                    presenting: OutlookInteractor.viewController,
+                                                    callback: callback
+                    )
+                }
             }
         }
     }
     
     func tryToSignInSilently() {
         if isSignedIn {
-            GIDSignIn.sharedInstance().signInSilently()
+            GIDSignIn.sharedInstance.restorePreviousSignIn(callback: signInCallbackCreator(continuation: nil))
         }
     }
     
@@ -123,15 +125,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, CalendarInteractor {
         }
     }
     
-    func signIn(from object: AnyObject = GoogleInteractor.sharedInstance){
-        if isSignedIn {
-            GIDSignIn.sharedInstance().signInSilently()
-        } else {
-            GIDSignIn.sharedInstance().signIn()
-        }
-    }
-    
     func signOut(){
-        GIDSignIn.sharedInstance().signOut()
+        GIDSignIn.sharedInstance.signOut()
     }
 }

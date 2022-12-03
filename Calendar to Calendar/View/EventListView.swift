@@ -37,7 +37,7 @@ struct EventListView: View {
     @State private var isShowingAllAlarms: Bool = false
     @State private var eventListError: EventError? = nil
     @State private var successfulExport = false
-    @State private var openPublisher = PassthroughSubject<Bool, Never>()
+    @State private var openPublisher = CurrentValueSubject<Bool, Never>(true)
     let dismiss: () -> Void
     
     private func saveEvents() {
@@ -86,7 +86,7 @@ struct EventListView: View {
                 }.padding()
             }
             ScrollView {
-                VStack {
+                LazyVStack {
                     ForEach($events) { $event in
                         EventView(event: $event,
                                   openValuePublisher: openPublisher.eraseToAnyPublisher()) {

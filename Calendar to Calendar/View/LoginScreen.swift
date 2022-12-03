@@ -8,6 +8,7 @@
 
 import SwiftUI
 import GoogleSignIn
+import GoogleSignInSwift
 
 struct LoginInformation: Identifiable {
     let id: CurrentServer
@@ -24,7 +25,34 @@ struct LoginScreen: View {
     @State private var isLoggingIn: Bool = false
     @State private var hasError: Bool = false
     @Environment(\.backgroundColor) var backgroundColor
-    let onCalendarResponse: ((CurrentServer, [Calendar]) -> Void)
+    let onCalendarResponse: ((CurrentServer, [Calendar]?) -> Void)
+    
+    func login(server: Binding<LoginInformation>) {
+        isLoggingIn = true
+        if server.wrappedValue.signedIn {
+            server.wrappedValue.id.interactor.signOut()
+            server.wrappedValue.signedIn = false
+            onCalendarResponse(server.wrappedValue.id, nil)
+            isLoggingIn = false
+        } else {
+            Task {
+                defer { isLoggingIn = false }
+                do {
+                    try await server.wrappedValue.id.interactor.signIn()
+                    server.wrappedValue.signedIn = true
+                    let calendars = try await server.wrappedValue.id.interactor.getCalendars()
+                    await MainActor.run {
+                        onCalendarResponse(server.wrappedValue.id, calendars)
+                    }
+                    
+                } catch {
+                    await MainActor.run {
+                        hasError = true
+                    }
+                }
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -32,34 +60,18 @@ struct LoginScreen: View {
                 ForEach($loginInformation) { $info in
                     ConfigurationRow(info.id.rawValue) {
                         if canLogOut || !info.signedIn {
-                            CircularButton {
-                                isLoggingIn = true
-                                if info.signedIn {
-                                    info.id.interactor.signOut()
-                                    info.signedIn = false
-                                    isLoggingIn = false
-                                } else {
-                                    Task {
-                                        defer { isLoggingIn = false }
-                                        do {
-                                            try await info.id.interactor.signIn()
-                                            info.signedIn = true
-                                            let calendars = try await info.id.interactor.getCalendars()
-                                            await MainActor.run {
-                                                onCalendarResponse(info.id, calendars)
-                                            }
-                                            
-                                        } catch {
-                                            await MainActor.run {
-                                                hasError = true
-                                            }
-                                        }
-                                        
-                                    }
+                            if info.id == .GOOGLE && !info.signedIn {
+                                GoogleSignInButton {
+                                    login(server: $info)
+                                }.frame(maxWidth: 125)
+                            } else {
+                                CircularButton {
+                                    login(server: $info)
+                                } label: {
+                                    Text(info.signedIn ? "Sign Out" : "Sign In")
                                 }
-                            } label: {
-                                Text(info.signedIn ? "Sign Out" : "Sign In")
                             }
+                            
                         } else {
                             HStack {
                                 Image(systemName: "checkmark")
@@ -76,7 +88,6 @@ struct LoginScreen: View {
         }.alert(isPresented: $hasError) {
             Alert(title: Text("Something went wrong"), dismissButton: .default(Text("Ok")))
         }
-        .background(SignInWrapper())
         .onAppear {
             self.loginInformation = Self.currentLoginState()
         }
@@ -86,22 +97,5 @@ struct LoginScreen: View {
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
         LoginScreen { _, _ in print("hi")}
-    }
-}
-
-private class SignInController: UIViewController, GIDSignInUIDelegate {
-    
-}
-
-
-struct SignInWrapper: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let controller = SignInController(nibName: nil, bundle: nil)
-        GIDSignIn.sharedInstance().uiDelegate = controller
-        return controller
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        // Do nothing
     }
 }

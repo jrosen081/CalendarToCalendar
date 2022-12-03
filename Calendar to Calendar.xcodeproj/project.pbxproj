@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -38,6 +38,8 @@
 		A051A6BB2936E93600541B0C /* EnvironmentValues+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A051A6BA2936E93500541B0C /* EnvironmentValues+Color.swift */; };
 		A051A6BD2936ECD100541B0C /* OnboardingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A051A6BC2936ECD100541B0C /* OnboardingViews.swift */; };
 		A051A6BF2939A01E00541B0C /* EventSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A051A6BE2939A01E00541B0C /* EventSorter.swift */; };
+		A0590BFE293AEAE200EC8720 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A0590BFD293AEAE200EC8720 /* GoogleSignInSwift */; };
+		A0590C00293AEC4500EC8720 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A0590BFF293AEC4500EC8720 /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0590BFE293AEAE200EC8720 /* GoogleSignInSwift in Frameworks */,
+				A0590C00293AEC4500EC8720 /* GoogleSignIn in Frameworks */,
 				04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */,
 				898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */,
 			);
@@ -244,7 +248,6 @@
 				04D763F220097D8D006CA589 /* Frameworks */,
 				04D763F320097D8D006CA589 /* Resources */,
 				406CDDE36540A718331DD2F2 /* [CP] Embed Pods Frameworks */,
-				1CE45C5B04E9BD709E520091 /* [CP] Copy Pods Resources */,
 				04B088D92091514400FACE03 /* Run Script */,
 			);
 			buildRules = (
@@ -252,6 +255,10 @@
 			dependencies = (
 			);
 			name = "Calendar to Calendar";
+			packageProductDependencies = (
+				A0590BFD293AEAE200EC8720 /* GoogleSignInSwift */,
+				A0590BFF293AEC4500EC8720 /* GoogleSignIn */,
+			);
 			productName = QuickstartApp;
 			productReference = 04D763F520097D8D006CA589 /* Calendar to Calendar.app */;
 			productType = "com.apple.product-type.application";
@@ -290,6 +297,9 @@
 				Base,
 			);
 			mainGroup = 04D763EC20097D8D006CA589;
+			packageReferences = (
+				A0590BFC293AEAE200EC8720 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			productRefGroup = 04D763F620097D8D006CA589 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -328,44 +338,17 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
-		1CE45C5B04E9BD709E520091 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		406CDDE36540A718331DD2F2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/p2.OAuth2/p2_OAuth2.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/p2_OAuth2.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -547,7 +530,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -565,7 +549,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Calendar to Calendar";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -587,7 +574,10 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Calendar to Calendar";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.calendartocalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -618,6 +608,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A0590BFC293AEAE200EC8720 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A0590BFD293AEAE200EC8720 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0590BFC293AEAE200EC8720 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		A0590BFF293AEC4500EC8720 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0590BFC293AEAE200EC8720 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04D763ED20097D8D006CA589 /* Project object */;
 }

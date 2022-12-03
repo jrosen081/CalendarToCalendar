@@ -1,4 +1,3 @@
-import Google
 import GoogleSignIn
 import SwiftUI
 import UIKit
@@ -26,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		// Initialize sign-in
 		var configureError: NSError?
-		GGLContext.sharedInstance().configureWithError(&configureError)
+//		GGLContext.sharedInstance().configureWithError(&configureError)
 		assert(configureError == nil, "Error configuring Google services: \(String(describing: configureError))")
         CurrentServer.allCases.forEach { $0.interactor.tryToSignInSilently() }
         window?.rootViewController = UIHostingController(rootView: MainView())
@@ -55,9 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			service?.handleOAuthCallback(url: url)
 			return true
 		} else {
-			return GIDSignIn.sharedInstance().handle(url,
-													 sourceApplication: sourceApplication,
-													 annotation: annotation)
+            return GIDSignIn.sharedInstance.handle(url)
 		}
 	}
 	
@@ -73,9 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		//Else the scheme is coming from Google
 		else {
-			return GIDSignIn.sharedInstance().handle(url,
-													 sourceApplication: sourceApplication,
-													 annotation: annotation)
+			return GIDSignIn.sharedInstance.handle(url)
 		}
 	}
 }

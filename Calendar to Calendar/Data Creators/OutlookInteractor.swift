@@ -39,7 +39,7 @@ class OutlookInteractor: NSObject, CalendarInteractor {
         }
     }
     
-    private var viewController: UIViewController {
+    public static var viewController: UIViewController {
         var rootController = UIApplication.shared.windows.first?.rootViewController ?? UIViewController()
         while let presented = rootController.presentedViewController {
             rootController = presented
@@ -50,7 +50,7 @@ class OutlookInteractor: NSObject, CalendarInteractor {
     @MainActor
     func signIn() async throws {
         return try await withCheckedThrowingContinuation { continuation in
-            oauth2.authorizeEmbedded(from: viewController) { result, error in
+            oauth2.authorizeEmbedded(from: Self.viewController) { result, error in
                 if let unwrappedError = error {
                     self.signOut()
                     continuation.resume(with: .failure(unwrappedError))
