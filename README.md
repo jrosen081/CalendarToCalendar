@@ -12,6 +12,9 @@ It is open source so anyone can use it, but please leave feedback on how it work
 # Link To The App
 Click <a href = "https://itunes.apple.com/us/app/calendar-to-calendar/id1414727515?mt=8" target = '_blank'> here </a> to go to the app on the App Store.
 
+# How the App Uses Calendar Data
+With Calendar to Calendar, you can easily transfer events from your Google or Outlook calendar to your iPhone calendar. My app uses calendar data to seamlessly and accurately import your events, so you never have to worry about manually entering them into your iPhone calendar. Plus, my app is designed to respect your privacy, so you can trust that your personal calendar data will be kept secure.
+
 # User Privacy
 Calendar to Calendar takes your privacy seriously. That's why I have implemented strict privacy measures to ensure that your personal information is kept safe and secure. My app does not collect any unnecessary data, and all of the information we do collect is used solely to provide you with the best possible experience. We will never share your information with third parties without your explicit consent. When you use my app, you can trust that your privacy is respected and protected.
 Click [here](./PrivacyPolicy.md) to see the privacy policy.
