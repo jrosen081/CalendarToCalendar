@@ -22,13 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.createNotification()
             }
         })
+        
         CurrentServer.allCases.forEach { $0.interactor.tryToSignInSilently() }
         window?.rootViewController = UIHostingController(rootView: MainView())
-        BackgroundSyncPerformer.submitRequest(fromFailure: false)
+        
         BGTaskScheduler.shared.register(forTaskWithIdentifier: BackgroundSyncPerformer.Constants.identifier,
                                         using: nil,
                                         launchHandler: BackgroundSyncPerformer.performTask(task:))
-    
+        BackgroundSyncPerformer.submitRequest(fromFailure: false)
         
 		return true
 	}
