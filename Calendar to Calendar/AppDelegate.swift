@@ -2,6 +2,7 @@ import GoogleSignIn
 import SwiftUI
 import UIKit
 import UserNotifications
+import BackgroundTasks
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,16 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         window?.makeKeyAndVisible()
 
-		let notificationCenter = UNUserNotificationCenter.current()
-		notificationCenter.requestAuthorization(options: [.alert, .badge, .sound], completionHandler: {(_, error) in
-			if let error = error {
-				print(error.localizedDescription)
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.requestAuthorization(options: [.alert, .badge, .sound], completionHandler: {(_, error) in
+            if let error = error {
+                print(error.localizedDescription)
             } else {
                 self.createNotification()
             }
-		})
+        })
         CurrentServer.allCases.forEach { $0.interactor.tryToSignInSilently() }
         window?.rootViewController = UIHostingController(rootView: MainView())
+        BackgroundSyncPerformer.submitRequest(fromFailure: false)
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: BackgroundSyncPerformer.Constants.identifier,
+                                        using: nil,
+                                        launchHandler: BackgroundSyncPerformer.performTask(task:))
+    
+        
 		return true
 	}
 

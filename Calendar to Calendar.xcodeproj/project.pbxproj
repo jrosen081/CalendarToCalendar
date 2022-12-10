@@ -39,6 +39,9 @@
 		A051A6BF2939A01E00541B0C /* EventSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A051A6BE2939A01E00541B0C /* EventSorter.swift */; };
 		A0590BFE293AEAE200EC8720 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A0590BFD293AEAE200EC8720 /* GoogleSignInSwift */; };
 		A0590C00293AEC4500EC8720 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A0590BFF293AEC4500EC8720 /* GoogleSignIn */; };
+		A0949B2029453A60009A2A9B /* BackgroundSyncRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0949B1F29453A60009A2A9B /* BackgroundSyncRequest.swift */; };
+		A0949B2229453B17009A2A9B /* BackgroundSyncPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0949B2129453B17009A2A9B /* BackgroundSyncPerformer.swift */; };
+		A0949B2429453C58009A2A9B /* BackgroundSyncSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0949B2329453C58009A2A9B /* BackgroundSyncSaver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +81,9 @@
 		A051A6BE2939A01E00541B0C /* EventSorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSorter.swift; sourceTree = "<group>"; };
 		A07289BB212F899D00B72E53 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeDelegate.swift; sourceTree = "<group>"; };
+		A0949B1F29453A60009A2A9B /* BackgroundSyncRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSyncRequest.swift; sourceTree = "<group>"; };
+		A0949B2129453B17009A2A9B /* BackgroundSyncPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSyncPerformer.swift; sourceTree = "<group>"; };
+		A0949B2329453C58009A2A9B /* BackgroundSyncSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSyncSaver.swift; sourceTree = "<group>"; };
 		CA37D7C2630204D34F8510B9 /* Pods-QuickstartApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickstartApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-QuickstartApp/Pods-QuickstartApp.release.xcconfig"; sourceTree = "<group>"; };
 		F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calendar_to_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6FE0580215CCAE3D3DF0619 /* Pods-Calendar to Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar to Calendar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 		04D763F720097D8D006CA589 /* Calendar to Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				A0949B1E29453A47009A2A9B /* BackgroundSync */,
 				A051A6B529230D9E00541B0C /* Interactor */,
 				A019F9F7291C898D00477074 /* View */,
 				04B35DA121019718008DDDA2 /* Calendar to Calendar.entitlements */,
@@ -220,6 +227,16 @@
 				A051A6BE2939A01E00541B0C /* EventSorter.swift */,
 			);
 			path = Interactor;
+			sourceTree = "<group>";
+		};
+		A0949B1E29453A47009A2A9B /* BackgroundSync */ = {
+			isa = PBXGroup;
+			children = (
+				A0949B1F29453A60009A2A9B /* BackgroundSyncRequest.swift */,
+				A0949B2129453B17009A2A9B /* BackgroundSyncPerformer.swift */,
+				A0949B2329453C58009A2A9B /* BackgroundSyncSaver.swift */,
+			);
+			path = BackgroundSync;
 			sourceTree = "<group>";
 		};
 		D85DB956B10182044A4D97A1 /* Pods */ = {
@@ -388,6 +405,7 @@
 				A031E4A7249F01040030D08F /* Event.swift in Sources */,
 				A0298D15227A069B000C5BBE /* CurrentServer.swift in Sources */,
 				04A7B3512123AAA80026E954 /* CalendarInteractor.swift in Sources */,
+				A0949B2029453A60009A2A9B /* BackgroundSyncRequest.swift in Sources */,
 				A051A6BF2939A01E00541B0C /* EventSorter.swift in Sources */,
 				A051A6BB2936E93600541B0C /* EnvironmentValues+Color.swift in Sources */,
 				04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */,
@@ -400,6 +418,8 @@
 				A051A6B2291FF28E00541B0C /* ExportFlowLandingPage.swift in Sources */,
 				A051A6A2291EA78000541B0C /* LabelHeader.swift in Sources */,
 				A051A6A8291EA85200541B0C /* Toggle.swift in Sources */,
+				A0949B2229453B17009A2A9B /* BackgroundSyncPerformer.swift in Sources */,
+				A0949B2429453C58009A2A9B /* BackgroundSyncSaver.swift in Sources */,
 				A051A6A0291EA6A300541B0C /* CircularButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
