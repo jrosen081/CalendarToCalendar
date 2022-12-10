@@ -11,7 +11,6 @@
 		049210E6203E632C007C324D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 049210E5203E632C007C324D /* arrow.png */; };
 		04A7B3512123AAA80026E954 /* CalendarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A7B3502123AAA80026E954 /* CalendarInteractor.swift */; };
 		04AC6F732032146B00ED80D9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04AC6F722032146B00ED80D9 /* Images.xcassets */; };
-		04D7640320097D8D006CA589 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D7640120097D8D006CA589 /* LaunchScreen.storyboard */; };
 		04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E1F508201010AC00EC2291 /* EventKit.framework */; };
 		04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2A46920E58F52003605A9 /* GoogleInteractor.swift */; };
 		898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */; };
@@ -54,7 +53,6 @@
 		04C9A99F207C4AD800E595A7 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		04D763F520097D8D006CA589 /* Calendar to Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Calendar to Calendar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D763F820097D8D006CA589 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		04D7640220097D8D006CA589 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04D7640420097D8D006CA589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E1F508201010AC00EC2291 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		04F2A46920E58F52003605A9 /* GoogleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleInteractor.swift; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 				04D2328E20FD4AC600C71C72 /* Data Creators */,
 				04D2328D20FD4AA100C71C72 /* Data Structures */,
 				04D763F820097D8D006CA589 /* AppDelegate.swift */,
-				04D7640120097D8D006CA589 /* LaunchScreen.storyboard */,
 				04D7640420097D8D006CA589 /* Info.plist */,
 			);
 			path = "Calendar to Calendar";
@@ -314,7 +311,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04D7640320097D8D006CA589 /* LaunchScreen.storyboard in Resources */,
 				04AC6F732032146B00ED80D9 /* Images.xcassets in Resources */,
 				047A86CD2009A6FF005A46BF /* GoogleService-Info.plist in Resources */,
 				049210E6203E632C007C324D /* arrow.png in Resources */,
@@ -409,17 +405,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		04D7640120097D8D006CA589 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04D7640220097D8D006CA589 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		04D7640520097D8D006CA589 /* Debug */ = {
@@ -548,6 +533,8 @@
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Calendar to Calendar";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -573,6 +560,8 @@
 				GENERATE_PROFILING_CODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Calendar to Calendar/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Calendar to Calendar";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -19,14 +19,14 @@ struct LoginScreen: View {
     private static func currentLoginState() -> [LoginInformation] {
         CurrentServer.allCases.map { LoginInformation(id: $0, signedIn: $0.interactor.isSignedIn) }
     }
-    
+
     var canLogOut: Bool = true
     @State private var loginInformation = Self.currentLoginState()
     @State private var isLoggingIn: Bool = false
     @State private var hasError: Bool = false
     @Environment(\.backgroundColor) var backgroundColor
     let onCalendarResponse: ((CurrentServer, [Calendar]?) -> Void)
-    
+
     func login(server: Binding<LoginInformation>) {
         isLoggingIn = true
         if server.wrappedValue.signedIn {
@@ -44,7 +44,7 @@ struct LoginScreen: View {
                     await MainActor.run {
                         onCalendarResponse(server.wrappedValue.id, calendars)
                     }
-                    
+
                 } catch {
                     await MainActor.run {
                         hasError = true
@@ -53,7 +53,7 @@ struct LoginScreen: View {
             }
         }
     }
-    
+
     var body: some View {
         ZStack {
             Form {
@@ -71,7 +71,7 @@ struct LoginScreen: View {
                                     Text(info.signedIn ? "Sign Out" : "Sign In")
                                 }
                             }
-                            
+
                         } else {
                             HStack {
                                 Image(systemName: "checkmark")

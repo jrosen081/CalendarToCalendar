@@ -20,9 +20,9 @@ extension NSNotification.Name {
 enum EventRequestError: Identifiable, Hashable {
     case noValues
     case error
-    
+
     var id: Self { self }
-    
+
     var alert: Alert {
         switch self {
         case .noValues:
@@ -39,13 +39,13 @@ struct ExportFlowLandingPage: View {
     @State private var requests: [CalendarRequest] = []
     @Binding var calendars: [CurrentServer: [Calendar]]
     @State private var isLoading = true
-    @State private var nextEvents: [Event]? = nil
+    @State private var nextEvents: [Event]?
     @State private var isMakingRequest: Bool = false
-    @State private var eventRequestError: EventRequestError? = nil
+    @State private var eventRequestError: EventRequestError?
     @Environment(\.backgroundColor) var backgroundColor
     let goToSettings: () -> Void
     let anyAccountsSignedIn = AccountInfo.anyAccountsSignedIn
-    
+
     var body: some View {
         Group {
             if isLoading {
@@ -84,7 +84,7 @@ struct ExportFlowLandingPage: View {
                     EventRequestingView(calendars: calendars, requests: $requests) { requests in
                         performRequest(requests: requests)
                     }
-                    
+
                     NavigationLink(isActive: binding, destination: {
                         let nextEventsBinding = Binding(get: { nextEvents ?? [] }, set: { self.nextEvents = $0 })
                         EventListView(events: nextEventsBinding) {
@@ -107,7 +107,7 @@ struct ExportFlowLandingPage: View {
             loadCalendars()
         }
     }
-    
+
     private func loadCalendars() {
         self.isLoading = true
         Task {
@@ -128,7 +128,7 @@ struct ExportFlowLandingPage: View {
                             } catch {
                                 print(error)
                             }
-                            
+
                         }
                         await taskGroup.waitForAll()
                     }
@@ -139,7 +139,7 @@ struct ExportFlowLandingPage: View {
             }
         }
     }
-    
+
     private func performRequest(requests: [CalendarRequest]) {
         self.isMakingRequest = true
         Task {
@@ -174,7 +174,7 @@ struct ExportFlowLandingPage: View {
                     self.isMakingRequest = false
                 }
             }
-            
+
         }
     }
 }

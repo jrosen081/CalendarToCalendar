@@ -13,7 +13,7 @@ func CircularButton(action: @escaping () -> Void, label: () -> some View) -> som
         label()
             .padding(12)
             .overlay(Capsule().stroke())
-            .contentShape(Rectangle())
+            .contentShape(Capsule())
     })
     .buttonStyle(CircularButtonStyle())
 }
@@ -28,12 +28,12 @@ private struct CircularButtonStyle: ButtonStyle {
 struct RoundedButton_Previews: PreviewProvider {
     static var previews: some View {
         CircularButton {
-            
+
         } label: {
             Text("hi")
         }
         CircularButton {
-            
+
         } label: {
             Label("HI", systemImage: "pencil")
         }

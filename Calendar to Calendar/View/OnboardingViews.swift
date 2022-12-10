@@ -32,11 +32,11 @@ struct OnboardingViews: View {
                 VStack {
                     Text("""
     This app allows you to save your Google or Outlook Calendars into your phone calendar.
-    
+
     Please continue with the setup, so you will be ready to use the app!
 
     """)
-                    
+
                     Spacer()
                 }
                 .padding(.top)
@@ -50,7 +50,7 @@ struct OnboardingViews: View {
                 } else {
                     self.onboardingStep = .finish
                 }
-                
+
             } content: {
                 LoginScreen(canLogOut: false) { _, _ in
                     self.canPassSignInScreen = true
@@ -72,7 +72,7 @@ struct OnboardingViews: View {
                                 }
                             }
                         }
-                        let _ = try? await EKEventStore().requestAccess(to: .event)
+                        _ = try? await EKEventStore().requestAccess(to: .event)
                     }
                 }
             } content: {
@@ -103,15 +103,14 @@ struct OnboardingView<Content: View>: View {
     let buttonEnabled: Bool
     let nextClicked: () -> Void
     let content: () -> Content
-    
-    
+
     var body: some View {
         VStack {
             Text(title)
                 .font(.largeTitle)
                 .multilineTextAlignment(.center)
             content()
-                
+
             CircularButton(action: nextClicked) {
                 Text(buttonText)
                     .frame(maxWidth: .infinity, alignment: .center)

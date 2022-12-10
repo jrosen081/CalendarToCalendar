@@ -18,7 +18,7 @@ struct EventSaver {
             return .notAllowed
         }
         do {
-            
+
             for event in events {
                 try eventStore.save(event.createCalendarEvent(eventStore),
                                     span: .thisEvent)

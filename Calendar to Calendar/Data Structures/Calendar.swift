@@ -12,11 +12,11 @@ import GoogleAPIClientForREST
 struct Calendar: Hashable, Identifiable {
     let name: String
     let identifier: String
-    
+
     var id: String { identifier }
 }
-extension Calendar{
-    init(googleCalendar: GTLRCalendar_CalendarListEntry){
+extension Calendar {
+    init(googleCalendar: GTLRCalendar_CalendarListEntry) {
         self.name = googleCalendar.summary ?? ""
         self.identifier = googleCalendar.identifier ?? ""
     }

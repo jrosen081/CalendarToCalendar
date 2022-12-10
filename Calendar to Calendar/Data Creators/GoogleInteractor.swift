@@ -11,16 +11,16 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 
 class GoogleInteractor: NSObject, CalendarInteractor {
-    
-    var isSignedIn: Bool{
+
+    var isSignedIn: Bool {
         return GIDSignIn.sharedInstance.hasPreviousSignIn() || GIDSignIn.sharedInstance.currentUser != nil
     }
     private let service = GTLRCalendarService()
     static let sharedInstance = GoogleInteractor()
     private let scopes = [kGTLRAuthScopeCalendarReadonly]
-    
+
     private lazy var configuration = GIDConfiguration(clientID: "140821696802-p1vcstjg021t9v3b3n90nie63n01f6s6.apps.googleusercontent.com")
-    
+
     private func signInCallbackCreator(continuation: CheckedContinuation<(), Error>?) -> GIDSignInCallback {
         return { user, error in
             if let error {
@@ -37,7 +37,7 @@ class GoogleInteractor: NSObject, CalendarInteractor {
             }
         }
     }
-    
+
     func signIn() async throws {
         return try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.main.async { [self] in
@@ -53,13 +53,13 @@ class GoogleInteractor: NSObject, CalendarInteractor {
             }
         }
     }
-    
+
     func tryToSignInSilently() {
         if isSignedIn {
             GIDSignIn.sharedInstance.restorePreviousSignIn(callback: signInCallbackCreator(continuation: nil))
         }
     }
-    
+
     func getCalendars() async throws -> [Calendar] {
         return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[Calendar], Error>) -> Void in
             let query: GTLRCalendarQuery_CalendarListList = GTLRCalendarQuery_CalendarListList.query()
@@ -69,15 +69,14 @@ class GoogleInteractor: NSObject, CalendarInteractor {
                 if let response = response as? GTLRCalendar_CalendarList,
                     let calendars = response.items {
                     continuation.resume(returning: calendars
-                        .map {calendar in Calendar(googleCalendar: calendar)} )
+                        .map {calendar in Calendar(googleCalendar: calendar)})
                 } else {
                     continuation.resume(throwing: error!)
                 }
             }
-            
         }
     }
-    
+
     func fetchEvents(name: String?, startDate: Date, endDate: Date, calendarID: String) async throws -> [Event] {
         return try await withCheckedThrowingContinuation { continuation in
             let query = GTLRCalendarQuery_EventsList.query(withCalendarId: calendarID)
@@ -85,7 +84,7 @@ class GoogleInteractor: NSObject, CalendarInteractor {
             query.timeMax = GTLRDateTime.init(date: endDate)
             query.orderBy = "startTime"
             query.singleEvents = true
-            if let name = name{
+            if let name = name {
                 query.q = name
             }
             self.service.executeQuery(query) { _, response, error in
@@ -107,9 +106,7 @@ class GoogleInteractor: NSObject, CalendarInteractor {
                             startDate = dateFormatter.date(from: start.rfc3339String)!
                             endDate = dateFormatter.date(from: event.end!.dateTime!.rfc3339String)!
                             isAllDay = false
-                        }
-                        else
-                        {
+                        } else {
                             let start = event.start!.date!
                             dateFormatter.dateFormat = "yyyy-MM-dd"
                             startDate = dateFormatter.date(from: start.rfc3339String)!
@@ -124,8 +121,8 @@ class GoogleInteractor: NSObject, CalendarInteractor {
             }
         }
     }
-    
-    func signOut(){
+
+    func signOut() {
         GIDSignIn.sharedInstance.signOut()
     }
 }

@@ -22,11 +22,11 @@ struct EventRequestingView: View {
     let calendars: [CurrentServer: [Calendar]]
     @Binding var requests: [CalendarRequest]
     let performRequest: ([CalendarRequest]) -> Void
-    
+
     private var isDisabled: Bool {
         requests.isEmpty || requests.contains(where: { $0.calendar == nil })
     }
-    
+
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
@@ -57,8 +57,7 @@ struct EventRequestingView: View {
                     Text("Add an event using one of the accounts above")
                     Spacer()
                 }
-            }
-            else {
+            } else {
                 ScrollView {
                     VStack {
                         ForEach($requests) { $request in

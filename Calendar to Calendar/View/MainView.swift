@@ -24,7 +24,7 @@ struct MainView: View {
     @State private var calendarInfo: [CurrentServer: [Calendar]] = [:]
     @State private var currentScreen = Screen.request
     @State private var showingOnboarding = UserDefaults.standard.integer(forKey: "Version") < 3
-    
+
     var body: some View {
         TabView(selection: $currentScreen) {
             NavigationView {

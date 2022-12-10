@@ -21,9 +21,9 @@ enum AlarmSetting: Int, CaseIterable {
     case oneDay
     case twoDays
     case oneWeek
-    
+
     var secondsBefore: Int {
-        switch self{
+        switch self {
         case .none: return 0
         case .fiveBefore: return -300
         case .fifteenBefore: return -900
@@ -38,22 +38,22 @@ enum AlarmSetting: Int, CaseIterable {
     }
 }
 
-struct Event: Equatable, Identifiable {
+struct Event: Hashable, Identifiable {
     let id: String
     var name: String
     var startDate: Date
     var endDate: Date
     var alarm: AlarmSetting = .none
     var isAllDay: Bool
-    public static let alarmPickerDate:[String] = ["No Alarm", "5 Minutes Before", "15 Minutes Before", "30 Minutes Before", "1 Hour Before", "2 Hours Before", "6 Hours Before", "1 Day Before", "2 Days Before", "1 Week Before"]
-    
+    public static let alarmPickerDate: [String] = ["No Alarm", "5 Minutes Before", "15 Minutes Before", "30 Minutes Before", "1 Hour Before", "2 Hours Before", "6 Hours Before", "1 Day Before", "2 Days Before", "1 Week Before"]
+
     func createCalendarEvent(_ store: EKEventStore) -> EKEvent {
         let event = EKEvent(eventStore: store)
         event.title = self.name
         event.isAllDay = self.isAllDay
         event.startDate = self.startDate
         event.endDate = isAllDay ? self.startDate : self.endDate
-        if (alarm != .none){
+        if alarm != .none {
             let alarm = EKAlarm(relativeOffset: TimeInterval(self.alarm.secondsBefore))
             event.addAlarm(alarm)
         }

@@ -12,9 +12,9 @@ import SwiftUI
 enum EventError: Identifiable {
     case notAllowed
     case error
-    
+
     var id: Self { self }
-    
+
     func alert(retry: @escaping () -> Void) -> Alert {
         switch self {
         case .notAllowed:
@@ -33,13 +33,13 @@ enum EventError: Identifiable {
 
 struct EventListView: View {
     @Binding var events: [Event]
+    @State private var isOpened: [String: Bool] = [:]
     @State private var isShowingTextOverlay: Bool = false
     @State private var isShowingAllAlarms: Bool = false
-    @State private var eventListError: EventError? = nil
+    @State private var eventListError: EventError?
     @State private var successfulExport = false
-    @State private var openPublisher = CurrentValueSubject<Bool, Never>(true)
     let dismiss: () -> Void
-    
+
     private func saveEvents() {
         self.eventListError = nil
         Task {
@@ -53,7 +53,7 @@ struct EventListView: View {
             }
         }
     }
-    
+
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
@@ -74,22 +74,26 @@ struct EventListView: View {
                         Label("Edit all alarms", systemImage: "alarm")
                     }
                     CircularButton {
-                        openPublisher.send(true)
+                        withAnimation{ isOpened = Dictionary(uniqueKeysWithValues: events.map { ($0.id, true) }) }
                     } label: {
                         Text("Expand All")
                     }
                     CircularButton {
-                        openPublisher.send(false)
+                        withAnimation{ isOpened = Dictionary(uniqueKeysWithValues: events.map { ($0.id, false) }) }
                     } label: {
                         Text("Collapse All")
                     }
                 }.padding()
             }
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack {
                     ForEach($events) { $event in
-                        EventView(event: $event,
-                                  openValuePublisher: openPublisher.eraseToAnyPublisher()) {
+                        let isOpenedBinding = Binding<Bool>(get: { isOpened[event.id] ?? true }) {
+                            isOpened[event.id] = $0
+                        }
+                        EventView(
+                            isOpened: isOpenedBinding,
+                            event: $event) {
                             events.removeAll(where: { $0 == event })
                         }
                         Divider()
@@ -140,11 +144,10 @@ struct EventListView: View {
 }
 
 struct EventView: View {
-    @State private var isOpened = true
+    @Binding var isOpened: Bool
     @Binding var event: Event
-    let openValuePublisher: AnyPublisher<Bool, Never>
     let onDelete: () -> Void
-    
+
     private var startDateBinding: Binding<Date> {
         Binding(get: { event.startDate }) { newValue in
             event.startDate = newValue
@@ -153,7 +156,7 @@ struct EventView: View {
             }
         }
     }
-    
+
     private var endDateBinding: Binding<Date> {
         Binding(get: { event.endDate }) { newValue in
             event.endDate = newValue
@@ -162,7 +165,7 @@ struct EventView: View {
             }
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -182,18 +185,27 @@ struct EventView: View {
                 if event.isAllDay && !isOpened {
                     Image(systemName: "calendar")
                 }
-                Button {
-                    onDelete()
-                } label: {
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
-                }
-                Button {
-                    withAnimation { self.isOpened.toggle() }
-                } label: {
-                    Image(systemName: "chevron.right")
-                        .rotationEffect(.degrees(isOpened ? 90 : 0))
-                }
+                HStack {
+                    Button {
+                        onDelete()
+                    } label: {
+                        Label("Delete Event", systemImage: "trash")
+                            .foregroundColor(.red)
+                            .contentShape(Rectangle())
+                            .labelStyle(.iconOnly)
+                            .aspectRatio(1, contentMode: .fit)
+                    }
+                    Button {
+                        withAnimation { self.isOpened.toggle() }
+                    } label: {
+                        Label(isOpened ? "Collapse" : "Expand", systemImage: "chevron.right")
+                            .rotationEffect(.degrees(isOpened ? 90 : 0))
+                            .aspectRatio(1, contentMode: .fit)
+                            .contentShape(Rectangle())
+                            .labelStyle(.iconOnly)
+                    }
+                }.padding(.trailing)
+                
             }
             if isOpened {
                 ConfigurationView {
@@ -211,13 +223,10 @@ struct EventView: View {
                         Toggle(isOn: $event.isAllDay)
                     }
                 }
-                
+
             }
         }
         .labelsHidden()
-        .onReceive(openValuePublisher) {
-            self.isOpened = $0
-        }
     }
 }
 
@@ -232,7 +241,7 @@ private func AlarmPicker(selection: Binding<AlarmSetting>) -> some View {
 struct EventNameEditingView: View {
     @State private var text = ""
     let nameCreator: (String) -> Void
-    
+
     var body: some View {
         VStack {
             Text("What would you like to name the events?")
@@ -256,7 +265,7 @@ struct EventNameEditingView: View {
 struct AlarmEditingView: View {
     @State private var alarmSetting = AlarmSetting.none
     let onSave: (AlarmSetting) -> Void
-    
+
     var body: some View {
         VStack {
             Text("When would you like all alarms to be set?")

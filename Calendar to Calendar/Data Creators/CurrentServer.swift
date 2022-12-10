@@ -11,9 +11,9 @@ import Foundation
 enum CurrentServer: String, Identifiable, CaseIterable {
 	case GOOGLE = "Google"
 	case OUTLOOK = "Outlook"
-    
+
     var id: String { rawValue }
-    
+
     var interactor: CalendarInteractor {
         switch self {
         case .GOOGLE:

@@ -16,7 +16,7 @@ struct EventRequestView: View {
     @Binding var endDate: Date
     let calendars: [Calendar]
     let onDelete: () -> Void
-    
+
     private var startDateBinding: Binding<Date> {
         Binding(get: { startDate }) { newValue in
             startDate = newValue
@@ -25,7 +25,7 @@ struct EventRequestView: View {
             }
         }
     }
-    
+
     private var endDateBinding: Binding<Date> {
         Binding(get: { endDate }) { newValue in
             endDate = newValue
@@ -34,8 +34,7 @@ struct EventRequestView: View {
             }
         }
     }
-    
-    
+
     var body: some View {
         ConfigurationView {
             ConfigurationRow("Is there a specific name you are looking for?") {
