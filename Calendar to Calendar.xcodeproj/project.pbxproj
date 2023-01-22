@@ -14,6 +14,9 @@
 		04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E1F508201010AC00EC2291 /* EventKit.framework */; };
 		04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F2A46920E58F52003605A9 /* GoogleInteractor.swift */; };
 		898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */; };
+		A012A3A7297DF20E0022F69A /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A012A3A6297DF20E0022F69A /* EventTests.swift */; };
+		A012A3AA297DF4620022F69A /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A012A3A9297DF4620022F69A /* GoogleSignIn */; };
+		A012A3AD297DF4F70022F69A /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9A99F207C4AD800E595A7 /* Event.swift */; };
 		A019F9F9291C899B00477074 /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A019F9F8291C899B00477074 /* EventListView.swift */; };
 		A019F9FB291CA0B900477074 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A019F9FA291CA0B900477074 /* BottomSheet.swift */; };
 		A0298D15227A069B000C5BBE /* CurrentServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0298D14227A069B000C5BBE /* CurrentServer.swift */; };
@@ -72,6 +75,8 @@
 		783B112BEE4ADF0B25397DF0 /* Pods-Calendar to Calendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar to Calendar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Calendar to Calendar/Pods-Calendar to Calendar.debug.xcconfig"; sourceTree = "<group>"; };
 		A012A397297DEDC80022F69A /* CalendarToCalendarTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CalendarToCalendarTestPlan.xctestplan; sourceTree = "<group>"; };
 		A012A39C297DEE250022F69A /* CalendartoCalendarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalendartoCalendarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A012A3A6297DF20E0022F69A /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
+		A012A3AB297DF4B10022F69A /* Pods_Calendar_to_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Calendar_to_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A019F9F8291C899B00477074 /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
 		A019F9FA291CA0B900477074 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		A0298D14227A069B000C5BBE /* CurrentServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentServer.swift; sourceTree = "<group>"; };
@@ -118,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A012A3AA297DF4620022F69A /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +202,7 @@
 		70D12A274971795A067BBB14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A012A3AB297DF4B10022F69A /* Pods_Calendar_to_Calendar.framework */,
 				A07289BB212F899D00B72E53 /* StoreKit.framework */,
 				04E1F508201010AC00EC2291 /* EventKit.framework */,
 				F144E4611A9C784E2BA75393 /* Pods_Calendar_to_Calendar.framework */,
@@ -214,6 +221,7 @@
 		A012A39D297DEE250022F69A /* CalendartoCalendarTests */ = {
 			isa = PBXGroup;
 			children = (
+				A012A3A6297DF20E0022F69A /* EventTests.swift */,
 			);
 			path = CalendartoCalendarTests;
 			sourceTree = "<group>";
@@ -328,6 +336,9 @@
 				A012A3A1297DEE250022F69A /* PBXTargetDependency */,
 			);
 			name = CalendartoCalendarTests;
+			packageProductDependencies = (
+				A012A3A9297DF4620022F69A /* GoogleSignIn */,
+			);
 			productName = CalendartoCalendarTests;
 			productReference = A012A39C297DEE250022F69A /* CalendartoCalendarTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -357,6 +368,7 @@
 					};
 					A012A39B297DEE250022F69A = {
 						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
 						TestTargetID = 04D763F420097D8D006CA589;
 					};
 				};
@@ -495,6 +507,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A012A3AD297DF4F70022F69A /* Event.swift in Sources */,
+				A012A3A7297DF20E0022F69A /* EventTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -682,12 +696,23 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SCB9RTL9PP;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"GTLR_USE_FRAMEWORK_IMPORTS=1",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -695,8 +720,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.apartmenthunting.CalendartoCalendarTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calendar to Calendar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Calendar to Calendar";
@@ -708,20 +737,30 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SCB9RTL9PP;
+				GCC_PREPROCESSOR_DEFINITIONS = "GTLR_USE_FRAMEWORK_IMPORTS=1";
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.JackRosen.apartmenthunting.CalendartoCalendarTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Calendar to Calendar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Calendar to Calendar";
@@ -772,6 +811,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A012A3A9297DF4620022F69A /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0590BFC293AEAE200EC8720 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
 		A0590BFD293AEAE200EC8720 /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A0590BFC293AEAE200EC8720 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
