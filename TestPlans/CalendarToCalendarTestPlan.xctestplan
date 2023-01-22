@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "910F6BF4-93D0-4C9B-BC5D-B70D221DD827",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Calendar to Calendar.xcodeproj",
+        "identifier" : "A012A39B297DEE250022F69A",
+        "name" : "CalendartoCalendarTests"
+      }
+    }
+  ],
+  "version" : 1
+}
