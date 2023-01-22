@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum CurrentServer: String, Identifiable, CaseIterable {
+enum CurrentServer: String, Identifiable, CaseIterable, Codable {
 	case GOOGLE = "Google"
 	case OUTLOOK = "Outlook"
 

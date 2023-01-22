@@ -10,7 +10,7 @@ import Foundation
 import EventKit
 import SwiftUI
 
-enum AlarmSetting: Int, CaseIterable {
+enum AlarmSetting: Int, CaseIterable, Codable {
     case none
     case fiveBefore
     case fifteenBefore
@@ -68,5 +68,17 @@ extension Event {
         self.startDate = startDate
         self.endDate = endDate
         self.isAllDay = isAllDay
+    }
+    
+    init(ekEvent: EKEvent, id: String) {
+        self.id = id
+        self.name = ekEvent.title
+        self.startDate = ekEvent.startDate
+        self.endDate = ekEvent.endDate
+        self.isAllDay = ekEvent.isAllDay
+        guard let alarm = ekEvent.alarms?.first else { return }
+        self.alarm = AlarmSetting.allCases.first {
+            TimeInterval($0.secondsBefore) == alarm.relativeOffset
+        } ?? .none
     }
 }
