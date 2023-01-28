@@ -17,6 +17,7 @@ enum LoadingState<T> {
 
 enum Screen {
     case request
+    case sync
     case signIn
 }
 
@@ -37,6 +38,15 @@ struct MainView: View {
                 Text("Export")
                 Image(systemName: "calendar")
             }
+            SyncView {
+                currentScreen = .request
+            }
+            .tag(Screen.sync)
+            .tabItem {
+                Text("Sync")
+                Image(systemName: "arrow.triangle.2.circlepath")
+            }
+            
             NavigationView {
                 LoginScreen { server, calendars in
                     calendarInfo[server] = calendars

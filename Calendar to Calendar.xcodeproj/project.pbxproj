@@ -42,6 +42,9 @@
 		A051A6BF2939A01E00541B0C /* EventSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A051A6BE2939A01E00541B0C /* EventSorter.swift */; };
 		A0590BFE293AEAE200EC8720 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A0590BFD293AEAE200EC8720 /* GoogleSignInSwift */; };
 		A0590C00293AEC4500EC8720 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A0590BFF293AEC4500EC8720 /* GoogleSignIn */; };
+		A0680C5F2985AF08000B588F /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = A0680C5E2985AF08000B588F /* DesignSystem */; };
+		A0680C612985AF08000B588F /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = A0680C602985AF08000B588F /* Paywall */; };
+		A0680C642985B0C7000B588F /* SyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0680C632985B0C7000B588F /* SyncView.swift */; };
 		A0949B2029453A60009A2A9B /* BackgroundSyncRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0949B1F29453A60009A2A9B /* BackgroundSyncRequest.swift */; };
 		A0949B2229453B17009A2A9B /* BackgroundSyncPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0949B2129453B17009A2A9B /* BackgroundSyncPerformer.swift */; };
 		A0949B2429453C58009A2A9B /* BackgroundSyncSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0949B2329453C58009A2A9B /* BackgroundSyncSaver.swift */; };
@@ -96,6 +99,9 @@
 		A051A6BA2936E93500541B0C /* EnvironmentValues+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+Color.swift"; sourceTree = "<group>"; };
 		A051A6BC2936ECD100541B0C /* OnboardingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViews.swift; sourceTree = "<group>"; };
 		A051A6BE2939A01E00541B0C /* EventSorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSorter.swift; sourceTree = "<group>"; };
+		A0680C5C2985A5D3000B588F /* Paywall */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Paywall; sourceTree = "<group>"; };
+		A0680C5D2985AEEC000B588F /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
+		A0680C632985B0C7000B588F /* SyncView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncView.swift; sourceTree = "<group>"; };
 		A07289BB212F899D00B72E53 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A07289BF212F8D3900B72E53 /* AdFreeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdFreeDelegate.swift; sourceTree = "<group>"; };
 		A0949B1F29453A60009A2A9B /* BackgroundSyncRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSyncRequest.swift; sourceTree = "<group>"; };
@@ -112,8 +118,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0680C5F2985AF08000B588F /* DesignSystem in Frameworks */,
 				A0590BFE293AEAE200EC8720 /* GoogleSignInSwift in Frameworks */,
 				A0590C00293AEC4500EC8720 /* GoogleSignIn in Frameworks */,
+				A0680C612985AF08000B588F /* Paywall in Frameworks */,
 				04E1F509201010AC00EC2291 /* EventKit.framework in Frameworks */,
 				898B9BBC8945069A0D3B2233 /* Pods_Calendar_to_Calendar.framework in Frameworks */,
 			);
@@ -163,6 +171,7 @@
 		04D763EC20097D8D006CA589 = {
 			isa = PBXGroup;
 			children = (
+				A0680C5B2985A59F000B588F /* Packages */,
 				A012A396297DEDB10022F69A /* TestPlans */,
 				047A86CC2009A6FF005A46BF /* GoogleService-Info.plist */,
 				04D763F720097D8D006CA589 /* Calendar to Calendar */,
@@ -237,6 +246,7 @@
 				A051A6AF291F064C00541B0C /* LoginScreen.swift */,
 				A051A6B1291FF28E00541B0C /* ExportFlowLandingPage.swift */,
 				A051A6BC2936ECD100541B0C /* OnboardingViews.swift */,
+				A0680C632985B0C7000B588F /* SyncView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -272,6 +282,15 @@
 				A051A6BE2939A01E00541B0C /* EventSorter.swift */,
 			);
 			path = Interactor;
+			sourceTree = "<group>";
+		};
+		A0680C5B2985A59F000B588F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				A0680C5D2985AEEC000B588F /* DesignSystem */,
+				A0680C5C2985A5D3000B588F /* Paywall */,
+			);
+			path = Packages;
 			sourceTree = "<group>";
 		};
 		A0949B1E29453A47009A2A9B /* BackgroundSync */ = {
@@ -317,6 +336,8 @@
 			packageProductDependencies = (
 				A0590BFD293AEAE200EC8720 /* GoogleSignInSwift */,
 				A0590BFF293AEC4500EC8720 /* GoogleSignIn */,
+				A0680C5E2985AF08000B588F /* DesignSystem */,
+				A0680C602985AF08000B588F /* Paywall */,
 			);
 			productName = QuickstartApp;
 			productReference = 04D763F520097D8D006CA589 /* Calendar to Calendar.app */;
@@ -488,6 +509,7 @@
 				A051A6BF2939A01E00541B0C /* EventSorter.swift in Sources */,
 				A051A6BB2936E93600541B0C /* EnvironmentValues+Color.swift in Sources */,
 				04F2A46A20E58F52003605A9 /* GoogleInteractor.swift in Sources */,
+				A0680C642985B0C7000B588F /* SyncView.swift in Sources */,
 				A051A6B0291F064C00541B0C /* LoginScreen.swift in Sources */,
 				A051A6AA291EA88700541B0C /* ConfigurationView.swift in Sources */,
 				A051A6A6291EA7FE00541B0C /* DatePicker.swift in Sources */,
@@ -825,6 +847,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A0590BFC293AEAE200EC8720 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
+		};
+		A0680C5E2985AF08000B588F /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignSystem;
+		};
+		A0680C602985AF08000B588F /* Paywall */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Paywall;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
