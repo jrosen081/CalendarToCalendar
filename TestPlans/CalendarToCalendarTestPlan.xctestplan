@@ -18,6 +18,20 @@
         "identifier" : "A012A39B297DEE250022F69A",
         "name" : "CalendartoCalendarTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/DesignSystem",
+        "identifier" : "DesignSystemTests",
+        "name" : "DesignSystemTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Packages\/Paywall",
+        "identifier" : "PaywallTests",
+        "name" : "PaywallTests"
+      }
     }
   ],
   "version" : 1
